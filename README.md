@@ -7,10 +7,7 @@ A unified, professional Node.js CLI tool for launching independent cross-chain t
 ## ✨ Features
 
 - **Sepolia to Holesky USDC, LINK, EURC** transfers
-- **Modular design:** Easily add more chains and tokens
-- **Independent modules:** Each script runs in its own process and keeps its own menu
-- **Extensible:** Add new transfer modules with minimal changes
-
+- **ADDING MORE CHAIN SOON 
 ---
 
 ## ⚡️ Installation
