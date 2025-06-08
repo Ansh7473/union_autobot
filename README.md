@@ -6,7 +6,7 @@ A unified, professional Node.js CLI tool for launching independent cross-chain t
 
 ## ✨ Features
 
-- **Sepolia to Holesky USDC, LINK, EURC** transfers
+- **Sepolia to Holesky ETH USDC, LINK, EURC** transfers
 - **ADDING MORE CHAIN SOON 
 ---
 
