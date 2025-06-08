@@ -32,6 +32,11 @@ A unified, professional Node.js CLI tool for transfer scripts (ETH, LINK, EURC) 
 ## 🛠️ Usage
 
 1. **Run the main CLI menu:**
+
+   ```bash
+   npm update
+   ```
+
    ```bash
    node index.js
    ```
