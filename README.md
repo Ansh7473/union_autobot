@@ -76,10 +76,6 @@ To add a new transfer module:
 
 ---
 
-## 📜 License
-
-MIT (or specify your preferred license)
-
 ---
 
 **Happy cross-chain transferring! 🚀🌉**
