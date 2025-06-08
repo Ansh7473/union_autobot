@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "@cosmjs/cosmwasm-stargate": "^0.32.4",
+    "@cosmjs/encoding": "^0.32.4",
+    "@cosmjs/proto-signing": "^0.32.4",
+    "@cosmjs/stargate": "^0.32.4",
+    "@noble/secp256k1": "^2.2.3",
+    "axios": "^1.9.0",
+    "dotenv": "^16.5.0",
+    "ethers": "^6.14.3",
+    "moment-timezone": "^0.6.0",
+    "node-fetch": "^3.3.2",
+    "viem": "^2.30.6",
+    "winston": "^3.17.0"
+  }
+}
