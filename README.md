@@ -6,23 +6,34 @@ A unified, professional Node.js CLI tool for launching independent cross-chain t
 
 ## ✨ Features
 
-- **Sepolia to Holesky USDC,LINK,EURC.
-- **Adding more chain soon.
+- **Sepolia to Holesky USDC, LINK, EURC** transfers
+- **Modular design:** Easily add more chains and tokens
+- **Independent modules:** Each script runs in its own process and keeps its own menu
+- **Extensible:** Add new transfer modules with minimal changes
 
+---
+
+## ⚡️ Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Ansh7473/UNION-AUTO_BOT.git
+   cd UNION-AUTO_BOT
+   ```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
 ---
 
 ## 🛠️ Usage
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-2. **Run the main CLI menu:**
+1. **Run the main CLI menu:**
    ```bash
    node index.js
    ```
-3. **Select a transfer module:**
+2. **Select a transfer module:**
    - Choose ETH, LINK, or EURC transfer from the menu.
    - The selected script will launch in its own process and present its own menu.
 
