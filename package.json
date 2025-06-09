@@ -1,7 +1,7 @@
 {
   "name": "union-auto-bot",
   "version": "1.0.0",
-  "description": "Cross-chain automation bot", // Added comment
+  "description": "Cross-chain automation bot",
   "dependencies": {
     "@cosmjs/cosmwasm-stargate": "^0.32.4",
     "@cosmjs/encoding": "^0.32.4",
@@ -12,7 +12,7 @@
     "cli-table3": "^0.6.5",
     "dotenv": "^16.5.0",
     "ethers": "^6.14.3",
-    "moment-timezone": "^0.6.0",
+    "moment-timezone": "^0.5.46",
     "node-fetch": "^3.3.2",
     "viem": "^2.30.6",
     "winston": "^3.17.0"
