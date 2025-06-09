@@ -1,7 +1,18 @@
 [
-    {
-        "VERSION": "1.0.0",
-        "UPDATE_DATE": "2025-06-09T01:33:00Z",
-        "CHANGES": ["Initial release", "Cross-chain transfer support"]
-    }
+  {
+    "VERSION": "1.0.1",
+    "UPDATE_DATE": "2025-06-09T15:38:01+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Update update-version.yml"
+    ]
+  },
+  {
+    "VERSION": "1.0.0",
+    "UPDATE_DATE": "2025-06-09T01:33:00Z",
+    "CHANGES": [
+      "Initial release",
+      "Cross-chain transfer support"
+    ]
+  }
 ]
