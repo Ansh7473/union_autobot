@@ -1,6 +1,7 @@
 {
   "name": "union-auto-bot",
   "version": "1.0.0",
+  "description": "Cross-chain automation bot", // Added comment
   "dependencies": {
     "@cosmjs/cosmwasm-stargate": "^0.32.4",
     "@cosmjs/encoding": "^0.32.4",
