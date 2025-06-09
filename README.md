@@ -19,7 +19,7 @@ https://github.com/user-attachments/assets/4adfb2cb-720f-4524-89e9-3c0db4ba03bb
 - **Sepolia to Holesky ETH USDC, LINK, EURC** transfers
 -  **Holesky to Sepolia ETH USDC, LINK, EURC** transfers
 - **ADDING MORE CHAIN SOON
-- CODE IS OBSTRUCTED SO NO ONE CAN COMPLAIN AND MAKE OUR TESTENT EFFORTS WASTE 
+- CODE IS OBFUSTRICATED SO NO ONE CAN COMPLAIN AND MAKE OUR TESTENT EFFORTS WASTE 
 
 ## ⚡️ Installation
 
