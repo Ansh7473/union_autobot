@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2 # Fetch last two commits to allow diff
+          fetch-depth: 0 # Full history for commit info
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -42,7 +42,7 @@ jobs:
               const changedFiles = process.env.CHANGED_FILES || 'Unknown';
               const newEntry = {
                 VERSION: newVersion,
-                UPDATE_DATE: moment().tz('Asia/Kolkata').toISOString(),
+                UPDATE_DATE: moment().tz('Asia/Kolkata').format('YYYY-MM-DDTHH:mm:ssZ'),
                 CHANGES: ['Updated files: ' + changedFiles, 'Commit: ' + commitMessage]
               };
               versions.unshift(newEntry);
@@ -58,5 +58,5 @@ jobs:
       - name: Commit updated versions.json
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Auto-update versions.json to $NEW_VERSION"
+          commit_message: "Auto-update versions.json"
           file_pattern: versions.json
