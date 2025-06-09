@@ -1,4 +1,6 @@
 {
+  "name": "union-auto-bot",
+  "version": "1.0.0",
   "dependencies": {
     "@cosmjs/cosmwasm-stargate": "^0.32.4",
     "@cosmjs/encoding": "^0.32.4",
@@ -6,6 +8,7 @@
     "@cosmjs/stargate": "^0.32.4",
     "@noble/secp256k1": "^2.2.3",
     "axios": "^1.9.0",
+    "cli-table3": "^0.6.5",
     "dotenv": "^16.5.0",
     "ethers": "^6.14.3",
     "moment-timezone": "^0.6.0",
