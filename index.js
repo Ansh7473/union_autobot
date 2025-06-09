@@ -9,6 +9,7 @@ const path = require('path');
 const axios = require('axios');
 const Table = require('cli-table3');
 const fs = require('fs').promises;
+const moment = require('moment-timezone');
 
 // Create readline interface
 const rl = readline.createInterface({
@@ -17,7 +18,7 @@ const rl = readline.createInterface({
 });
 
 // ============= Version Check and Update Functions =============
-const CURRENT_VERSION = '1.0.0'; // Replace with your current bot version
+const CURRENT_VERSION = '1.0.0';
 const REPO_OWNER = 'Ansh7473';
 const REPO_NAME = 'UNION-AUTO_BOT';
 const VERSION_FILE = 'versions.json';
@@ -40,19 +41,19 @@ async function fetchVersionsJson() {
             }
             return data.map(version => ({
                 version: version.VERSION,
-                update_date: version.UPDATE_DATE,
+                update_date: moment(version.UPDATE_DATE).tz('Asia/Kolkata').format('YYYY-MM-DD HH:mm:ss z'),
                 changes: version.CHANGES
             }));
         } else {
             console.log(`❌ Failed to fetch versions from GitHub (Status: ${response.status})`);
-            if (response.status === 403) console.log('ℹ️ GitHub API rate limit exceeded or access denied');
-            if (response.status === 404) console.log('ℹ️ Version file (versions.json) not found in the repository.');
+            if (response.status === 403) console.log('ℹ️ GitHub API rate limit exceeded');
+            if (response.status === 404) console.log('ℹ️ Version file (versions.json) not found');
             return [];
         }
     } catch (error) {
         console.log(`❌ Error fetching versions: ${error.message}`);
         if (error.code === 'ECONNREFUSED' || error.code === 'ETIMEDOUT') {
-            console.log('💡 Consider checking your network connection.');
+            console.log('💡 Check your network connection.');
         }
         return [];
     }
@@ -89,7 +90,10 @@ async function downloadFile(file) {
     }
 
     try {
-        const response = await axios.get(file.download_url, { responseType: 'arraybuffer' });
+        const headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36'
+        };
+        const response = await axios.get(file.download_url, { headers, responseType: 'arraybuffer' });
         if (response.status === 200) {
             await fs.writeFile(path.join(__dirname, file.name), response.data);
             console.log(`✅ Downloaded ${file.name}`);
@@ -124,7 +128,7 @@ function formatVersionChanges(versions) {
 
     const table = new Table({
         head: ['Version', 'Update Date', 'Changes'],
-        colWidths: [15, 20, 50],
+        colWidths: [15, 25, 50],
         style: { head: ['cyan'], border: ['grey'] },
         wordWrap: true
     });
@@ -133,7 +137,7 @@ function formatVersionChanges(versions) {
         const changesStr = version.changes.map(change => `• ${change}`).join('\n');
         table.push([`✨ ${version.version}`, `📅 ${version.update_date}`, changesStr]);
         if (index < versions.length - 1) {
-            table.push(['─'.repeat(12), '─'.repeat(17), '─'.repeat(47)]);
+            table.push(['─'.repeat(12), '─'.repeat(22), '─'.repeat(47)]);
         }
     });
 
@@ -148,6 +152,8 @@ async function checkVersion() {
         const versions = await fetchVersionsJson();
         if (!versions || versions.length === 0) {
             console.log('✅ Unable to check for updates. Continuing with current version.');
+            console.log('Press Enter to return to the main menu...');
+            await getUserInput('');
             return true;
         }
 
@@ -228,13 +234,33 @@ async function getUserInput(prompt) {
     });
 }
 
-function runScript(scriptName) {
+async function runScript(scriptName) {
     const scriptPath = path.join(__dirname, scriptName);
-    const child = spawn('node', [scriptPath], { stdio: 'inherit' });
+    try {
+        await fs.access(scriptPath);
+        const child = spawn('node', [scriptPath], { stdio: ['inherit', 'inherit', 'inherit'] });
 
-    child.on('exit', (code) => {
+        child.on('error', (error) => {
+            console.log(`❌ Error running ${scriptName}: ${error.message}`);
+            console.log('Press Enter to return to the menu...');
+            getUserInput('').then(() => mainMenu());
+        });
+
+        child.on('exit', (code) => {
+            if (code !== 0) {
+                console.log(`⚠️ ${scriptName} exited with code ${code}`);
+                console.log('Press Enter to return to the menu...');
+                getUserInput('').then(() => mainMenu());
+            } else {
+                mainMenu();
+            }
+        });
+    } catch (error) {
+        console.log(`❌ Script ${scriptName} not found or inaccessible: ${error.message}`);
+        console.log('Press Enter to return to the menu...');
+        await getUserInput('');
         mainMenu();
-    });
+    }
 }
 
 // ============= Hierarchical Menu =============
@@ -271,20 +297,16 @@ async function sepoliaToHoleskyMenu() {
     const token = await getUserInput("👉 Enter your choice (1-5): ");
     switch (token) {
         case "1":
-            rl.close();
-            runScript('SepoliaToHoleskyEth.js');
+            await runScript('SepoliaToHoleskyEth.js');
             break;
         case "2":
-            rl.close();
-            runScript('SepoliaToHoleskyLinkTransfer.js');
+            await runScript('SepoliaToHoleskyLinkTransfer.js');
             break;
         case "3":
-            rl.close();
-            runScript('SepoliaToHoleskyEurcTransfer.js');
+            await runScript('SepoliaToHoleskyEurcTransfer.js');
             break;
         case "4":
-            rl.close();
-            runScript('SepoliaToHoleskyUsdcTransfer.js');
+            await runScript('SepoliaToHoleskyUsdcTransfer.js');
             break;
         case "5":
             mainMenu();
@@ -306,20 +328,16 @@ async function holeskyToSepoliaMenu() {
     const token = await getUserInput("👉 Enter your choice (1-5): ");
     switch (token) {
         case "1":
-            rl.close();
-            runScript('HoleskyToSepoliaETH.js');
+            await runScript('HoleskyToSepoliaETH.js');
             break;
         case "2":
-            rl.close();
-            runScript('HoleskyToSepoliaLink.js');
+            await runScript('HoleskyToSepoliaLink.js');
             break;
         case "3":
-            rl.close();
-            runScript('HoleskyToSepoliaEurc.js');
+            await runScript('HoleskyToSepoliaEurc.js');
             break;
         case "4":
-            rl.close();
-            runScript('HoleskyToSepoliaUsdc.js');
+            await runScript('HoleskyToSepoliaUsdc.js');
             break;
         case "5":
             mainMenu();
