@@ -161,12 +161,12 @@ async function checkVersion() {
             const aParts = a.version.split('.').map(Number);
             const bParts = b.version.split('.').map(Number);
             for (let i = 0; i < 3; i++) {
-                if (aParts[i] !== bParts[i]) return aParts[i] - bParts[i];
+                if (aParts[i] !== bParts[i]) return bParts[i] - aParts[i]; // Descending order
             }
             return 0;
         });
 
-        const latestVersion = versions[versions.length - 1];
+        const latestVersion = versions[0];
         const currentVersionParts = CURRENT_VERSION.split('.').map(Number);
         const latestVersionParts = latestVersion.version.split('.').map(Number);
 
