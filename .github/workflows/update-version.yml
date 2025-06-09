@@ -1,0 +1,54 @@
+name: Auto-Update versions.json
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Update versions.json
+        run: |
+          # Read current versions.json
+          if [ -f versions.json ]; then
+            CURRENT_VERSION=$(jq -r '.[0].VERSION' versions.json)
+          else
+            CURRENT_VERSION="1.0.0"
+          fi
+          # Increment patch version
+          IFS='.' read -r -a VERSION_PARTS <<< "$CURRENT_VERSION"
+          PATCH=$(( ${VERSION_PARTS[2]} + 1 ))
+          NEW_VERSION="${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.$PATCH"
+          # Get commit message and date
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          COMMIT_DATE=$(git log -1 --pretty=%cI)
+          # Get changed files
+          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD | tr '\n' ', ' | sed 's/, $//')
+          # Update or create versions.json
+          jq -n \
+            --arg version "$NEW_VERSION" \
+            --arg date "$COMMIT_DATE" \
+            --arg changes "Updated files: $CHANGED_FILES, Commit: $COMMIT_MESSAGE" \
+            '[{
+              "VERSION": $version,
+              "UPDATE_DATE": $date,
+              "CHANGES": [$changes]
+            }] + $input' versions.json > temp.json
+          mv temp.json versions.json
+        env:
+          input: "$(cat versions.json || echo '[]')"
+
+      - name: Commit updated versions.json
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update versions.json to $NEW_VERSION"
