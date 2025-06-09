@@ -7,7 +7,6 @@ A unified, professional Node.js CLI tool for transfer scripts (ETH, LINK, EURC) 
 ![Screenshot 2025-06-08 182419](https://github.com/user-attachments/assets/1c440c2a-2be9-4805-8e6e-5ce07ebca321)
 
 
-https://github.com/user-attachments/assets/4adfb2cb-720f-4524-89e9-3c0db4ba03bb
 
 
 
