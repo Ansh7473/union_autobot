@@ -1,22 +1,14 @@
 /**
  * Sepolia to Holesky Cross-Chain Transfer Hub
- * Routes to ETH, LINK, EURC, and USDC transfer scripts with auto-update feature
- * Added update notification in main menu
+ * Handles version checking, updates, and starts the menu system
  */
 
-const readline = require('readline');
-const { spawn } = require('child_process');
-const path = require('path');
 const axios = require('axios');
 const Table = require('cli-table3');
 const fs = require('fs').promises;
 const moment = require('moment-timezone');
-
-// Create readline interface
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+const path = require('path');
+const { mainMenu, getUserInput } = require('./menu.js');
 
 // ============= Version Check and Update Functions =============
 const CURRENT_VERSION = '1.0.0';
@@ -25,7 +17,7 @@ const REPO_NAME = 'UNION-AUTO_BOT';
 const VERSION_FILE = 'versions.json';
 const EXCLUDED_FILES = ['private_keys.txt'];
 
-// New global variables to store update status
+// Global variables for update notification
 let latestVersion = null;
 let isUpdateAvailable = false;
 
@@ -99,15 +91,36 @@ async function downloadFile(file) {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36'
         };
         const response = await axios.get(file.download_url, { headers, responseType: 'arraybuffer' });
-        if (response.status === 200) {
-            await fs.writeFile(path.join(__dirname, file.name), response.data);
-            console.log(`✅ Downloaded ${file.name}`);
-        } else {
-            console.log(`❌ Failed to download ${file.name} (Status: ${response.status})`);
-        }
+        await fs.writeFile(path.join(__dirname, file.name), response.data);
+        console.log(`✅ Downloaded ${file.name}`);
     } catch (error) {
         console.log(`❌ Error downloading ${file.name}: ${error.message}`);
     }
+}
+
+async function formatVersionChanges(versions) {
+    if (!versions || versions.length === 0) {
+        console.log('✩ No version information available.');
+        return;
+    }
+
+    const table = new Table({
+        head: ['Version', 'Update Date', '✩'],
+        style: { head: ['cyan'], border: ['grey'] },
+        wordWrap: true
+    });
+
+    versions.forEach((version, index) => {
+        const changesStr = version.changes.map(change => `• ${change}`).join('\n');
+        table.push([`✩ ${version.version}`, `📅 ${version.update_date}`, changesStr]);
+        if (index < versions.length - 1) {
+            table.push(['─'.repeat(12), '─'.repeat('22'), '─'.repeat(47)]);
+        }
+    });
+
+    console.log('\n📋 Available Updates');
+    console.log(table.toString());
+    console.log();
 }
 
 async function updateFiles() {
@@ -117,38 +130,12 @@ async function updateFiles() {
         return false;
     }
 
-    console.log('\n📥 Downloading updated files...');
+    console.log('\n=== Downloading Files ===');
     for (const file of files) {
         await downloadFile(file);
     }
-    console.log('✅ Update complete.');
+    console.log('✔ Update complete.');
     return true;
-}
-
-function formatVersionChanges(versions) {
-    if (!versions || versions.length === 0) {
-        console.log('ℹ️ No version information available.');
-        return;
-    }
-
-    const table = new Table({
-        head: ['Version', 'Update Date', 'Changes'],
-        colWidths: [15, 25, 50],
-        style: { head: ['cyan'], border: ['grey'] },
-        wordWrap: true
-    });
-
-    versions.forEach((version, index) => {
-        const changesStr = version.changes.map(change => `• ${change}`).join('\n');
-        table.push([`✨ ${version.version}`, `📅 ${version.update_date}`, changesStr]);
-        if (index < versions.length - 1) {
-            table.push(['─'.repeat(12), '─'.repeat(22), '─'.repeat(47)]);
-        }
-    });
-
-    console.log('\n📋 Available Updates:');
-    console.log(table.toString());
-    console.log();
 }
 
 async function checkVersion() {
@@ -215,178 +202,13 @@ async function checkVersion() {
     }
 }
 
-// ============= Menu Interface =============
-function displayBanner() {
-    console.clear();
-    console.log("\n🌉 ========================================== 🌉");
-    console.log("  UNION Cross-Chain Automation");
-    console.log("🌉 ========================================== 🌉\n");
-}
-
-function displayMainMenu() {
-    console.log("🔹 Select an Option:");
-    console.log("1️⃣  Sepolia → Holesky");
-    console.log("2️⃣  Holesky → Sepolia");
-    console.log("3️⃣  SEI → CORN");
-    console.log("4️⃣  Check for Updates");
-    console.log("5️⃣  Exit");
-    // New notification for updates
-    if (isUpdateAvailable && latestVersion) {
-        console.log(`\n⚠️ New Update Available: v${latestVersion.version} (Select 4 to update)`);
-    }
-    console.log();
-}
-
-async function getUserInput(prompt) {
-    return new Promise((resolve) => {
-        rl.question(prompt, (answer) => {
-            resolve(answer.trim());
-        });
-    });
-}
-
-async function runScript(scriptName) {
-    const scriptPath = path.join(__dirname, scriptName);
-    try {
-        await fs.access(scriptPath);
-        const child = spawn('node', [scriptPath], { stdio: ['inherit', 'inherit', 'inherit'] });
-
-        child.on('error', (error) => {
-            console.log(`❌ Error running ${scriptName}: ${error.message}`);
-            console.log('Press Enter to return to the menu...');
-            getUserInput('').then(() => mainMenu());
-        });
-
-        child.on('exit', (code) => {
-            if (code !== 0) {
-                console.log(`⚠️ ${scriptName} exited with code ${code}`);
-                console.log('Press Enter to return to the menu...');
-                getUserInput('').then(() => mainMenu());
-            } else {
-                mainMenu();
-            }
-        });
-    } catch (error) {
-        console.log(`❌ Script ${scriptName} not found or inaccessible: ${error.message}`);
-        console.log('Press Enter to return to the menu...');
-        await getUserInput('');
-        mainMenu();
-    }
-}
-
-// ============= Hierarchical Menu =============
-async function mainMenu() {
-    displayBanner();
-    // Check for updates on first load
-    if (latestVersion === null) {
-        await checkVersion();
-    }
-    displayMainMenu();
-    const choice = await getUserInput("👉 Enter your choice (1-5): ");
-
-    if (choice === "1") {
-        await sepoliaToHoleskyMenu();
-    } else if (choice === "2") {
-        await holeskyToSepoliaMenu();
-    } else if (choice === "3") {
-        await seiToCornMenu();
-    } else if (choice === "4") {
-        await checkVersion();
-        mainMenu();
-    } else if (choice === "5") {
-        console.log("\n👋 Goodbye!");
-        rl.close();
-        process.exit(0);
-    } else {
-        console.log("\n❌ Invalid choice. Please try again.");
-        setTimeout(mainMenu, 1500);
-    }
-}
-
-async function sepoliaToHoleskyMenu() {
-    console.clear();
-    console.log("\n🌉 Sepolia → Holesky: Select Token");
-    console.log("1️⃣  ETH");
-    console.log("2️⃣  LINK");
-    console.log("3️⃣  EURC");
-    console.log("4️⃣  USDC");
-    console.log("5️⃣  Back\n");
-    const token = await getUserInput("👉 Enter your choice (1-5): ");
-    switch (token) {
-        case "1":
-            await runScript('SepoliaToHoleskyEth.js');
-            break;
-        case "2":
-            await runScript('SepoliaToHoleskyLinkTransfer.js');
-            break;
-        case "3":
-            await runScript('SepoliaToHoleskyEurcTransfer.js');
-            break;
-        case "4":
-            await runScript('SepoliaToHoleskyUsdcTransfer.js');
-            break;
-        case "5":
-            mainMenu();
-            break;
-        default:
-            console.log("\n❌ Invalid choice. Please try again.");
-            setTimeout(sepoliaToHoleskyMenu, 1500);
-    }
-}
-
-async function holeskyToSepoliaMenu() {
-    console.clear();
-    console.log("\n🌉 Holesky → Sepolia: Select Token");
-    console.log("1️⃣  ETH");
-    console.log("2️⃣  LINK");
-    console.log("3️⃣  EURC");
-    console.log("4️⃣  USDC");
-    console.log("5️⃣  Back\n");
-    const token = await getUserInput("👉 Enter your choice (1-5): ");
-    switch (token) {
-        case "1":
-            await runScript('HoleskyToSepoliaETH.js');
-            break;
-        case "2":
-            await runScript('HoleskyToSepoliaLink.js');
-            break;
-        case "3":
-            await runScript('HoleskyToSepoliaEurc.js');
-            break;
-        case "4":
-            await runScript('HoleskyToSepoliaUsdc.js');
-            break;
-        case "5":
-            mainMenu();
-            break;
-        default:
-            console.log("\n❌ Invalid choice. Please try again.");
-            setTimeout(holeskyToSepoliaMenu, 1500);
-    }
-}
-
-async function seiToCornMenu() {
-    console.clear();
-    console.log("\n🌉 SEI → CORN: Select Token");
-    console.log("1️⃣  SEI");
-    console.log("2️⃣  Back\n");
-    const token = await getUserInput("👉 Enter your choice (1-2): ");
-    switch (token) {
-        case "1":
-            await runScript('SeiToCornSEITransfer.js');
-            break;
-        case "2":
-            mainMenu();
-            break;
-        default:
-            console.log("\n❌ Invalid choice. Please try again.");
-            setTimeout(seiToCornMenu, 1500);
-    }
-}
-
 // Start the application
 console.log("🚀 Starting Sepolia to Holesky Cross-Chain Transfer Hub...");
-mainMenu().catch((err) => {
-    console.error("Fatal error:", err);
-    process.exit(1);
+checkVersion().then((continueRunning) => {
+    if (continueRunning) {
+        mainMenu(checkVersion, isUpdateAvailable, latestVersion).catch((err) => {
+            console.error("Fatal error:", err);
+            process.exit(1);
+        });
+    }
 });
