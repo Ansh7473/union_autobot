@@ -1,6 +1,7 @@
 /**
  * Sepolia to Holesky Cross-Chain Transfer Hub
  * Routes to ETH, LINK, EURC, and USDC transfer scripts with auto-update feature
+ * Added update notification in main menu
  */
 
 const readline = require('readline');
@@ -23,6 +24,10 @@ const REPO_OWNER = 'Ansh7473';
 const REPO_NAME = 'UNION-AUTO_BOT';
 const VERSION_FILE = 'versions.json';
 const EXCLUDED_FILES = ['private_keys.txt'];
+
+// New global variables to store update status
+let latestVersion = null;
+let isUpdateAvailable = false;
 
 async function fetchVersionsJson() {
     const url = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${VERSION_FILE}`;
@@ -166,21 +171,21 @@ async function checkVersion() {
             return 0;
         });
 
-        const latestVersion = versions[0];
+        latestVersion = versions[0]; // Store latest version globally
         const currentVersionParts = CURRENT_VERSION.split('.').map(Number);
         const latestVersionParts = latestVersion.version.split('.').map(Number);
 
-        let isLatest = true;
+        isUpdateAvailable = false; // Reset update status
         for (let i = 0; i < 3; i++) {
             if (currentVersionParts[i] < latestVersionParts[i]) {
-                isLatest = false;
+                isUpdateAvailable = true; // Set update available
                 break;
             } else if (currentVersionParts[i] > latestVersionParts[i]) {
                 break;
             }
         }
 
-        if (!isLatest) {
+        if (isUpdateAvailable) {
             console.log(`⚠️ New version available: ${latestVersion.version}`);
             formatVersionChanges(versions);
             const answer = await getUserInput('👉 Do you want to update to the latest version? (y/n): ');
@@ -222,8 +227,14 @@ function displayMainMenu() {
     console.log("🔹 Select an Option:");
     console.log("1️⃣  Sepolia → Holesky");
     console.log("2️⃣  Holesky → Sepolia");
-    console.log("3️⃣  Check for Updates");
-    console.log("4️⃣  Exit\n");
+    console.log("3️⃣  SEI → CORN");
+    console.log("4️⃣  Check for Updates");
+    console.log("5️⃣  Exit");
+    // New notification for updates
+    if (isUpdateAvailable && latestVersion) {
+        console.log(`\n⚠️ New Update Available: v${latestVersion.version} (Select 4 to update)`);
+    }
+    console.log();
 }
 
 async function getUserInput(prompt) {
@@ -266,17 +277,23 @@ async function runScript(scriptName) {
 // ============= Hierarchical Menu =============
 async function mainMenu() {
     displayBanner();
+    // Check for updates on first load
+    if (latestVersion === null) {
+        await checkVersion();
+    }
     displayMainMenu();
-    const choice = await getUserInput("👉 Enter your choice (1-4): ");
+    const choice = await getUserInput("👉 Enter your choice (1-5): ");
 
     if (choice === "1") {
         await sepoliaToHoleskyMenu();
     } else if (choice === "2") {
         await holeskyToSepoliaMenu();
     } else if (choice === "3") {
+        await seiToCornMenu();
+    } else if (choice === "4") {
         await checkVersion();
         mainMenu();
-    } else if (choice === "4") {
+    } else if (choice === "5") {
         console.log("\n👋 Goodbye!");
         rl.close();
         process.exit(0);
@@ -345,6 +362,25 @@ async function holeskyToSepoliaMenu() {
         default:
             console.log("\n❌ Invalid choice. Please try again.");
             setTimeout(holeskyToSepoliaMenu, 1500);
+    }
+}
+
+async function seiToCornMenu() {
+    console.clear();
+    console.log("\n🌉 SEI → CORN: Select Token");
+    console.log("1️⃣  SEI");
+    console.log("2️⃣  Back\n");
+    const token = await getUserInput("👉 Enter your choice (1-2): ");
+    switch (token) {
+        case "1":
+            await runScript('SeiToCornSEITransfer.js');
+            break;
+        case "2":
+            mainMenu();
+            break;
+        default:
+            console.log("\n❌ Invalid choice. Please try again.");
+            setTimeout(seiToCornMenu, 1500);
     }
 }
 

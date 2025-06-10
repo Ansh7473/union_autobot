@@ -1,11 +1,3 @@
-/**
- * Sepolia to Holesky Cross-Chain LINK Transfer Script
- * Handles LINK token transfers from Sepolia to Holesky using Union protocol
- * Matches ABI: send(uint32 channelId, uint64 timeoutHeight, uint64 timeoutTimestamp, bytes32 salt, (uint8 version, uint8 opcode, bytes operand) instruction) payable
- * Includes LINK token approval before transfer
- */
-
-// ============= External Dependencies =============
 const { ethers } = require("ethers");
 const fs = require('fs');
 const path = require('path');
@@ -24,7 +16,7 @@ const rl = readline.createInterface({
 function displayBanner() {
     console.clear();
     console.log("\n🌉 ==================================== 🌉");
-    console.log("       Sepolia to Holesky LINK Cross-Chain Transfer Bot");
+    console.log("       Sepolia to Holesky ETH Cross-Chain Transfer Bot");
     console.log("🌉 ==================================== 🌉\n");
 }
 
@@ -45,19 +37,19 @@ async function getUserInput(prompt) {
 
 async function getTransferParams() {
     console.log("\n📝 Transfer Configuration:");
-    const amount = await getUserInput("💰 Enter LINK amount (default: 0.000001): ");
+    const amount = await getUserInput("💰 Enter ETH amount (default: 0.000001): ");
     const delay = await getUserInput("⏰ Enter delay between transactions in seconds (default: 0): ");
     const count = await getUserInput("🔄 Enter number of transactions (default: 1): ");
     
     const params = {
-        amount: amount || "0.000001", // Default to 0.000001 LINK
+        amount: amount || "0.000001", // Default to 0.000001 ETH
         delay: (delay ? parseInt(delay) : 0) * 1000, // Convert to milliseconds
         count: count ? parseInt(count) : 1
     };
 
     // Validate inputs
     if (isNaN(params.amount) || params.amount <= 0) {
-        throw new Error("Invalid LINK amount. Must be a positive number.");
+        throw new Error("Invalid ETH amount. Must be a positive number.");
     }
     if (isNaN(params.delay) || params.delay < 0) {
         throw new Error("Invalid delay. Must be a non-negative number.");
@@ -73,7 +65,7 @@ async function getTransferParams() {
 async function executeTransfers(params) {
     console.log("\n🚀 Starting transfer(s)...");
     console.log("📊 Configuration:");
-    console.log(`   Amount per transfer: ${params.amount} LINK`);
+    console.log(`   Amount per transfer: ${params.amount} ETH`);
     console.log(`   Number of transfers: ${params.count}`);
     console.log(`   Delay between transfers: ${params.delay / 1000}s\n`);
 
@@ -131,38 +123,9 @@ async function mainMenu() {
 
 // ============= Network Configuration =============
 const RPC_URL = "https://sepolia.drpc.org"; // Public Sepolia RPC
-const UNION_CONTRACT_ADDRESS = "0x5FbE74A283f7954f10AA04C2eDf55578811aeb03"; // Union protocol contract
-const LINK_CONTRACT_ADDRESS = "0x779877A7B0D9E8603169DdbD7836e478b4624789"; // LINK token contract
+const CONTRACT_ADDRESS = "0x5FbE74A283f7954f10AA04C2eDf55578811aeb03"; // Native currency transfer
 const CHAIN_ID = 11155111; // Sepolia Chain ID
 const NATIVE_CURRENCY = "ETH";
-
-// LINK token ABI (subset for approval and balance)
-const LINK_ABI = [
-    {
-        "inputs": [
-            {"internalType": "address", "name": "spender", "type": "address"},
-            {"internalType": "uint256", "name": "amount", "type": "uint256"}
-        ],
-        "name": "approve",
-        "outputs": [{"internalType": "bool", "name": "", "type": "bool"}],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{"internalType": "address", "name": "account", "type": "address"}],
-        "name": "balanceOf",
-        "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "decimals",
-        "outputs": [{"internalType": "uint8", "name": "", "type": "uint8"}],
-        "stateMutability": "view",
-        "type": "function"
-    }
-];
 
 // ============= Utilities =============
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
@@ -183,12 +146,9 @@ if (!PRIVATE_KEY || !ethers.isHexString(PRIVATE_KEY, 32)) {
 const provider = new ethers.JsonRpcProvider(RPC_URL);
 const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
 
-// Initialize LINK contract
-const linkContract = new ethers.Contract(LINK_CONTRACT_ADDRESS, LINK_ABI, wallet);
-
 // ============= Core Transaction Data =============
-// Exact payload for Sepolia to Holesky LINK transfer
-const PAYLOAD = "0xff0d7c2f000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001847f61dbf7f4300eb0b6bffdbb39af3e98daf5a47f37b9d5663cb53ae905b4ec027578edb427f6800000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000003a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000002c00000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000018000000000000000000000000000000000000000000000000000000000000001c00000000000000000000000000000000000000000000000000de0b6b3a7640000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000002400000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002800000000000000000000000000000000000000000000000000de0b6b3a7640000000000000000000000000000000000000000000000000000000000000000001478ff133dd6be81621062971a7b0f142e9f532d51000000000000000000000000000000000000000000000000000000000000000000000000000000000000001478ff133DD6Be81621062971a7B0f142E9F532d510000000000000000000000000000000000000000000000000000000000000000000000000000000000000014779877a7b0d9e8603169ddbd7836e478b462478900000000000000000000000000000000000000000000000000000000000000000000000000000000000000044c494e4b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f436861696e4c696e6b20546f6b656e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000149eEB76a58A096D7EE093B90c4559348512648771000000000000000000000000";
+// Exact payload for Sepolia to Holesky transfer (2442 chars, 884 bytes)
+const PAYLOAD = "0xff0d7c2f000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001847f3cb25740c40c02cf239846b2fd2932318e59fe14d5a888613a2ec4633d5f248aa2e73457de200000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000003a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000002c00000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000018000000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000005af3107a40000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000024000000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000028000000000000000000000000000000000000000000000000000005af3107a4000000000000000000000000000000000000000000000000000000000000000001478ff133dd6be81621062971a7b0f142e9f532d51000000000000000000000000000000000000000000000000000000000000000000000000000000000000001478ff133DD6Be81621062971a7B0f142E9F532d510000000000000000000000000000000000000000000000000000000000000000000000000000000000000014eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee0000000000000000000000000000000000000000000000000000000000000000000000000000000000000003455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000054574686572000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001492b3BC0BC3AC0EE60B04a0BBc4A09Deb3914c886000000000000000000000000";
 
 // ============= Cryptographic Functions =============
 /**
@@ -214,11 +174,11 @@ function generateUnionTimeoutTimestampHex() {
 
 // ============= Payload Manipulation Functions =============
 /**
- * Convert LINK amount to correct hex format for payload
+ * Convert ETH amount to correct hex format for payload and tx value
  */
-function formatLinkValue(linkAmount) {
-    // Convert LINK to wei (LINK has 18 decimals) and then to hex without 0x prefix
-    const weiValue = ethers.parseUnits(linkAmount.toString(), 18);
+function formatEthValue(ethAmount) {
+    // Convert ETH to wei and then to hex without 0x prefix
+    const weiValue = ethers.parseEther(ethAmount.toString());
     return weiValue.toString(16);
 }
 
@@ -298,72 +258,15 @@ async function pollPacketHash(txHash, retries = 50, intervalMs = 5000) {
     return null;
 }
 
-/**
- * Approve LINK tokens for Union contract
- * @param {string} linkAmount - Amount of LINK to approve
- * @returns {Promise<boolean>} - True if approval succeeded
- */
-async function approveLink(linkAmount) {
-    try {
-        console.log("\n🔐 Approving LINK tokens for Union contract...");
-        const linkAmountWei = ethers.parseUnits(linkAmount.toString(), 18);
-        
-        // Check current balance
-        const balance = await linkContract.balanceOf(wallet.address);
-        if (balance < linkAmountWei) {
-            throw new Error(`Insufficient LINK balance. Have: ${ethers.formatUnits(balance, 18)} LINK, Need: ${linkAmount} LINK`);
-        }
-
-        const nonce = await provider.getTransactionCount(wallet.address, "pending");
-        const feeData = await provider.getFeeData();
-
-        // Ensure maxPriorityFeePerGas <= maxFeePerGas
-        let maxFeePerGas = feeData.maxFeePerGas || ethers.parseUnits("20", "gwei");
-        let maxPriorityFeePerGas = feeData.maxPriorityFeePerGas || ethers.parseUnits("1", "gwei");
-        if (maxPriorityFeePerGas > maxFeePerGas) {
-            maxPriorityFeePerGas = maxFeePerGas;
-        }
-
-        const tx = await linkContract.approve(UNION_CONTRACT_ADDRESS, linkAmountWei, {
-            gasLimit: 100000,
-            maxFeePerGas: maxFeePerGas,
-            maxPriorityFeePerGas: maxPriorityFeePerGas,
-            nonce: nonce
-        });
-
-        console.log(`📜 Approval transaction hash: ${tx.hash}`);
-        console.log(`🔍 View on Sepolia Testnet: https://sepolia.etherscan.io/tx/${tx.hash}`);
-
-        const receipt = await tx.wait();
-        console.log("📌 Approval Status:", receipt.status === 1 ? "✅ Success" : "❌ Failed");
-
-        return receipt.status === 1;
-    } catch (err) {
-        console.error("\n❌ Approval Error ❌");
-        console.error("Type:", err.name);
-        console.error("Message:", err.message);
-        if (err.data) {
-            console.error("Data:", err.data);
-        }
-        return false;
-    }
-}
-
 // ============= Core Transaction Function =============
 /**
- * Main function to execute cross-chain LINK transfer transaction
- * @param {string} linkAmount - Amount of LINK to transfer
+ * Main function to execute cross-chain ETH transfer transaction
+ * @param {string} ethAmount - Amount of ETH to transfer
  */
-async function sendRawPayloadTx(linkAmount) {
+async function sendRawPayloadTx(ethAmount) {
     try {
-        // Approve LINK tokens for Union contract
-        const approvalSuccess = await approveLink(linkAmount);
-        if (!approvalSuccess) {
-            throw new Error("LINK approval failed. Cannot proceed with transfer.");
-        }
-
-        // Format the LINK value for payload
-        const linkValueHex = formatLinkValue(linkAmount);
+        // Format the ETH value for both payload and transaction
+        const ethValueHex = formatEthValue(ethAmount);
         
         const nonce = await provider.getTransactionCount(wallet.address, "pending");
         const feeData = await provider.getFeeData();
@@ -376,12 +279,12 @@ async function sendRawPayloadTx(linkAmount) {
         }
 
         // First replace timestamp (full 32 bytes)
-        const oldTimestamp = "0000000000000000000000000000000000000000000000001847f61dbf7f4300";
+        const oldTimestamp = "0000000000000000000000000000000000000000000000001847f3cb25740c40";
         const newTimestamp = generateUnionTimeoutTimestampHex(); // 64 chars
         let modifiedPayload = replace32ByteField(PAYLOAD, oldTimestamp, newTimestamp);
 
         // Then replace salt with new random value
-        const oldSalt = "eb0b6bffdbb39af3e98daf5a47f37b9d5663cb53ae905b4ec027578edb427f68";
+        const oldSalt = "c02cf239846b2fd2932318e59fe14d5a888613a2ec4633d5f248aa2e73457de2";
         const newSalt = generateSalt().slice(2); // 64 chars
         modifiedPayload = replace32ByteField(modifiedPayload, oldSalt, newSalt);
 
@@ -391,9 +294,9 @@ async function sendRawPayloadTx(linkAmount) {
         modifiedPayload = replace32ByteField(modifiedPayload, oldSenderWallet, newSenderWallet);
         modifiedPayload = replace32ByteField(modifiedPayload, oldSenderWallet, newSenderWallet);
 
-        // Replace LINK value in payload (replace both instances)
-        const oldValueInPayload = "0000000000000000000000000000000000000000000000000de0b6b3a7640000";
-        const newValueInPayload = to32ByteHex(linkValueHex); // 64 chars
+        // Replace ETH value in payload (replace both instances)
+        const oldValueInPayload = "00000000000000000000000000000000000000000000000000005af3107a4000";
+        const newValueInPayload = to32ByteHex(ethValueHex); // 64 chars
         modifiedPayload = replace32ByteField(modifiedPayload, oldValueInPayload, newValueInPayload);
         modifiedPayload = replace32ByteField(modifiedPayload, oldValueInPayload, newValueInPayload);
 
@@ -403,9 +306,9 @@ async function sendRawPayloadTx(linkAmount) {
         }
 
         const tx = {
-            to: UNION_CONTRACT_ADDRESS,
+            to: CONTRACT_ADDRESS,
             data: '0x' + modifiedPayload,
-            value: 0, // No ETH transfer for LINK
+            value: "0x" + ethValueHex, // ETH transfer value
             gasLimit: 300000,
             maxFeePerGas: maxFeePerGas,
             maxPriorityFeePerGas: maxPriorityFeePerGas,
@@ -413,8 +316,8 @@ async function sendRawPayloadTx(linkAmount) {
             chainId: CHAIN_ID,
         };
 
-        console.log("\n📤 Sending LINK transfer transaction...");
-        console.log(`💰 LINK amount (wei): ${ethers.parseUnits(linkAmount, 18)}`);
+        console.log("\n📤 Sending transaction...");
+        console.log(`💰 ETH value (wei): ${ethers.parseEther(ethAmount)}`);
         console.log(`⛽ Gas fees (ETH): maxFeePerGas=${maxFeePerGas}, maxPriorityFeePerGas=${maxPriorityFeePerGas}`);
         console.log(`🔐 Sender: ${wallet.address}`);
         console.log(`🧂 Salt: 0x${newSalt}`);
