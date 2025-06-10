@@ -17,6 +17,7 @@ A unified, professional Node.js CLI tool for transfer scripts (ETH, LINK, EURC) 
 
 - **Sepolia to Holesky ETH USDC, LINK, EURC** transfers
 -  **Holesky to Sepolia ETH USDC, LINK, EURC** transfers
+-  SEI TO CORN
 - **ADDING MORE CHAIN SOON
 - CODE IS OBFUSTRICATED SO NO ONE CAN COMPLAIN AND MAKE OUR TESTENT EFFORTS WASTE 
 
