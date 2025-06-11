@@ -1,1 +1,2 @@
-remove0xprviate key cosmos 
+remove0xprviate key cosmos   ##used for sei to xion and xion to other chains 
+ 
