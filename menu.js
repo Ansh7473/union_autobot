@@ -27,11 +27,12 @@ function displayMainMenu(isUpdateAvailable, latestVersion) {
     console.log("1️⃣  Sepolia → Holesky");
     console.log("2️⃣  Holesky → Sepolia");
     console.log("3️⃣  SEI → CORN");
-    console.log("4️⃣  Check for Updates");
-    console.log("5️⃣  Exit");
+    console.log("4️⃣  Xion → Babylon");
+    console.log("5️⃣  Check for Updates");
+    console.log("6️⃣  Exit");
     // Display update notification
     if (isUpdateAvailable && latestVersion) {
-        console.log(`\n⚠️ New Update Available: v${latestVersion.version} (Select 4 to update)`);
+        console.log(`\n⚠️ New Update Available: v${latestVersion.version} (Select 5 to update)`);
     }
     console.log();
 }
@@ -75,11 +76,40 @@ async function runScript(scriptName) {
     }
 }
 
+async function runScriptWithArg(scriptName, arg) {
+    const scriptPath = path.join(__dirname, scriptName);
+    try {
+        await fs.access(scriptPath);
+        const child = spawn('node', [scriptPath, arg], { stdio: ['inherit', 'inherit', 'inherit'] });
+        return new Promise((resolve) => {
+            child.on('error', (error) => {
+                console.log(`❌ Error running ${scriptName}: ${error.message}`);
+                console.log('Press Enter to return to the menu...');
+                getUserInput('').then(() => resolve());
+            });
+            child.on('exit', (code) => {
+                if (code !== 0) {
+                    console.log(`⚠️ ${scriptName} exited with code ${code}`);
+                    console.log('Press Enter to return to the menu...');
+                    getUserInput('').then(() => resolve());
+                } else {
+                    resolve();
+                }
+            });
+        });
+    } catch (error) {
+        console.log(`❌ Script ${scriptName} not found or inaccessible: ${error.message}`);
+        console.log('Press Enter to return to the menu...');
+        await getUserInput('');
+        return;
+    }
+}
+
 // ============= Hierarchical Menu =============
 async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) {
     displayBanner();
     displayMainMenu(isUpdateAvailable, latestVersion);
-    const choice = await getUserInput("👉 Enter your choice (1-5): ");
+    const choice = await getUserInput("👉 Enter your choice (1-6): ");
 
     if (choice === "1") {
         await sepoliaToHoleskyMenu();
@@ -91,11 +121,14 @@ async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) 
         await seiToCornMenu();
         await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
     } else if (choice === "4") {
+        await xionToBabylonMenu();
+        await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
+    } else if (choice === "5") {
         const continueRunning = await checkVersionCallback();
         if (continueRunning) {
             await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
         }
-    } else if (choice === "5") {
+    } else if (choice === "6") {
         console.log("\n👋 Goodbye!");
         rl.close();
         process.exit(0);
@@ -116,7 +149,7 @@ async function sepoliaToHoleskyMenu() {
     const token = await getUserInput("👉 Enter your choice (1-5): ");
     switch (token) {
         case "1":
-            await runScript('SepoliaToHoleskyEth.js');
+            await runScript('SepoliaToHoleskyEthTransfer.js');
             break;
         case "2":
             await runScript('SepoliaToHoleskyLinkTransfer.js');
@@ -180,6 +213,28 @@ async function seiToCornMenu() {
         default:
             console.log("\n❌ Invalid choice. Please try again.");
             setTimeout(seiToCornMenu, 1500);
+    }
+}
+
+async function xionToBabylonMenu() {
+    console.clear();
+    console.log("\n🌉 Xion → Babylon: Select Token");
+    console.log("1️⃣  USDC");
+    console.log("2️⃣  XION");
+    console.log("3️⃣  Back\n");
+    const token = await getUserInput("👉 Enter your choice (1-3): ");
+    switch (token) {
+        case "1":
+            await runScriptWithArg('Xion_To_Babylon_XION_USDC.js', 'USDC');
+            break;
+        case "2":
+            await runScriptWithArg('Xion_To_Babylon_XION_USDC.js', 'XION');
+            break;
+        case "3":
+            break;
+        default:
+            console.log("\n❌ Invalid choice. Please try again.");
+            setTimeout(xionToBabylonMenu, 1500);
     }
 }
 
