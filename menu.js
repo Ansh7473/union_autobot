@@ -3,16 +3,10 @@
  * Handles CLI menu navigation and script execution
  */
 
-const readline = require('readline');
+const inquirer = require('inquirer');
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs').promises;
-
-// Create readline interface
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
 
 // ============= Menu Interface =============
 function displayBanner() {
@@ -23,14 +17,7 @@ function displayBanner() {
 }
 
 async function displayMainMenu(isUpdateAvailable, latestVersion) {
-    console.log("🔹 Select Chain and Token:");
-    console.log("1️⃣  Sepolia → Holesky");
-    console.log("2️⃣  Holesky → Sepolia");
-    console.log("3️⃣  SEI Transfers");
-    console.log("4️⃣  XION ↔ BABYLON");
-    console.log("5️⃣  Check for Updates");
-    console.log("6️⃣  Exit\n");
-
+    // These indexes are still needed for the version check logic
     const updateIndex = 5;
     const exitIndex = 6;
 
@@ -45,11 +32,12 @@ async function displayMainMenu(isUpdateAvailable, latestVersion) {
 }
 
 async function getUserInput(prompt) {
-    return new Promise((resolve) => {
-        rl.question(prompt, (answer) => {
-            resolve(answer.trim());
-        });
-    });
+    const { answer } = await inquirer.prompt([{
+        type: 'input',
+        name: 'answer',
+        message: prompt
+    }]);
+    return answer.trim();
 }
 
 async function runScript(scriptName) {
@@ -67,14 +55,18 @@ async function runScript(scriptName) {
                 getUserInput('').then(() => resolve());
             });
 
-            child.on('exit', (code) => {
+            child.on('exit', async (code) => {
                 if (code !== 0) {
                     console.log(`⚠️ ${scriptName} exited with code ${code}`);
                 } else {
                     console.log(`✅ ${scriptName} completed successfully`);
                 }
-                console.log('Press Enter to return to the menu...');
-                getUserInput('').then(() => resolve());
+                await inquirer.prompt([{
+                    type: 'input',
+                    name: 'continue',
+                    message: 'Press Enter to return to the menu...'
+                }]);
+                resolve();
             });
         });
     } catch (error) {
@@ -90,19 +82,25 @@ async function runScriptWithArg(scriptName, arg) {
         await fs.access(scriptPath);
         const child = spawn('node', [scriptPath, arg], { stdio: ['inherit', 'inherit', 'inherit'] });
         return new Promise((resolve) => {
-            child.on('error', (error) => {
+            child.on('error', async (error) => {
                 console.log(`❌ Error running ${scriptName}: ${error.message}`);
-                console.log('Press Enter to return to the menu...');
-                getUserInput('').then(() => resolve());
+                await inquirer.prompt([{
+                    type: 'input',
+                    name: 'continue',
+                    message: 'Press Enter to return to the menu...'
+                }]);
+                resolve();
             });
-            child.on('exit', (code) => {
+            child.on('exit', async (code) => {
                 if (code !== 0) {
                     console.log(`⚠️ ${scriptName} exited with code ${code}`);
-                    console.log('Press Enter to return to the menu...');
-                    getUserInput('').then(() => resolve());
-                } else {
-                    resolve();
+                    await inquirer.prompt([{
+                        type: 'input',
+                        name: 'continue',
+                        message: 'Press Enter to return to the menu...'
+                    }]);
                 }
+                resolve();
             });
         });
     } catch (error) {
@@ -120,8 +118,20 @@ async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) 
     while (true) {
         displayBanner();
         const { updateIndex, exitIndex } = await displayMainMenu(isUpdateAvailable, latestVersion);
-        const choice = await getUserInput('Enter your choice: ');
-        const numChoice = parseInt(choice);
+        const { choice } = await inquirer.prompt([{
+            type: 'list',
+            name: 'choice',
+            message: 'Select an option:',
+            choices: [
+                { name: 'Sepolia → Holesky', value: 1 },
+                { name: 'Holesky → Sepolia', value: 2 },
+                { name: 'SEI Transfers', value: 3 },
+                { name: 'XION ↔ BABYLON', value: 4 },
+                { name: 'Check for Updates', value: 5 },
+                { name: 'Exit', value: 6 }
+            ]
+        }]);
+        const numChoice = choice;
 
         if (numChoice === exitIndex) {
             console.log('👋 Thanks for using UNION Cross-Chain Automation!');
@@ -152,13 +162,18 @@ async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) 
 
 async function sepoliaToHoleskyMenu() {
     console.clear();
-    console.log("\n🌉 Sepolia → Holesky: Select Token");
-    console.log("1️⃣  ETH");
-    console.log("2️⃣  LINK");
-    console.log("3️⃣  EURC");
-    console.log("4️⃣  USDC");
-    console.log("5️⃣  Back\n");
-    const token = await getUserInput("👉 Enter your choice (1-5): ");
+    const { token } = await inquirer.prompt([{
+        type: 'list',
+        name: 'token',
+        message: '🌉 Sepolia → Holesky: Select Token',
+        choices: [
+            { name: 'ETH', value: '1' },
+            { name: 'LINK', value: '2' },
+            { name: 'EURC', value: '3' },
+            { name: 'USDC', value: '4' },
+            { name: 'Back', value: '5' }
+        ]
+    }]);
     switch (token) {
         case "1":
             await runScript('SepoliaToHoleskyEthTransfer.js');
@@ -173,22 +188,31 @@ async function sepoliaToHoleskyMenu() {
             await runScript('SepoliaToHoleskyUsdcTransfer.js');
             break;
         case "5":
-            break;
-        default:
-            console.log("\n❌ Invalid choice. Please try again.");
-            setTimeout(sepoliaToHoleskyMenu, 1500);
+            break;            default:
+                console.log("\n❌ Invalid choice.");
+                await inquirer.prompt([{
+                    type: 'input',
+                    name: 'continue',
+                    message: 'Press Enter to continue...'
+                }]);
+                await sepoliaToHoleskyMenu();
     }
 }
 
 async function holeskyToSepoliaMenu() {
     console.clear();
-    console.log("\n🌉 Holesky → Sepolia: Select Token");
-    console.log("1️⃣  ETH");
-    console.log("2️⃣  LINK");
-    console.log("3️⃣  EURC");
-    console.log("4️⃣  USDC");
-    console.log("5️⃣  Back\n");
-    const token = await getUserInput("👉 Enter your choice (1-5): ");
+    const { token } = await inquirer.prompt([{
+        type: 'list',
+        name: 'token',
+        message: '🌉 Holesky → Sepolia: Select Token',
+        choices: [
+            { name: 'ETH', value: '1' },
+            { name: 'LINK', value: '2' },
+            { name: 'EURC', value: '3' },
+            { name: 'USDC', value: '4' },
+            { name: 'Back', value: '5' }
+        ]
+    }]);
     switch (token) {
         case "1":
             await runScript('HoleskyToSepoliaETH.js');
@@ -212,11 +236,16 @@ async function holeskyToSepoliaMenu() {
 
 async function seiToCornMenu() {
     console.clear();
-    console.log("\n🌉 SEI Transfers: Select Destination");
-    console.log("1️⃣  SEI → CORN");
-    console.log("2️⃣  SEI → XION");
-    console.log("3️⃣  Back\n");
-    const choice = await getUserInput("👉 Enter your choice (1-3): ");
+    const { choice } = await inquirer.prompt([{
+        type: 'list',
+        name: 'choice',
+        message: '🌉 SEI Transfers: Select Destination',
+        choices: [
+            { name: 'SEI → CORN', value: '1' },
+            { name: 'SEI → XION', value: '2' },
+            { name: 'Back', value: '3' }
+        ]
+    }]);
     
     switch (choice) {
         case "1":
@@ -226,19 +255,28 @@ async function seiToCornMenu() {
             await seiToXionTokenMenu();
             break;
         case "3":
-            break;
-        default:
-            console.log("\n❌ Invalid choice. Please try again.");
-            setTimeout(seiToCornMenu, 1500);
+            break;            default:
+                console.log("\n❌ Invalid choice.");
+                await inquirer.prompt([{
+                    type: 'input',
+                    name: 'continue',
+                    message: 'Press Enter to continue...'
+                }]);
+                await seiToCornMenu();
     }
 }
 
 async function seiToCornTokenMenu() {
     console.clear();
-    console.log("\n🌉 SEI → CORN: Select Token");
-    console.log("1️⃣  SEI");
-    console.log("2️⃣  Back\n");
-    const token = await getUserInput("👉 Enter your choice (1-2): ");
+    const { token } = await inquirer.prompt([{
+        type: 'list',
+        name: 'token',
+        message: '🌉 SEI → CORN: Select Token',
+        choices: [
+            { name: 'SEI', value: '1' },
+            { name: 'Back', value: '2' }
+        ]
+    }]);
     switch (token) {
         case "1":
             await runScript('SeiToCornSEITransfer.js');
@@ -253,10 +291,15 @@ async function seiToCornTokenMenu() {
 
 async function seiToXionTokenMenu() {
     console.clear();
-    console.log("\n🌉 SEI → XION: Select Token");
-    console.log("1️⃣  SEI");
-    console.log("2️⃣  Back\n");
-    const token = await getUserInput("👉 Enter your choice (1-2): ");
+    const { token } = await inquirer.prompt([{
+        type: 'list',
+        name: 'token',
+        message: '🌉 SEI → XION: Select Token',
+        choices: [
+            { name: 'SEI', value: '1' },
+            { name: 'Back', value: '2' }
+        ]
+    }]);
     switch (token) {
         case "1":
             await runScript('SeiToXionSEITransfer.js');
@@ -271,35 +314,47 @@ async function seiToXionTokenMenu() {
 
 async function xionToBabylonMenu() {
     console.clear();
-    console.log("\n🌉 Xion → Babylon: Select Token");
-    console.log("1️⃣  USDC");
-    console.log("2️⃣  XION");
-    console.log("3️⃣  Back\n");
-    const token = await getUserInput("👉 Enter your choice (1-3): ");
+    const { token } = await inquirer.prompt([{
+        type: 'list',
+        name: 'token',
+        message: '🌉 Xion → Babylon: Select Token',
+        choices: [
+            { name: 'USDC', value: '1' },
+            { name: 'XION', value: '2' },
+            { name: 'Back', value: '3' }
+        ]
+    }]);
     switch (token) {
         case "1":
             await runScriptWithArg('Xion_To_Babylon_XION_USDC.js', 'USDC');
             break;
         case "2":
             await runScriptWithArg('Xion_To_Babylon_XION_USDC.js', 'XION');
-            break;
-        case "3":
-            break;
-        default:
-            console.log("\n❌ Invalid choice. Please try again.");
-            setTimeout(xionToBabylonMenu, 1500);
+            break;            case "3":
+                break;
+            default:
+                console.log("\n❌ Invalid choice.");
+                await inquirer.prompt([{
+                    type: 'input',
+                    name: 'continue',
+                    message: 'Press Enter to continue...'
+                }]);
+                await xionToBabylonMenu();
     }
 }
 
 async function handleTokenMenu(tokenType) {
     while (true) {
-        console.log(`\n🔹 ${tokenType} Transfer Options:`);
-        console.log("1️⃣  Sepolia → Holesky");
-        console.log("2️⃣  Holesky → Sepolia");
-        console.log("3️⃣  Back to Main Menu");
-        console.log();
-
-        const choice = await getUserInput("👉 Enter your choice (1-3): ");
+        const { choice } = await inquirer.prompt([{
+            type: 'list',
+            name: 'choice',
+            message: `🔹 ${tokenType} Transfer Options:`,
+            choices: [
+                { name: 'Sepolia → Holesky', value: '1' },
+                { name: 'Holesky → Sepolia', value: '2' },
+                { name: 'Back to Main Menu', value: '3' }
+            ]
+        }]);
 
         switch(choice) {
             case "1":
@@ -313,11 +368,21 @@ async function handleTokenMenu(tokenType) {
             case "3":
                 return;
             default:
-                console.log("❌ Invalid choice. Please try again.");
-                await new Promise(resolve => setTimeout(resolve, 1500));
+                console.log("❌ Invalid choice.");
+                await inquirer.prompt([{
+                    type: 'input',
+                    name: 'continue',
+                    message: 'Press Enter to continue...'
+                }]);
         }
     }
 }
+
+// Clean up readline interface when process exits
+process.on('SIGINT', () => {
+    console.log('\n👋 Thanks for using UNION Cross-Chain Automation!');
+    process.exit(0);
+});
 
 module.exports = {
     mainMenu,
