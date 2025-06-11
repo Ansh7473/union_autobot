@@ -26,7 +26,7 @@ async function displayMainMenu(isUpdateAvailable, latestVersion) {
     console.log("🔹 Select Chain and Token:");
     console.log("1️⃣  Sepolia → Holesky");
     console.log("2️⃣  Holesky → Sepolia");
-    console.log("3️⃣  SEI ↔ CORN");
+    console.log("3️⃣  SEI Transfers");
     console.log("4️⃣  XION ↔ BABYLON");
     console.log("5️⃣  Check for Updates");
     console.log("6️⃣  Exit\n");
@@ -212,6 +212,29 @@ async function holeskyToSepoliaMenu() {
 
 async function seiToCornMenu() {
     console.clear();
+    console.log("\n🌉 SEI Transfers: Select Destination");
+    console.log("1️⃣  SEI → CORN");
+    console.log("2️⃣  SEI → XION");
+    console.log("3️⃣  Back\n");
+    const choice = await getUserInput("👉 Enter your choice (1-3): ");
+    
+    switch (choice) {
+        case "1":
+            await seiToCornTokenMenu();
+            break;
+        case "2":
+            await seiToXionTokenMenu();
+            break;
+        case "3":
+            break;
+        default:
+            console.log("\n❌ Invalid choice. Please try again.");
+            setTimeout(seiToCornMenu, 1500);
+    }
+}
+
+async function seiToCornTokenMenu() {
+    console.clear();
     console.log("\n🌉 SEI → CORN: Select Token");
     console.log("1️⃣  SEI");
     console.log("2️⃣  Back\n");
@@ -224,7 +247,25 @@ async function seiToCornMenu() {
             break;
         default:
             console.log("\n❌ Invalid choice. Please try again.");
-            setTimeout(seiToCornMenu, 1500);
+            setTimeout(seiToCornTokenMenu, 1500);
+    }
+}
+
+async function seiToXionTokenMenu() {
+    console.clear();
+    console.log("\n🌉 SEI → XION: Select Token");
+    console.log("1️⃣  SEI");
+    console.log("2️⃣  Back\n");
+    const token = await getUserInput("👉 Enter your choice (1-2): ");
+    switch (token) {
+        case "1":
+            await runScript('SeiToXionSEITransfer.js');
+            break;
+        case "2":
+            break;
+        default:
+            console.log("\n❌ Invalid choice. Please try again.");
+            setTimeout(seiToXionTokenMenu, 1500);
     }
 }
 
