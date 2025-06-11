@@ -15,7 +15,11 @@ const CURRENT_VERSION = '1.0.0';
 const REPO_OWNER = 'Ansh7473';
 const REPO_NAME = 'UNION-AUTO_BOT';
 const VERSION_FILE = 'versions.json';
-const EXCLUDED_FILES = ['private_keys.txt'];
+const EXCLUDED_FILES = [
+    'private_keys.txt',
+    'xion.txt',
+    'BABYLON_ADDRESS.txt'
+];
 
 // Global variables for update notification
 let latestVersion = null;
