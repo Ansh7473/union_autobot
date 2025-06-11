@@ -1,2 +1,2 @@
-remove0xprviate key cosmos   ##used for sei to xion and xion to other chains 
+remove0xprviate##used for sei to xion and xion to other chains prviate key per line only remove rest all 
  
