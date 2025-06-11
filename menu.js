@@ -22,19 +22,26 @@ function displayBanner() {
     console.log("🌉 ========================================== 🌉\n");
 }
 
-function displayMainMenu(isUpdateAvailable, latestVersion) {
-    console.log("🔹 Select an Option:");
+async function displayMainMenu(isUpdateAvailable, latestVersion) {
+    console.log("🔹 Select Chain and Token:");
     console.log("1️⃣  Sepolia → Holesky");
     console.log("2️⃣  Holesky → Sepolia");
-    console.log("3️⃣  SEI → CORN");
-    console.log("4️⃣  Xion → Babylon");
+    console.log("3️⃣  SEI ↔ CORN");
+    console.log("4️⃣  XION ↔ BABYLON");
     console.log("5️⃣  Check for Updates");
-    console.log("6️⃣  Exit");
-    // Display update notification
+    console.log("6️⃣  Exit\n");
+
+    const updateIndex = 5;
+    const exitIndex = 6;
+
+    // Display update notification if available
     if (isUpdateAvailable && latestVersion) {
-        console.log(`\n⚠️ New Update Available: v${latestVersion.version} (Select 5 to update)`);
+        console.log(`\n⚠️ New Update Available: v${latestVersion.version}`);
+        console.log(`Select ${updateIndex} to update and get new features!`);
     }
     console.log();
+
+    return { updateIndex, exitIndex };
 }
 
 async function getUserInput(prompt) {
@@ -49,6 +56,8 @@ async function runScript(scriptName) {
     const scriptPath = path.join(__dirname, scriptName);
     try {
         await fs.access(scriptPath);
+        console.log(`🚀 Running ${scriptName}...`);
+        
         const child = spawn('node', [scriptPath], { stdio: ['inherit', 'inherit', 'inherit'] });
 
         return new Promise((resolve) => {
@@ -61,18 +70,17 @@ async function runScript(scriptName) {
             child.on('exit', (code) => {
                 if (code !== 0) {
                     console.log(`⚠️ ${scriptName} exited with code ${code}`);
-                    console.log('Press Enter to return to the menu...');
-                    getUserInput('').then(() => resolve());
                 } else {
-                    resolve();
+                    console.log(`✅ ${scriptName} completed successfully`);
                 }
+                console.log('Press Enter to return to the menu...');
+                getUserInput('').then(() => resolve());
             });
         });
     } catch (error) {
         console.log(`❌ Script ${scriptName} not found or inaccessible: ${error.message}`);
         console.log('Press Enter to return to the menu...');
         await getUserInput('');
-        return;
     }
 }
 
@@ -105,36 +113,40 @@ async function runScriptWithArg(scriptName, arg) {
     }
 }
 
+
+
 // ============= Hierarchical Menu =============
 async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) {
-    displayBanner();
-    displayMainMenu(isUpdateAvailable, latestVersion);
-    const choice = await getUserInput("👉 Enter your choice (1-6): ");
+    while (true) {
+        displayBanner();
+        const { updateIndex, exitIndex } = await displayMainMenu(isUpdateAvailable, latestVersion);
+        const choice = await getUserInput('Enter your choice: ');
+        const numChoice = parseInt(choice);
 
-    if (choice === "1") {
-        await sepoliaToHoleskyMenu();
-        await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
-    } else if (choice === "2") {
-        await holeskyToSepoliaMenu();
-        await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
-    } else if (choice === "3") {
-        await seiToCornMenu();
-        await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
-    } else if (choice === "4") {
-        await xionToBabylonMenu();
-        await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
-    } else if (choice === "5") {
-        const continueRunning = await checkVersionCallback();
-        if (continueRunning) {
-            await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
+        if (numChoice === exitIndex) {
+            console.log('👋 Thanks for using UNION Cross-Chain Automation!');
+            process.exit(0);
+        } else if (numChoice === updateIndex) {
+            await checkVersionCallback(true);
+        } else {
+            switch(numChoice) {
+                case 1:
+                    await sepoliaToHoleskyMenu();
+                    break;
+                case 2:
+                    await holeskyToSepoliaMenu();
+                    break;
+                case 3:
+                    await seiToCornMenu();
+                    break;
+                case 4:
+                    await xionToBabylonMenu();
+                    break;
+                default:
+                    console.log('❌ Invalid choice. Please try again.');
+                    await getUserInput('Press Enter to continue...');
+            }
         }
-    } else if (choice === "6") {
-        console.log("\n👋 Goodbye!");
-        rl.close();
-        process.exit(0);
-    } else {
-        console.log("\n❌ Invalid choice. Please try again.");
-        setTimeout(() => mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion), 1500);
     }
 }
 
@@ -235,6 +247,34 @@ async function xionToBabylonMenu() {
         default:
             console.log("\n❌ Invalid choice. Please try again.");
             setTimeout(xionToBabylonMenu, 1500);
+    }
+}
+
+async function handleTokenMenu(tokenType) {
+    while (true) {
+        console.log(`\n🔹 ${tokenType} Transfer Options:`);
+        console.log("1️⃣  Sepolia → Holesky");
+        console.log("2️⃣  Holesky → Sepolia");
+        console.log("3️⃣  Back to Main Menu");
+        console.log();
+
+        const choice = await getUserInput("👉 Enter your choice (1-3): ");
+
+        switch(choice) {
+            case "1":
+                console.log(`\n🚀 Starting Sepolia to Holesky ${tokenType} transfer...`);
+                await runScript(`SepoliaToHolesky${tokenType}Transfer.js`);
+                break;
+            case "2":
+                console.log(`\n🚀 Starting Holesky to Sepolia ${tokenType} transfer...`);
+                await runScript(`HoleskyToSepolia${tokenType}.js`);
+                break;
+            case "3":
+                return;
+            default:
+                console.log("❌ Invalid choice. Please try again.");
+                await new Promise(resolve => setTimeout(resolve, 1500));
+        }
     }
 }
 
