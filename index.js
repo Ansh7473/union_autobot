@@ -140,82 +140,84 @@ function formatVersionChanges(versions) {
 }
 
 async function checkVersion(showTable = false) {
-    console.log('🔍 Checking for updates...');
     try {
         const versions = await fetchVersionsJson();
-        if (!versions || versions.length === 0) {
-            console.log('✅ Unable to check for updates. Continuing with current version.');
-            if (showTable) {
-                console.log('Press Enter to return to the main menu...');
-                await getUserInput('');
-            }
+        if (versions.length === 0) {
+            console.log('⚠️ Unable to check for updates. Continuing with current version...');
             return true;
         }
-
-        versions.sort((a, b) => {
-            const aParts = a.version.split('.').map(Number);
-            const bParts = b.version.split('.').map(Number);
-            for (let i = 0; i < 3; i++) {
-                if (aParts[i] !== bParts[i]) return bParts[i] - aParts[i];
-            }
-            return 0;
-        });
 
         latestVersion = versions[0];
         const currentVersionParts = CURRENT_VERSION.split('.').map(Number);
         const latestVersionParts = latestVersion.version.split('.').map(Number);
 
-        isUpdateAvailable = false;
+        // Compare versions
         for (let i = 0; i < 3; i++) {
-            if (currentVersionParts[i] < latestVersionParts[i]) {
+            if (latestVersionParts[i] > currentVersionParts[i]) {
                 isUpdateAvailable = true;
                 break;
-            } else if (currentVersionParts[i] > latestVersionParts[i]) {
+            } else if (latestVersionParts[i] < currentVersionParts[i]) {
                 break;
             }
         }
 
-        if (isUpdateAvailable && showTable) {
-            console.log(`⚠️ New version available: ${latestVersion.version}`);
-            formatVersionChanges(versions);
-            const answer = await getUserInput('👉 Do you want to update to the latest version? (y/n): ');
-            if (answer.toLowerCase() === 'y') {
-                await updateFiles();
-                console.log('\nℹ️ Please restart the application to use the updated version.');
-                console.log('Press Enter to return to the main menu...');
-                await getUserInput('');
-                return false;
+        if (showTable) {
+            displayVersionTable(versions);
+            if (isUpdateAvailable) {
+                const answer = await getUserInput('Would you like to update now? (y/n): ');
+                if (answer.toLowerCase() === 'y') {
+                    console.log('🔄 Updating to latest version...');
+                    await updateFiles();
+                    console.log('✅ Update complete! Please restart the application.');
+                    process.exit(0);
+                }
             } else {
-                console.log('ℹ️ Update skipped.');
-                console.log('Press Enter to return to the main menu...');
-                await getUserInput('');
-                return false;
+                console.log('✅ You are running the latest version!');
+                await getUserInput('Press Enter to continue...');
             }
-        } else if (showTable) {
-            console.log(`✅ You are running the latest version (${CURRENT_VERSION})`);
-            console.log('Press Enter to return to the main menu...');
-            await getUserInput('');
-            return true;
         }
 
         return true;
     } catch (error) {
-        console.log(`❌ Error checking version: ${error.message}`);
-        if (showTable) {
-            console.log('Press Enter to return to the main menu...');
-            await getUserInput('');
+        console.log('⚠️ Error checking version:', error.message);
+        const answer = await getUserInput('Would you like to continue anyway? (y/n): ');
+        return answer.toLowerCase() === 'y';
+    }
+}
+
+function displayVersionTable(versions) {
+    const table = new Table({
+        head: ['Version', 'Update Date', 'Changes'],
+        style: { head: ['cyan'] }
+    });
+
+    versions.forEach(v => {
+        table.push([
+            v.version,
+            v.update_date,
+            v.changes.join('\n')
+        ]);
+    });
+
+    console.log(table.toString());
+}
+
+async function startApp() {
+    console.log("🚀 Starting UNION Cross-Chain Transfer Hub...");
+    try {
+        const continueRunning = await checkVersion();
+        if (continueRunning) {
+            await mainMenu(
+                async (showTable = false) => await checkVersion(showTable),
+                isUpdateAvailable,
+                latestVersion
+            );
         }
-        return true;
+    } catch (err) {
+        console.error("❌ Fatal error:", err);
+        process.exit(1);
     }
 }
 
 // Start the application
-console.log("🚀 Starting Sepolia to Holesky Cross-Chain Transfer Hub...");
-checkVersion().then((continueRunning) => {
-    if (continueRunning) {
-        mainMenu(checkVersion, isUpdateAvailable, latestVersion).catch((err) => {
-            console.error("Fatal error:", err);
-            process.exit(1);
-        });
-    }
-});
+startApp();
