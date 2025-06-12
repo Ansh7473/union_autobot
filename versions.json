@@ -1,5 +1,13 @@
 [
   {
+    "VERSION": "1.0.56",
+    "UPDATE_DATE": "2025-06-12T17:39:39+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Update HoleskyToSepoliaEurc.js"
+    ]
+  },
+  {
     "VERSION": "1.0.55",
     "UPDATE_DATE": "2025-06-12T17:39:05+05:30",
     "CHANGES": [
