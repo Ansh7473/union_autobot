@@ -19,7 +19,8 @@ A unified, professional Node.js CLI tool for transfer scripts (ETH, LINK, EURC) 
 -  Holesky to Sepolia ETH USDC, LINK, EURC transfers
 -  Sei To Corn
 -  Sei To Xion
--  Xion to babylon USDC XION 
+-  Xion to babylon USDC XION
+-  Babylon BABY to HOLESKTY ,SEPOLIA,CORN added 
 -  ADDING MORE CHAIN SOON
 -  CODE IS OBFUSTRICATED SO NO ONE CAN COMPLAIN AND MAKE OUR TESTENT EFFORTS WASTE 
 
