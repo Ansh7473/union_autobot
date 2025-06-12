@@ -1,5 +1,13 @@
 [
   {
+    "VERSION": "1.0.40",
+    "UPDATE_DATE": "2025-06-12T13:29:23+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Update menu.js"
+    ]
+  },
+  {
     "VERSION": "1.0.39",
     "UPDATE_DATE": "2025-06-12T12:48:55+05:30",
     "CHANGES": [
