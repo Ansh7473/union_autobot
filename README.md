@@ -20,7 +20,8 @@ A unified, professional Node.js CLI tool for transfer scripts (ETH, LINK, EURC) 
 -  Sei To Corn
 -  Sei To Xion
 -  Xion to babylon USDC XION
--  Babylon BABY to HOLESKTY ,SEPOLIA,CORN added 
+-  Babylon BABY to HOLESKTY ,SEPOLIA,CORN added
+-  CORN TO SEI BTCN ADDED 
 -  ADDING MORE CHAIN SOON
 -  CODE IS OBFUSTRICATED SO NO ONE CAN COMPLAIN AND MAKE OUR TESTENT EFFORTS WASTE 
 
