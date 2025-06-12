@@ -3,16 +3,10 @@
  * Handles CLI menu navigation and script execution
  */
 
-const readline = require('readline');
+const inquirer = require('inquirer');
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs').promises;
-
-// Create readline interface
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
 
 // ============= Menu Interface =============
 function displayBanner() {
@@ -39,11 +33,14 @@ function displayMainMenu(isUpdateAvailable, latestVersion) {
 }
 
 async function getUserInput(prompt) {
-    return new Promise((resolve) => {
-        rl.question(prompt, (answer) => {
-            resolve(answer.trim());
-        });
-    });
+    const { answer } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'answer',
+            message: prompt,
+        }
+    ]);
+    return answer.trim();
 }
 
 async function runScript(scriptName) {
@@ -134,7 +131,6 @@ async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) 
         }
     } else if (choice === "7") {
         console.log("\n👋 Goodbye!");
-        rl.close();
         process.exit(0);
     } else {
         console.log("\n❌ Invalid choice. Please try again.");
