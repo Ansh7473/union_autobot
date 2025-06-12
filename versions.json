@@ -1,5 +1,13 @@
 [
   {
+    "VERSION": "1.0.54",
+    "UPDATE_DATE": "2025-06-12T17:02:50+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Create RPC.js"
+    ]
+  },
+  {
     "VERSION": "1.0.53",
     "UPDATE_DATE": "2025-06-12T16:22:20+05:30",
     "CHANGES": [
