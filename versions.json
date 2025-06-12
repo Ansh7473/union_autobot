@@ -1,5 +1,13 @@
 [
   {
+    "VERSION": "1.0.57",
+    "UPDATE_DATE": "2025-06-12T17:40:14+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Update HoleskyToSepoliaLink.js"
+    ]
+  },
+  {
     "VERSION": "1.0.56",
     "UPDATE_DATE": "2025-06-12T17:39:39+05:30",
     "CHANGES": [
