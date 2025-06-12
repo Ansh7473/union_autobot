@@ -22,7 +22,7 @@ A unified, professional Node.js CLI tool for transfer scripts (ETH, LINK, EURC) 
 -  Xion to babylon USDC XION
 -  Babylon BABY to HOLESKTY ,SEPOLIA,CORN added
 -  CORN TO SEI BTCN ADDED 
--  ADDING MORE CHAIN SOON
+-  ADDING MORE destination token 
 -  CODE IS OBFUSTRICATED SO NO ONE CAN COMPLAIN AND MAKE OUR TESTENT EFFORTS WASTE 
 
 ## ⚡️ Installation
