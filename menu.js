@@ -20,14 +20,15 @@ function displayMainMenu(isUpdateAvailable, latestVersion) {
     console.log("🔹 Select an Option:");
     console.log("1️⃣  Sepolia → Holesky");
     console.log("2️⃣  Holesky → Sepolia");
-    console.log("3️⃣  SEI → CORN");
+    console.log("3️⃣  SEI");
     console.log("4️⃣  Xion → Babylon");
-    console.log("5️⃣  Babylon Transfers");
-    console.log("6️⃣  Check for Updates");
-    console.log("7️⃣  Exit");
+    console.log("5️⃣  Babylon");
+    console.log("6️⃣  CORN");
+    console.log("7️⃣  Check for Updates");
+    console.log("8️⃣  Exit");
     // Display update notification
     if (isUpdateAvailable && latestVersion) {
-        console.log(`\n⚠️ New Update Available: v${latestVersion.version} (Select 6 to update)`);
+        console.log(`\n⚠️ New Update Available: v${latestVersion.version} (Select 7 to update)`);
     }
     console.log();
 }
@@ -107,7 +108,7 @@ async function runScriptWithArg(scriptName, arg) {
 async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) {
     displayBanner();
     displayMainMenu(isUpdateAvailable, latestVersion);
-    const choice = await getUserInput("👉 Enter your choice (1-7): ");
+    const choice = await getUserInput("👉 Enter your choice (1-8): ");
 
     if (choice === "1") {
         await sepoliaToHoleskyMenu();
@@ -116,7 +117,7 @@ async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) 
         await holeskyToSepoliaMenu();
         await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
     } else if (choice === "3") {
-        await seiToCornMenu();
+        await seiMenu();
         await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
     } else if (choice === "4") {
         await xionToBabylonMenu();
@@ -125,11 +126,14 @@ async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) 
         await runScript('BabylonToOthersTransfer.js');
         await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
     } else if (choice === "6") {
+        await cornMenu();
+        await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
+    } else if (choice === "7") {
         const continueRunning = await checkVersionCallback();
         if (continueRunning) {
             await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
         }
-    } else if (choice === "7") {
+    } else if (choice === "8") {
         console.log("\n👋 Goodbye!");
         process.exit(0);
     } else {
@@ -198,9 +202,31 @@ async function holeskyToSepoliaMenu() {
     }
 }
 
+async function seiMenu() {
+    console.clear();
+    console.log("\n🌾 SEI: Select Destination");
+    console.log("1️⃣  CORN");
+    console.log("2️⃣  XION");
+    console.log("3️⃣  Back\n");
+    const destination = await getUserInput("👉 Enter your choice (1-3): ");
+    switch (destination) {
+        case "1":
+            await seiToCornMenu();
+            break;
+        case "2":
+            await seiToXionMenu();
+            break;
+        case "3":
+            break;
+        default:
+            console.log("\n❌ Invalid choice. Please try again.");
+            setTimeout(seiMenu, 1500);
+    }
+}
+
 async function seiToCornMenu() {
     console.clear();
-    console.log("\n🌉 SEI → CORN: Select Token");
+    console.log("\n🌾 SEI → CORN: Select Token");
     console.log("1️⃣  SEI");
     console.log("2️⃣  Back\n");
     const token = await getUserInput("👉 Enter your choice (1-2): ");
@@ -213,6 +239,24 @@ async function seiToCornMenu() {
         default:
             console.log("\n❌ Invalid choice. Please try again.");
             setTimeout(seiToCornMenu, 1500);
+    }
+}
+
+async function seiToXionMenu() {
+    console.clear();
+    console.log("\n🌾 SEI → XION: Select Token");
+    console.log("1️⃣  SEI");
+    console.log("2️⃣  Back\n");
+    const token = await getUserInput("👉 Enter your choice (1-2): ");
+    switch (token) {
+        case "1":
+            await runScript('SeiToXionSEITransfer.js');
+            break;
+        case "2":
+            break;
+        default:
+            console.log("\n❌ Invalid choice. Please try again.");
+            setTimeout(seiToXionMenu, 1500);
     }
 }
 
@@ -235,6 +279,42 @@ async function xionToBabylonMenu() {
         default:
             console.log("\n❌ Invalid choice. Please try again.");
             setTimeout(xionToBabylonMenu, 1500);
+    }
+}
+
+async function cornMenu() {
+    console.clear();
+    console.log("\n🌽 CORN: Select Destination");
+    console.log("1️⃣  SEI");
+    console.log("2️⃣  Back\n");
+    const destination = await getUserInput("👉 Enter your choice (1-2): ");
+    switch (destination) {
+        case "1":
+            await cornToSeiMenu();
+            break;
+        case "2":
+            break;
+        default:
+            console.log("\n❌ Invalid choice. Please try again.");
+            setTimeout(cornMenu, 1500);
+    }
+}
+
+async function cornToSeiMenu() {
+    console.clear();
+    console.log("\n🌽 CORN → SEI: Select Token");
+    console.log("1️⃣  BTCN");
+    console.log("2️⃣  Back\n");
+    const token = await getUserInput("👉 Enter your choice (1-2): ");
+    switch (token) {
+        case "1":
+            await runScript('CronToSeiBtcnTransfer.js');
+            break;
+        case "2":
+            break;
+        default:
+            console.log("\n❌ Invalid choice. Please try again.");
+            setTimeout(cornToSeiMenu, 1500);
     }
 }
 
