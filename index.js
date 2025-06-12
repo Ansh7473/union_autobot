@@ -15,11 +15,7 @@ const CURRENT_VERSION = '1.0.0';
 const REPO_OWNER = 'Ansh7473';
 const REPO_NAME = 'UNION-AUTO_BOT';
 const VERSION_FILE = 'versions.json';
-const EXCLUDED_FILES = [
-    'private_keys.txt',
-    'xion.txt',
-    'BABYLON_ADDRESS.txt'
-];
+const EXCLUDED_FILES = ['private_keys.txt', 'xion.txt', 'BABYLON_ADDRESS.txt'];
 
 // Global variables for update notification
 let latestVersion = null;
@@ -144,84 +140,82 @@ function formatVersionChanges(versions) {
 }
 
 async function checkVersion(showTable = false) {
+    console.log('🔍 Checking for updates...');
     try {
         const versions = await fetchVersionsJson();
-        if (versions.length === 0) {
-            console.log('⚠️ Unable to check for updates. Continuing with current version...');
+        if (!versions || versions.length === 0) {
+            console.log('✅ Unable to check for updates. Continuing with current version.');
+            if (showTable) {
+                console.log('Press Enter to return to the main menu...');
+                await getUserInput('');
+            }
             return true;
         }
+
+        versions.sort((a, b) => {
+            const aParts = a.version.split('.').map(Number);
+            const bParts = b.version.split('.').map(Number);
+            for (let i = 0; i < 3; i++) {
+                if (aParts[i] !== bParts[i]) return bParts[i] - aParts[i];
+            }
+            return 0;
+        });
 
         latestVersion = versions[0];
         const currentVersionParts = CURRENT_VERSION.split('.').map(Number);
         const latestVersionParts = latestVersion.version.split('.').map(Number);
 
-        // Compare versions
+        isUpdateAvailable = false;
         for (let i = 0; i < 3; i++) {
-            if (latestVersionParts[i] > currentVersionParts[i]) {
+            if (currentVersionParts[i] < latestVersionParts[i]) {
                 isUpdateAvailable = true;
                 break;
-            } else if (latestVersionParts[i] < currentVersionParts[i]) {
+            } else if (currentVersionParts[i] > latestVersionParts[i]) {
                 break;
             }
         }
 
-        if (showTable) {
-            displayVersionTable(versions);
-            if (isUpdateAvailable) {
-                const answer = await getUserInput('Would you like to update now? (y/n): ');
-                if (answer.toLowerCase() === 'y') {
-                    console.log('🔄 Updating to latest version...');
-                    await updateFiles();
-                    console.log('✅ Update complete! Please restart the application.');
-                    process.exit(0);
-                }
+        if (isUpdateAvailable && showTable) {
+            console.log(`⚠️ New version available: ${latestVersion.version}`);
+            formatVersionChanges(versions);
+            const answer = await getUserInput('👉 Do you want to update to the latest version? (y/n): ');
+            if (answer.toLowerCase() === 'y') {
+                await updateFiles();
+                console.log('\nℹ️ Please restart the application to use the updated version.');
+                console.log('Press Enter to return to the main menu...');
+                await getUserInput('');
+                return false;
             } else {
-                console.log('✅ You are running the latest version!');
-                await getUserInput('Press Enter to continue...');
+                console.log('ℹ️ Update skipped.');
+                console.log('Press Enter to return to the main menu...');
+                await getUserInput('');
+                return false;
             }
+        } else if (showTable) {
+            console.log(`✅ You are running the latest version (${CURRENT_VERSION})`);
+            console.log('Press Enter to return to the main menu...');
+            await getUserInput('');
+            return true;
         }
 
         return true;
     } catch (error) {
-        console.log('⚠️ Error checking version:', error.message);
-        const answer = await getUserInput('Would you like to continue anyway? (y/n): ');
-        return answer.toLowerCase() === 'y';
-    }
-}
-
-function displayVersionTable(versions) {
-    const table = new Table({
-        head: ['Version', 'Update Date', 'Changes'],
-        style: { head: ['cyan'] }
-    });
-
-    versions.forEach(v => {
-        table.push([
-            v.version,
-            v.update_date,
-            v.changes.join('\n')
-        ]);
-    });
-
-    console.log(table.toString());
-}
-
-async function startApp() {
-    console.log("🚀 Starting UNION Cross-Chain Transfer Hub...");
-    try {
-        const continueRunning = await checkVersion();
-        if (continueRunning) {
-            await mainMenu(
-                async (showTable = false) => await checkVersion(showTable),
-                isUpdateAvailable,
-                latestVersion
-            );
+        console.log(`❌ Error checking version: ${error.message}`);
+        if (showTable) {
+            console.log('Press Enter to return to the main menu...');
+            await getUserInput('');
         }
-    } catch (err) {
-        console.error("❌ Fatal error:", err);
-        process.exit(1);
+        return true;
     }
 }
 
 // Start the application
-startApp();
+console.log("🚀 Starting Sepolia to Holesky Cross-Chain Transfer Hub...");
+checkVersion(false).then((continueRunning) => {
+    if (continueRunning) {
+        mainMenu((showTable = true) => checkVersion(showTable), isUpdateAvailable, latestVersion).catch((err) => {
+            console.error("Fatal error:", err);
+            process.exit(1);
+        });
+    }
+});
