@@ -1,6 +1,5 @@
 /**
  * RPC Configuration for UNION Cross-Chain Automation
- * Simple RPC endpoints for all supported networks
  */
 
 // ============= EVM Network RPC URLs =============
