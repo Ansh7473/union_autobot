@@ -1,5 +1,13 @@
 [
   {
+    "VERSION": "1.0.67",
+    "UPDATE_DATE": "2025-06-13T14:46:18+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Update RPC.js\n\nfixed rpc error in sepolia now u can manager rpc in each network"
+    ]
+  },
+  {
     "VERSION": "1.0.66",
     "UPDATE_DATE": "2025-06-13T14:36:20+05:30",
     "CHANGES": [
