@@ -1,5 +1,13 @@
 [
   {
+    "VERSION": "1.0.66",
+    "UPDATE_DATE": "2025-06-13T14:36:20+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Update Xion_To_Babylon_XION_USDC.js"
+    ]
+  },
+  {
     "VERSION": "1.0.65",
     "UPDATE_DATE": "2025-06-13T14:36:01+05:30",
     "CHANGES": [
