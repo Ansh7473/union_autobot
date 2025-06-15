@@ -1,5 +1,13 @@
 [
   {
+    "VERSION": "1.0.71",
+    "UPDATE_DATE": "2025-06-15T15:56:03+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Delete BabylonToOthersTransfer.js\n\nneeds fix"
+    ]
+  },
+  {
     "VERSION": "1.0.70",
     "UPDATE_DATE": "2025-06-13T21:57:53+05:30",
     "CHANGES": [
