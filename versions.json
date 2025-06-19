@@ -1,5 +1,13 @@
 [
   {
+    "VERSION": "1.0.76",
+    "UPDATE_DATE": "2025-06-19T20:17:55+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Update versions.json"
+    ]
+  },
+  {
     "VERSION": "1.0.75",
     "UPDATE_DATE": "2025-06-19T20:14:25+05:30",
     "CHANGES": [
