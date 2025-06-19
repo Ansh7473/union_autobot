@@ -1,6 +1,6 @@
 # 🚀 UNION AUTOMATION
 
-A unified, professional Node.js CLI tool for transfer scripts (ETH, LINK, EURC) between Sepolia and Holesky testnets. Each module runs as a separate process, preserving its own menu and logic.
+A unified, professional Node.js CLI tool for transfer scripts testnets. Each module runs as a separate process, preserving its own menu and logic.
 
 
 
