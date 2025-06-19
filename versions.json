@@ -1,5 +1,13 @@
 [
   {
+    "VERSION": "1.0.79",
+    "UPDATE_DATE": "2025-06-19T20:24:21+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Update RPC.js\n\nChanges holeksy rpc"
+    ]
+  },
+  {
     "VERSION": "1.0.78",
     "UPDATE_DATE": "2025-06-19T20:21:58+05:30",
     "CHANGES": [
