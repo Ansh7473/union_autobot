@@ -14,7 +14,7 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 ---
 
 ## ✨ Features
-
+-  NOTE- never use personal wallet testnet is free so use no fund wallet always 
 -  Sepolia to Holesky ETH USDC, LINK, EURC transfers
 -  Holesky to Sepolia ETH USDC, LINK, EURC transfers
 -  Sei To Corn
