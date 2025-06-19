@@ -4,7 +4,7 @@
     "UPDATE_DATE": "2025-06-19T20:14:25+05:30",
     "CHANGES": [
       "Updated files: None",
-      "Commit: Update BabylonToOthersTransfer.js\n\nStill need fix u guys please use your own evm address for reciver otherwise your transaction is  not count for xp"
+      "Commit: Update BabylonToOthersTransfer.js\n\nStill need fix u guys please use your own evm address for reciver otherwise your transaction is  not count for xp put your private keys in private-keys.txt to use your address as reciver for now soon i will add fix to use your own address u are currently sending in my address temporary pleae add your private key in txt to us your own "
     ]
   },
   {
