@@ -25,7 +25,14 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 -  ADDING MORE destination token
 -  CONFIG FOR RPC CHANGE 
 -  CODE IS OBFUSTRICATED SO NO ONE CAN COMPLAIN AND MAKE OUR TESTENT EFFORTS WASTE
--  DONT WORRY OBFUSTRICATED? 🔒 I AM NOT A DRAINER FOR YOUR TRUST I AM MAKING PRIVATE UNOBSFUSCATED REPO BUT ONLY FOR PRIVATE PEOPLE 
+-  DONT WORRY OBFUSTRICATED? 🔒 I AM NOT A DRAINER FOR YOUR TRUST I AM MAKING PRIVATE UNOBSFUSCATED REPO BUT ONLY FOR PRIVATE PEOPLE
+
+## Important  
+-put babylon address in babylon txt destination transfer to babylon use that address 
+-put evm in private_keys.txt for evm transfer 
+-put cosmos private key inside the xion.txt for cosmos chain execution 
+
+
 
 ## ⚡️ Installation
 
