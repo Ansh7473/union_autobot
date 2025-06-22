@@ -31,7 +31,7 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 -put babylon address in babylon txt destination transfer to babylon use that address 
 -put evm in private_keys.txt for evm transfer 
 -put cosmos private key inside the xion.txt for cosmos chain execution 
-
+---
 
 
 ## ⚡️ Installation
