@@ -24,7 +24,7 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 -  CORN TO SEI BTCN ADDED 
 -  ADDING MORE destination token
 -  CONFIG FOR RPC CHANGE
--  private_keys.txt for evn
+-  private_keys.txt for evm
 -  xion.txt for cosmos chains xion babylon
 -  BABYLON_ADDDRESS.txt for babylon address not private key 
 -  CODE IS OBFUSTRICATED SO NO ONE CAN COMPLAIN AND MAKE OUR TESTENT EFFORTS WASTE
