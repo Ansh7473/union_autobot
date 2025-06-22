@@ -23,7 +23,10 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 -  Babylon BABY to HOLESKTY ,SEPOLIA,CORN added
 -  CORN TO SEI BTCN ADDED 
 -  ADDING MORE destination token
--  CONFIG FOR RPC CHANGE 
+-  CONFIG FOR RPC CHANGE
+-  private_keys.txt for evn
+-  xion.txt for cosmos chains xion babylon
+-  BABYLON_ADDDRESS.txt for babylon address not private key 
 -  CODE IS OBFUSTRICATED SO NO ONE CAN COMPLAIN AND MAKE OUR TESTENT EFFORTS WASTE
 -  DONT WORRY OBFUSTRICATED? 🔒 I AM NOT A DRAINER FOR YOUR TRUST I AM MAKING PRIVATE UNOBSFUSCATED REPO BUT ONLY FOR PRIVATE PEOPLE
 
