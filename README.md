@@ -21,7 +21,7 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 -  BABYLON_ADDDRESS.txt for babylon address not private key 
 -  CODE IS OBFUSTRICATED SO NO ONE CAN COMPLAIN AND MAKE OUR TESTENT EFFORTS WASTE
 -  DONT WORRY OBFUSTRICATED? 🔒 I AM NOT A DRAINER FOR YOUR TRUST I AM MAKING PRIVATE UNOBSFUSCATED REPO BUT ONLY FOR PRIVATE PEOPLE I RECOMMEND NO FUND WALLET FOR YOUR SECURITY
--  Make sure to put your evm in private key .txt and also reciving address wallet key in xion.txt used cosmos related recving and sending address and also babylon txt used for only receive 
+-  Make sure to put your evm in private key .txt and also reciving address wallet key in xion.txt used cosmos related recving and sending address and also babylon txt used for only receive 💀 if u dont put any key inside those txt only use private key txt than all tranfer comes to my wallet that means your union task not count make sure to put your everything needed for automation in txts why it come to my wallet ? bcz the code structure used repalce method to simulate tranfer and make instructions 
 
 ## Important  
 -put babylon address in babylon txt destination transfer to babylon use that address 
