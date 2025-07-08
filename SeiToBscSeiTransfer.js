@@ -1,1 +1,1 @@
-console.log("⚠️ There is an error. Fixing something bug. Come back later.");
+console.log("⚠️ There is an error. Fixing bug. Come back later.");
