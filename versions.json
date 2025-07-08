@@ -1,5 +1,13 @@
 [
   {
+    "VERSION": "1.0.97",
+    "UPDATE_DATE": "2025-07-08T22:16:05+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Update SeiToBscSeiTransfer.js"
+    ]
+  },
+  {
     "VERSION": "1.0.96",
     "UPDATE_DATE": "2025-07-08T22:14:35+05:30",
     "CHANGES": [
