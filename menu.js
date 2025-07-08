@@ -22,13 +22,15 @@ function displayMainMenu(isUpdateAvailable, latestVersion) {
     console.log("2️⃣  Holesky → Sepolia");
     console.log("3️⃣  SEI");
     console.log("4️⃣  Xion → Babylon");
-    console.log("5️⃣  Babylon");
-    console.log("6️⃣  CORN");
-    console.log("7️⃣  Check for Updates");
-    console.log("8️⃣  Exit");
+    console.log("5️⃣  Babylon (Multi-destination)");
+    console.log("6️⃣  Babylon → XION");
+    console.log("7️⃣  SEI → BSC");
+    console.log("8️⃣  CORN");
+    console.log("9️⃣  Check for Updates");
+    console.log("🔟  Exit");
     // Display update notification
     if (isUpdateAvailable && latestVersion) {
-        console.log(`\n⚠️ New Update Available: v${latestVersion.version} (Select 7 to update)`);
+        console.log(`\n⚠️ New Update Available: v${latestVersion.version} (Select 9 to update)`);
     }
     console.log();
 }
@@ -108,7 +110,7 @@ async function runScriptWithArg(scriptName, arg) {
 async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) {
     displayBanner();
     displayMainMenu(isUpdateAvailable, latestVersion);
-    const choice = await getUserInput("👉 Enter your choice (1-8): ");
+    const choice = await getUserInput("👉 Enter your choice (1-10): ");
 
     if (choice === "1") {
         await sepoliaToHoleskyMenu();
@@ -126,14 +128,20 @@ async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) 
         await runScript('BabylonToOthersTransfer.js');
         await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
     } else if (choice === "6") {
-        await cornMenu();
+        await runScript('BabylonToXionTransfer.js');
         await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
     } else if (choice === "7") {
+        await runScript('SeiToBscSeiTransfer.js');
+        await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
+    } else if (choice === "8") {
+        await cornMenu();
+        await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
+    } else if (choice === "9") {
         const continueRunning = await checkVersionCallback();
         if (continueRunning) {
             await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
         }
-    } else if (choice === "8") {
+    } else if (choice === "10") {
         console.log("\n👋 Goodbye!");
         process.exit(0);
     } else {
