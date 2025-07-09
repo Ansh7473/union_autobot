@@ -14,6 +14,15 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 ---
 
 ## ✨ Features
+-  Destinations Supported
+-  BSC
+-  OSMOSIS
+-  HOLESKY
+-  SEPOLIA
+-  XION
+-  BABYLON
+-  CORN
+-  SEI
 -  NOTE- never use personal wallet testnet is free so use no fund wallet always 
 -  CONFIG FOR RPC CHANGE
 -  private_keys.txt for evm
