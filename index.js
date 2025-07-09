@@ -11,7 +11,9 @@ const path = require('path');
 const { mainMenu, getUserInput } = require('./menu.js');
 
 // ============= Version Check and Update Functions =============
-const CURRENT_VERSION = '1.0.0';
+// Read current version from package.json
+const packageJson = require('./package.json');
+const CURRENT_VERSION = packageJson.version;
 const REPO_OWNER = 'Ansh7473';
 const REPO_NAME = 'UNION-AUTO_BOT';
 const VERSION_FILE = 'versions.json';
@@ -145,6 +147,9 @@ async function checkVersion(showTable = false) {
         const versions = await fetchVersionsJson();
         if (!versions || versions.length === 0) {
             console.log('✅ Unable to check for updates. Continuing with current version.');
+            // Ensure update flags are properly set when no version info is available
+            isUpdateAvailable = false;
+            latestVersion = null;
             if (showTable) {
                 console.log('Press Enter to return to the main menu...');
                 await getUserInput('');
@@ -165,15 +170,24 @@ async function checkVersion(showTable = false) {
         const currentVersionParts = CURRENT_VERSION.split('.').map(Number);
         const latestVersionParts = latestVersion.version.split('.').map(Number);
 
+        // Compare versions: check if current version is lower than latest
         isUpdateAvailable = false;
         for (let i = 0; i < 3; i++) {
             if (currentVersionParts[i] < latestVersionParts[i]) {
                 isUpdateAvailable = true;
                 break;
             } else if (currentVersionParts[i] > latestVersionParts[i]) {
+                // Current version is newer than latest (shouldn't happen normally)
+                isUpdateAvailable = false;
                 break;
             }
+            // If equal, continue to next part
         }
+
+        // Debug info (can be removed later)
+        console.log(`📦 Current version: ${CURRENT_VERSION}`);
+        console.log(`🆕 Latest version: ${latestVersion.version}`);
+        console.log(`🔄 Update available: ${isUpdateAvailable}`);
 
         if (isUpdateAvailable && showTable) {
             console.log(`⚠️ New version available: ${latestVersion.version}`);
@@ -201,6 +215,9 @@ async function checkVersion(showTable = false) {
         return true;
     } catch (error) {
         console.log(`❌ Error checking version: ${error.message}`);
+        // Ensure update flags are properly set on error
+        isUpdateAvailable = false;
+        latestVersion = null;
         if (showTable) {
             console.log('Press Enter to return to the main menu...');
             await getUserInput('');
@@ -213,6 +230,7 @@ async function checkVersion(showTable = false) {
 console.log("🚀 Starting Sepolia to Holesky Cross-Chain Transfer Hub...");
 checkVersion(false).then((continueRunning) => {
     if (continueRunning) {
+        // Pass the actual values after initial check
         mainMenu((showTable = true) => checkVersion(showTable), isUpdateAvailable, latestVersion).catch((err) => {
             console.error("Fatal error:", err);
             process.exit(1);
