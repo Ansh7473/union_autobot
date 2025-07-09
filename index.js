@@ -11,9 +11,18 @@ const path = require('path');
 const { mainMenu, getUserInput } = require('./menu.js');
 
 // ============= Version Check and Update Functions =============
-// Read current version from package.json
-const packageJson = require('./package.json');
-const CURRENT_VERSION = packageJson.version;
+// Read current version from local versions.json file
+let CURRENT_VERSION = '1.0.0'; // Default fallback
+try {
+    const localVersionsPath = path.join(__dirname, 'versions.json');
+    if (require('fs').existsSync(localVersionsPath)) {
+        const localVersions = require('./versions.json');
+        CURRENT_VERSION = localVersions[0].VERSION; // Get latest local version
+    }
+} catch (error) {
+    console.log('Warning: Could not read local versions.json, using default version');
+}
+
 const REPO_OWNER = 'Ansh7473';
 const REPO_NAME = 'UNION-AUTO_BOT';
 const VERSION_FILE = 'versions.json';
@@ -144,18 +153,8 @@ function formatVersionChanges(versions) {
 async function checkVersion(showTable = false) {
     console.log('🔍 Checking for updates...');
     try {
-        // Read local versions.json file instead of fetching from GitHub
-        const fs = require('fs');
-        const localVersionsPath = path.join(__dirname, 'versions.json');
-        let versions = [];
-        
-        if (fs.existsSync(localVersionsPath)) {
-            const versionsData = JSON.parse(fs.readFileSync(localVersionsPath, 'utf8'));
-            versions = versionsData.map(v => ({ version: v.VERSION, changes: v.CHANGES }));
-        } else {
-            // Fallback to GitHub API if local file doesn't exist
-            versions = await fetchVersionsJson();
-        }
+        // Always fetch from GitHub API to get the latest remote versions
+        const versions = await fetchVersionsJson();
         
         if (!versions || versions.length === 0) {
             console.log('✅ Unable to check for updates. Continuing with current version.');
@@ -197,8 +196,8 @@ async function checkVersion(showTable = false) {
         }
 
         // Debug info (can be removed later)
-        console.log(`📦 Current version: ${CURRENT_VERSION}`);
-        console.log(`🆕 Latest version: ${latestVersion.version}`);
+        console.log(`📦 Current version (local versions.json): ${CURRENT_VERSION}`);
+        console.log(`🆕 Latest version (GitHub API): ${latestVersion.version}`);
         console.log(`🔄 Update available: ${isUpdateAvailable}`);
 
         if (isUpdateAvailable && showTable) {
