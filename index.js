@@ -144,7 +144,19 @@ function formatVersionChanges(versions) {
 async function checkVersion(showTable = false) {
     console.log('🔍 Checking for updates...');
     try {
-        const versions = await fetchVersionsJson();
+        // Read local versions.json file instead of fetching from GitHub
+        const fs = require('fs');
+        const localVersionsPath = path.join(__dirname, 'versions.json');
+        let versions = [];
+        
+        if (fs.existsSync(localVersionsPath)) {
+            const versionsData = JSON.parse(fs.readFileSync(localVersionsPath, 'utf8'));
+            versions = versionsData.map(v => ({ version: v.VERSION, changes: v.CHANGES }));
+        } else {
+            // Fallback to GitHub API if local file doesn't exist
+            versions = await fetchVersionsJson();
+        }
+        
         if (!versions || versions.length === 0) {
             console.log('✅ Unable to check for updates. Continuing with current version.');
             // Ensure update flags are properly set when no version info is available
