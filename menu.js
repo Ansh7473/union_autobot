@@ -28,8 +28,8 @@ function displayMainMenu(isUpdateAvailable, latestVersion) {
     console.log("8️⃣  CORN");
     console.log("9️⃣  Check for Updates");
     console.log("🔟  Exit");
-    // Display update notification
-    if (isUpdateAvailable && latestVersion) {
+    // Display update notification only when update is actually available
+    if (isUpdateAvailable === true && latestVersion && latestVersion.version) {
         console.log(`\n⚠️ New Update Available: v${latestVersion.version} (Select 9 to update)`);
     }
     console.log();
