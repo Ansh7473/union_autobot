@@ -24,9 +24,9 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 -  Make sure to put your evm in private key .txt and also reciving address wallet key in xion.txt used cosmos related recving and sending address and also babylon txt used for only receive 💀 if u dont put any key inside those txt only use private key txt than all tranfer comes to my wallet that means your union task not count make sure to put your everything needed for automation in txts why it come to my wallet ? bcz the code structure used repalce method to simulate tranfer and make instructions if no new sender and reciver found it used default reciving address from instructions code structure i found some user using script but sending to my wallet thats why i am awaring 
 
 ## Important  
--put babylon address in babylon txt destination transfer to babylon use that address 
--put evm in private_keys.txt for evm transfer 
--put cosmos private key inside the xion.txt for cosmos chain execution 
+- put babylon address in babylon txt destination transfer to babylon use that address 
+- put evm in private_keys.txt for evm transfer 
+- put cosmos private key inside the xion.txt for cosmos chain execution 
 ---
 
 
