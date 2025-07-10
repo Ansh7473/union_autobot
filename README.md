@@ -45,7 +45,7 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/Ansh7473/union_autobot.git
-   cd UNION-AUTO_BOT
+   cd union_autobot
    ```
 2. **Install dependencies:**
    ```bash
