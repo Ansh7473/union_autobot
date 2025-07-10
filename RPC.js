@@ -4,8 +4,8 @@
 
 // ============= EVM Network RPC URLs =============
 const EVM_RPC = {
-    SEPOLIA: "https://1rpc.io/sepolia",
-    HOLESKY: "https://1rpc.io/holesky",
+    SEPOLIA: "https://eth-sepolia.public.blastapi.io",
+    HOLESKY: "https://ethereum-holesky-rpc.publicnode.com",
     SEI_TESTNET: "https://evm-rpc-testnet.sei-apis.com",
     CORN_TESTNET: "https://21000001.rpc.thirdweb.com"
 };
