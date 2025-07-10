@@ -21,7 +21,7 @@ module.exports = {
     EVM_RPC,
     COSMOS_RPC,
     
-    // Direct access
+    
     SEPOLIA_RPC: EVM_RPC.SEPOLIA,
     HOLESKY_RPC: EVM_RPC.HOLESKY,
     SEI_TESTNET_RPC: EVM_RPC.SEI_TESTNET,
