@@ -14,7 +14,7 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 ---
 
 ## ✨ Features
--  8 SENDING/RECIVING Destinations Supported 👇🏼
+-  8 SENDING/RECIVING Destinations Supported👇🏼
 -  BSC
 -  OSMOSIS
 -  HOLESKY
