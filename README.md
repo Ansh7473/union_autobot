@@ -23,9 +23,6 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 -  BABYLON
 -  CORN
 -  SEI
--  DELAY
--  NO OF TRANSACTION
--  AMOUNT ADJUSTEMENT(NOT BSC AND OSMOSIS DETINATION)
 -  CONFIG FOR RPC CHANGE
 -  SAFE Encrypted Codes No report No sybils 
 ## Important  
