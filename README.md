@@ -14,7 +14,7 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 ---
 
 ## ✨ Features
--  Destinations Supported
+-  8 SENDING/RECIVING Destinations Supported 👇🏼
 -  BSC
 -  OSMOSIS
 -  HOLESKY
@@ -22,7 +22,10 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 -  XION
 -  BABYLON
 -  CORN
--  SEI 
+-  SEI
+-  DELAY
+-  NO OF TRANSACTION
+-  AMOUNT ADJUSTEMENT(NOT BSC AND OSMOSIS DETINATION)
 -  CONFIG FOR RPC CHANGE
 -  SAFE Encrypted Codes No report No sybils 
 ## Important  
