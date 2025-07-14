@@ -25,7 +25,7 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 -  SEI
 -  CONFIG FOR RPC CHANGE
 -  SAFE Encrypted Codes No report No sybils
--  Create https://github.com/Ansh7473/union_autobot/issues issue to add any specific route 
+-  Create https://github.com/Ansh7473/union_autobot/issues issue if you want me to add any specific route 
 ## Important  
 - NOTE- never use personal wallet testnet is free so use no fund wallet always
 - put babylon address in babylon txt destination transfer to babylon use that address 
