@@ -51,6 +51,10 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
    ```bash
    npm install
    ```
+   Or You can use
+   ```bash
+   install.bat
+   ```
 
 ---
 
