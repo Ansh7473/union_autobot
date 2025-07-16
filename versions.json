@@ -1,5 +1,13 @@
 [
   {
+    "VERSION": "1.0.140",
+    "UPDATE_DATE": "2025-07-17T00:13:04+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Update install.bat"
+    ]
+  },
+  {
     "VERSION": "1.0.139",
     "UPDATE_DATE": "2025-07-16T23:46:37+05:30",
     "CHANGES": [
