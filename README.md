@@ -65,11 +65,14 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
    ```bash
    npm update
    ```
+   or u can do this
+   <img width="123" height="17" alt="1000164879" src="https://github.com/user-attachments/assets/5e307b62-92fc-40dc-aac4-339af3508659" />
+
 
    ```bash
    node index.js
    ```
-2. **Select a transfer module:**
+3. **Select a transfer module:**
    - Choose ETH, LINK, or EURC transfer from the menu.
    - The selected script will launch in its own process and present its own menu.
 
