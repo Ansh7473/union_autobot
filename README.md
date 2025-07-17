@@ -72,6 +72,11 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
    ```bash
    node index.js
    ```
+   Or 
+   ```bash
+   start.bat
+   ```
+   
 3. **Select a transfer module:**
    - Choose ETH, LINK, or EURC transfer from the menu.
    - The selected script will launch in its own process and present its own menu.
