@@ -74,7 +74,7 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
    ```
    Or 
    ```bash
-   [start.bat](https://github.com/Ansh7473/union_autobot/blob/main/Start.bat)
+   https://github.com/Ansh7473/union_autobot/blob/main/Start.bat
    ```
    
 3. **Select a transfer module:**
