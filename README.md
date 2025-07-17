@@ -73,9 +73,8 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
    node index.js
    ```
    Or 
-   ```bash
    https://github.com/Ansh7473/union_autobot/blob/main/Start.bat
-   ```
+   
    
 3. **Select a transfer module:**
    - Choose ETH, LINK, or EURC transfer from the menu.
