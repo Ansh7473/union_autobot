@@ -1,5 +1,13 @@
 [
   {
+    "VERSION": "1.0.145",
+    "UPDATE_DATE": "2025-07-19T21:02:23+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Update BabylonToOthersTransfer.js\n\nfixed receiver problem same address of mine getting reciveing amount when sending transaction error is running from but i noticed error today no one informed me about this thats why fixed but too late btw enjoy auto transfers"
+    ]
+  },
+  {
     "VERSION": "1.0.144",
     "UPDATE_DATE": "2025-07-18T04:12:16+05:30",
     "CHANGES": [
