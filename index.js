@@ -26,7 +26,7 @@ try {
 const REPO_OWNER = 'Ansh7473';
 const REPO_NAME = 'UNION-AUTO_BOT';
 const VERSION_FILE = 'versions.json';
-const EXCLUDED_FILES = ['private_keys.txt', 'xion.txt', 'BABYLON_ADDRESS.txt'];
+const EXCLUDED_FOLDERS = ['node_modules', 'data'];
 
 // Global variables for update notification
 let latestVersion = null;
@@ -67,8 +67,8 @@ async function fetchVersionsJson() {
     }
 }
 
-async function fetchRepoFiles() {
-    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/`;
+async function fetchRepoFiles(subPath = '') {
+    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${subPath}`;
     const headers = {
         'Accept': 'application/vnd.github.v3+json',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36'
@@ -77,79 +77,141 @@ async function fetchRepoFiles() {
     try {
         const response = await axios.get(url, { headers });
         if (response.status === 200) {
-            return response.data.filter(item => item.type === 'file').map(item => ({
-                name: item.name,
-                download_url: item.download_url
-            }));
+            let allFiles = [];
+            
+            for (const item of response.data) {
+                if (item.type === 'file') {
+                    // Add file with relative path
+                    allFiles.push({
+                        name: item.name,
+                        path: subPath ? `${subPath}/${item.name}` : item.name,
+                        download_url: item.download_url
+                    });
+                } else if (item.type === 'dir') {
+                    // Skip node_modules completely
+                    if (item.name === 'node_modules') {
+                        console.log(`ℹ️ Skipping excluded folder: ${item.name}`);
+                        continue;
+                    }
+                    
+                    // For data folder, check if it exists locally first
+                    if (item.name === 'data') {
+                        const dataFolderPath = path.join(__dirname, 'data');
+                        try {
+                            await fs.access(dataFolderPath);
+                            console.log(`ℹ️ Skipping data folder (exists locally)`);
+                            continue;
+                        } catch {
+                            console.log(`📥 Data folder doesn't exist locally, will download`);
+                        }
+                    }
+                    
+                    // Recursively fetch files from subdirectory
+                    const subDirPath = subPath ? `${subPath}/${item.name}` : item.name;
+                    const subFiles = await fetchRepoFiles(subDirPath);
+                    allFiles = allFiles.concat(subFiles);
+                }
+            }
+            
+            return allFiles;
         } else {
-            console.log(`❌ Failed to fetch repository files (Status: ${response.status})`);
+            console.log(`❌ Failed to fetch repository files from ${subPath || 'root'} (Status: ${response.status})`);
             return [];
         }
     } catch (error) {
-        console.log(`❌ Error fetching repository files: ${error.message}`);
+        console.log(`❌ Error fetching repository files from ${subPath || 'root'}: ${error.message}`);
         return [];
     }
 }
 
 async function downloadFile(file) {
-    if (EXCLUDED_FILES.includes(file.name)) {
-        console.log(`ℹ️ Skipping ${file.name} (excluded file)`);
-        return;
-    }
-
     try {
+        // Create directory if it doesn't exist
+        const filePath = path.join(__dirname, file.path);
+        const dirPath = path.dirname(filePath);
+        
+        // Create directory recursively if it doesn't exist
+        await fs.mkdir(dirPath, { recursive: true });
+        
         const headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36'
         };
         const response = await axios.get(file.download_url, { headers, responseType: 'arraybuffer' });
-        await fs.writeFile(path.join(__dirname, file.name), response.data);
-        console.log(`✅ Downloaded ${file.name}`);
+        await fs.writeFile(filePath, response.data);
+        console.log(`✅ Downloaded ${file.path}`);
     } catch (error) {
-        console.log(`❌ Error downloading ${file.name}: ${error.message}`);
+        console.log(`❌ Error downloading ${file.path}: ${error.message}`);
     }
 }
 
-async function getLocalFiles() {
+async function getLocalFiles(subPath = '') {
     try {
-        const localFiles = await fs.readdir(__dirname);
-        return localFiles.filter(file => {
-            // Only include actual files (not directories) and exclude protected files
-            return file.includes('.') && !EXCLUDED_FILES.includes(file);
-        });
+        const currentPath = path.join(__dirname, subPath);
+        const items = await fs.readdir(currentPath, { withFileTypes: true });
+        let allFiles = [];
+        
+        for (const item of items) {
+            const itemPath = subPath ? `${subPath}/${item.name}` : item.name;
+            
+            if (item.isFile()) {
+                // Include all files except those in excluded folders
+                const folderName = itemPath.split('/')[0];
+                if (folderName !== 'node_modules' && folderName !== 'data') {
+                    allFiles.push(itemPath);
+                }
+            } else if (item.isDirectory()) {
+                // Skip node_modules completely
+                if (item.name === 'node_modules') {
+                    console.log(`ℹ️ Skipping excluded folder during scan: ${item.name}`);
+                    continue;
+                }
+                
+                // Skip data folder during scan (it's protected)
+                if (item.name === 'data') {
+                    console.log(`ℹ️ Skipping data folder during scan (protected)`);
+                    continue;
+                }
+                
+                // Recursively get files from subdirectory
+                const subFiles = await getLocalFiles(itemPath);
+                allFiles = allFiles.concat(subFiles);
+            }
+        }
+        
+        return allFiles;
     } catch (error) {
-        console.log(`❌ Error reading local files: ${error.message}`);
+        console.log(`❌ Error reading local files from ${subPath || 'root'}: ${error.message}`);
         return [];
     }
 }
 
-async function deleteLocalFile(fileName) {
+async function deleteLocalFile(filePath) {
     try {
-        const filePath = path.join(__dirname, fileName);
-        await fs.unlink(filePath);
-        console.log(`🗑️ Deleted ${fileName}`);
+        const fullPath = path.join(__dirname, filePath);
+        await fs.unlink(fullPath);
+        console.log(`🗑️ Deleted ${filePath}`);
     } catch (error) {
-        console.log(`❌ Error deleting ${fileName}: ${error.message}`);
+        console.log(`❌ Error deleting ${filePath}: ${error.message}`);
     }
 }
 
 async function updateFiles() {
-    console.log('\n🔍 Fetching remote file list...');
+    console.log('\n🔍 Fetching remote file list (including subdirectories)...');
     const remoteFiles = await fetchRepoFiles();
     if (!remoteFiles.length) {
         console.log('❌ No files found to update.');
         return false;
     }
 
-    console.log('📂 Getting local file list...');
+    console.log('📂 Getting local file list (including subdirectories)...');
     const localFiles = await getLocalFiles();
     
-    // Get list of remote file names
-    const remoteFileNames = remoteFiles.map(file => file.name);
+    // Get list of remote file paths
+    const remoteFilePaths = remoteFiles.map(file => file.path);
     
     // Find files that exist locally but not remotely (should be deleted)
     const filesToDelete = localFiles.filter(localFile => 
-        !remoteFileNames.includes(localFile) && 
-        !EXCLUDED_FILES.includes(localFile)
+        !remoteFilePaths.includes(localFile)
     );
     
     // Delete obsolete files
@@ -168,8 +230,10 @@ async function updateFiles() {
     
     console.log('\n✅ Update complete.');
     console.log(`📊 Summary:`);
-    console.log(`   📥 Downloaded/Updated: ${remoteFiles.filter(f => !EXCLUDED_FILES.includes(f.name)).length} files`);
+    console.log(`   📥 Downloaded/Updated: ${remoteFiles.length} files`);
     console.log(`   🗑️ Deleted: ${filesToDelete.length} files`);
+    console.log(`   📁 Directories processed: chains/, utils/, and root`);
+    console.log(`   🚫 Excluded folders: ${EXCLUDED_FOLDERS.join(', ')} (only downloaded if missing)`);
     
     return true;
 }
