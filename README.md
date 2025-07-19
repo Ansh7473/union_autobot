@@ -8,6 +8,7 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 ![Screenshot 2025-06-11 212404](https://github.com/user-attachments/assets/c0d28bda-58e5-48ec-bce5-545c7dc79e5e)
 
 
+more details adding sooon 
 
 
 
