@@ -1,5 +1,13 @@
 [
   {
+    "VERSION": "1.0.119",
+    "UPDATE_DATE": "2025-07-19T22:54:52+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Update jwt.json"
+    ]
+  },
+  {
     "VERSION": "1.0.118",
     "UPDATE_DATE": "2025-07-19T22:54:09+05:30",
     "CHANGES": [
