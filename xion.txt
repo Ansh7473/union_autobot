@@ -1,2 +1,0 @@
-remove0xfromprviatekey ##used for sei to xion and xion to other chains prviate key per line only remove rest all 
- 
