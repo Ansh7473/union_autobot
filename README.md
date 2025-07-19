@@ -86,12 +86,12 @@ more details adding sooon
 ## 📁 Project Structure
 
 ```
-index.js                         # Main CLI menu/launcher
-SepoliaToHoleskyEth.js           # ETH transfer script (independent)
-SepoliaToHoleskyLinkTransfer.js  # LINK transfer script (independent)
-SepoliaToHoleskyEurcTransfer.js  # EURC transfer script (independent)
-private_keys.txt                 # (Sensitive) Private keys for transfers
-package.json                     # Project dependencies
+chains
+utils
+data
+index.js
+menu.js
+other stuffs 
 ```
 
 ---
