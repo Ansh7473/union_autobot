@@ -98,17 +98,7 @@ other stuffs
 
 ## 🧩 Adding More Modules
 
-To add a new transfer module:
-
-1. **Create a new script** (e.g., `SepoliaToHoleskyNewTokenTransfer.js`) following the pattern of the existing modules.
-2. **Update `index.js`:**
-   - Add a new menu option for your module.
-   - Use `child_process.spawn` to launch your new script, just like the existing ones.
-3. **No need to modify internal logic** of other modules.
-
-> ⚡️ **Tip:** The modular design makes it easy to add more transfer scripts in the future. Just drop in your new script and update the menu!
-
----
+create issue specific utils and route request and if u have soemthing to add 
 
 ## 🔒 Security Warning
 
