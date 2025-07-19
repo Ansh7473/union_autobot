@@ -1,8 +1,4 @@
-/**
- * Sepolia to Holesky Cross-Chain Transfer Hub
- * Handles version checking, updates, and starts the menu system
- * Updated for cleaner main menu notification
- */
+
 const axios = require('axios');
 const Table = require('cli-table3');
 const fs = require('fs').promises;
@@ -94,8 +90,8 @@ async function fetchRepoFiles(subPath = '') {
                         continue;
                     }
                     
-                    // For data folder, check if it exists locally first
-                    if (item.name === 'data') {
+                    // For data folder, check if it exists locally first (only at root level)
+                    if (item.name === 'data' && subPath === '') {
                         const dataFolderPath = path.join(__dirname, 'data');
                         try {
                             await fs.access(dataFolderPath);
