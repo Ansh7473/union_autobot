@@ -10,10 +10,10 @@ A unified, professional Node.js CLI tool for transfer scripts testnets. Each mod
 
 video below 👇🏼
 
-
+```bash
 https://github.com/user-attachments/assets/92089df5-162b-46d7-a7d2-0158a74dc629
 
-
+```
 
 
 ---
