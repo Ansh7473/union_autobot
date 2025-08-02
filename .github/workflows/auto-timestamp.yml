@@ -1,0 +1,25 @@
+name: Auto Timestamp Update
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Runs every 30 minutes
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  update-timestamp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update Timestamp File
+        run: |
+          echo "Last Updated: $(date -u)" > LAST_UPDATED.txt
+
+      - name: Commit & Push Timestamp Update
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update timestamp"
+          file_pattern: LAST_UPDATED.txt
+          commit_user_name: github-actions[bot]
+          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
