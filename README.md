@@ -42,6 +42,9 @@ https://github.com/user-attachments/assets/92089df5-162b-46d7-a7d2-0158a74dc629
 -  Make sure to put your evm in private key .txt and also reciving address wallet key in xion.txt used cosmos related recving and sending address and also babylon txt used for only receive 💀 if u dont put any key inside those txt only use private key txt than all tranfer comes to my wallet that means your union task not count make sure to put your everything needed for automation in txts why it come to my wallet ? bcz the code structure used repalce method to simulate tranfer and make instructions if no new sender and reciver found it used default reciving address from instructions code structure i found some user using script but sending to my wallet thats why i am awaring 
 ---
 
+---
+Known ERRORS - input data is not a valid secp256k1 private key  sol- check private key in xion.txt make sure rmeove 0x 
+---
 
 ## ⚡️ Installation
 
