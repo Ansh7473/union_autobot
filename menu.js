@@ -1,18 +1,30 @@
 /**
  * Menu functions for UNION Cross-Chain Automation
  * Handles CLI menu navigation and script execution
+ * Modified to ensure errors are visible and persistent
  */
 
 const inquirer = require('inquirer');
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs').promises;
+const { createWriteStream } = require('fs'); // Added for error logging
+
+// ============= Error Logging Setup =============
+const errorLogPath = path.join(__dirname, 'error.log');
+const errorLogStream = createWriteStream(errorLogPath, { flags: 'a' });
+
+// Function to log errors to file
+function logErrorToFile(errorMessage) {
+    const timestamp = new Date().toISOString();
+    errorLogStream.write(`[${timestamp}] ${errorMessage}\n`);
+}
 
 // ============= Menu Interface =============
 function displayBanner() {
     console.clear();
     console.log("\n🌉 ========================================== 🌉");
-    console.log("  UNION Cross-Chain Automation Powered by Ansh7473");
+    console.log("  UNION Cross-Chain Automation");
     console.log("🌉 ========================================== 🌉\n");
 }
 
@@ -22,10 +34,8 @@ function displayMainMenu(isUpdateAvailable, latestVersion) {
     console.log("2️⃣  Union Account Checker");
     console.log("3️⃣  Check for Updates");
     console.log("4️⃣  Exit");
-    // Display update notification only when update is actually available
     if (isUpdateAvailable === true && latestVersion && latestVersion.version) {
-        console.log(`
-⚠️ New Update Available: v${latestVersion.version} (Select 4 to update)`);
+        console.log(`\n⚠️ New Update Available: v${latestVersion.version} (Select 4 to update)`);
     }
     console.log();
 }
@@ -49,14 +59,20 @@ async function runRootScript(scriptName) {
 
         return new Promise((resolve) => {
             child.on('error', (error) => {
-                console.log(`❌ Error running ${scriptName}: ${error.message}`);
+                const errorMessage = `❌ Error running ${scriptName}: ${error.message}`;
+                console.error(errorMessage);
+                logErrorToFile(errorMessage); // Log to file
+                console.log('⚠️ Error details saved to error.log');
                 console.log('Press Enter to return to the menu...');
                 getUserInput('').then(() => resolve());
             });
 
             child.on('exit', (code) => {
                 if (code !== 0) {
-                    console.log(`⚠️ ${scriptName} exited with code ${code}`);
+                    const errorMessage = `⚠️ ${scriptName} exited with code ${code}`;
+                    console.error(errorMessage);
+                    logErrorToFile(errorMessage); // Log to file
+                    console.log('⚠️ Error details saved to error.log');
                     console.log('Press Enter to return to the menu...');
                     getUserInput('').then(() => resolve());
                 } else {
@@ -65,7 +81,10 @@ async function runRootScript(scriptName) {
             });
         });
     } catch (error) {
-        console.log(`❌ Script ${scriptName} not found or inaccessible: ${error.message}`);
+        const errorMessage = `❌ Script ${scriptName} not found or inaccessible: ${error.message}`;
+        console.error(errorMessage);
+        logErrorToFile(errorMessage); // Log to file
+        console.log('⚠️ Error details saved to error.log');
         console.log('Press Enter to return to the menu...');
         await getUserInput('');
         return;
@@ -80,14 +99,20 @@ async function runUtilScript(scriptName) {
 
         return new Promise((resolve) => {
             child.on('error', (error) => {
-                console.log(`❌ Error running ${scriptName}: ${error.message}`);
+                const errorMessage = `❌ Error running ${scriptName}: ${error.message}`;
+                console.error(errorMessage);
+                logErrorToFile(errorMessage); // Log to file
+                console.log('⚠️ Error details saved to error.log');
                 console.log('Press Enter to return to the menu...');
                 getUserInput('').then(() => resolve());
             });
 
             child.on('exit', (code) => {
                 if (code !== 0) {
-                    console.log(`⚠️ ${scriptName} exited with code ${code}`);
+                    const errorMessage = `⚠️ ${scriptName} exited with code ${code}`;
+                    console.error(errorMessage);
+                    logErrorToFile(errorMessage); // Log to file
+                    console.log('⚠️ Error details saved to error.log');
                     console.log('Press Enter to return to the menu...');
                     getUserInput('').then(() => resolve());
                 } else {
@@ -96,7 +121,10 @@ async function runUtilScript(scriptName) {
             });
         });
     } catch (error) {
-        console.log(`❌ Script ${scriptName} not found or inaccessible: ${error.message}`);
+        const errorMessage = `❌ Script ${scriptName} not found or inaccessible: ${error.message}`;
+        console.error(errorMessage);
+        logErrorToFile(errorMessage); // Log to file
+        console.log('⚠️ Error details saved to error.log');
         console.log('Press Enter to return to the menu...');
         await getUserInput('');
         return;
@@ -111,14 +139,20 @@ async function runScript(scriptName) {
 
         return new Promise((resolve) => {
             child.on('error', (error) => {
-                console.log(`❌ Error running ${scriptName}: ${error.message}`);
+                const errorMessage = `❌ Error running ${scriptName}: ${error.message}`;
+                console.error(errorMessage);
+                logErrorToFile(errorMessage); // Log to file
+                console.log('⚠️ Error details saved to error.log');
                 console.log('Press Enter to return to the menu...');
                 getUserInput('').then(() => resolve());
             });
 
             child.on('exit', (code) => {
                 if (code !== 0) {
-                    console.log(`⚠️ ${scriptName} exited with code ${code}`);
+                    const errorMessage = `⚠️ ${scriptName} exited with code ${code}`;
+                    console.error(errorMessage);
+                    logErrorToFile(errorMessage); // Log to file
+                    console.log('⚠️ Error details saved to error.log');
                     console.log('Press Enter to return to the menu...');
                     getUserInput('').then(() => resolve());
                 } else {
@@ -127,7 +161,10 @@ async function runScript(scriptName) {
             });
         });
     } catch (error) {
-        console.log(`❌ Script ${scriptName} not found or inaccessible: ${error.message}`);
+        const errorMessage = `❌ Script ${scriptName} not found or inaccessible: ${error.message}`;
+        console.error(errorMessage);
+        logErrorToFile(errorMessage); // Log to file
+        console.log('⚠️ Error details saved to error.log');
         console.log('Press Enter to return to the menu...');
         await getUserInput('');
         return;
@@ -141,13 +178,19 @@ async function runScriptWithArg(scriptName, arg) {
         const child = spawn('node', [scriptPath, arg], { stdio: ['inherit', 'inherit', 'inherit'] });
         return new Promise((resolve) => {
             child.on('error', (error) => {
-                console.log(`❌ Error running ${scriptName}: ${error.message}`);
+                const errorMessage = `❌ Error running ${scriptName} with arg ${arg}: ${error.message}`;
+                console.error(errorMessage);
+                logErrorToFile(errorMessage); // Log to file
+                console.log('⚠️ Error details saved to error.log');
                 console.log('Press Enter to return to the menu...');
                 getUserInput('').then(() => resolve());
             });
             child.on('exit', (code) => {
                 if (code !== 0) {
-                    console.log(`⚠️ ${scriptName} exited with code ${code}`);
+                    const errorMessage = `⚠️ ${scriptName} with arg ${arg} exited with code ${code}`;
+                    console.error(errorMessage);
+                    logErrorToFile(errorMessage); // Log to file
+                    console.log('⚠️ Error details saved to error.log');
                     console.log('Press Enter to return to the menu...');
                     getUserInput('').then(() => resolve());
                 } else {
@@ -156,7 +199,10 @@ async function runScriptWithArg(scriptName, arg) {
             });
         });
     } catch (error) {
-        console.log(`❌ Script ${scriptName} not found or inaccessible: ${error.message}`);
+        const errorMessage = `❌ Script ${scriptName} not found or inaccessible: ${error.message}`;
+        console.error(errorMessage);
+        logErrorToFile(errorMessage); // Log to file
+        console.log('⚠️ Error details saved to error.log');
         console.log('Press Enter to return to the menu...');
         await getUserInput('');
         return;
@@ -182,6 +228,7 @@ async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) 
         }
     } else if (choice === "4") {
         console.log("\n👋 Goodbye!");
+        errorLogStream.end(); // Close error log stream
         process.exit(0);
     } else {
         console.log("\n❌ Invalid choice. Please try again.");
@@ -190,7 +237,7 @@ async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) 
 }
 
 async function transferMenu() {
-    console.clear();
+    // Avoid clearing console here to preserve potential error messages
     console.log("\n🌉 Transfer Menu: Select Chain");
     console.log("1️⃣  Sepolia → Holesky");
     console.log("2️⃣  Holesky → Sepolia");
@@ -253,7 +300,7 @@ async function transferMenu() {
 }
 
 async function sepoliaToHoleskyMenu() {
-    console.clear();
+    // Avoid clearing console here
     console.log("\n🌉 Sepolia → Holesky: Select Token");
     console.log("1️⃣  ETH");
     console.log("2️⃣  LINK");
@@ -283,7 +330,7 @@ async function sepoliaToHoleskyMenu() {
 }
 
 async function holeskyToSepoliaMenu() {
-    console.clear();
+    // Avoid clearing console here
     console.log("\n🌉 Holesky → Sepolia: Select Token");
     console.log("1️⃣  ETH");
     console.log("2️⃣  LINK");
@@ -313,7 +360,7 @@ async function holeskyToSepoliaMenu() {
 }
 
 async function seiMenu() {
-    console.clear();
+    // Avoid clearing console here
     console.log("\n🌾 SEI: Select Destination");
     console.log("1️⃣  CORN");
     console.log("2️⃣  XION");
@@ -335,7 +382,7 @@ async function seiMenu() {
 }
 
 async function seiToCornMenu() {
-    console.clear();
+    // Avoid clearing console here
     console.log("\n🌾 SEI → CORN: Select Token");
     console.log("1️⃣  SEI");
     console.log("2️⃣  Back\n");
@@ -353,7 +400,7 @@ async function seiToCornMenu() {
 }
 
 async function seiToXionMenu() {
-    console.clear();
+    // Avoid clearing console here
     console.log("\n🌾 SEI → XION: Select Token");
     console.log("1️⃣  SEI");
     console.log("2️⃣  Back\n");
@@ -371,7 +418,7 @@ async function seiToXionMenu() {
 }
 
 async function xionToBabylonMenu() {
-    console.clear();
+    // Avoid clearing console here
     console.log("\n🌉 Xion → Babylon: Select Token");
     console.log("1️⃣  USDC");
     console.log("2️⃣  XION");
@@ -393,7 +440,7 @@ async function xionToBabylonMenu() {
 }
 
 async function cornMenu() {
-    console.clear();
+    // Avoid clearing console here
     console.log("\n🌽 CORN: Select Destination");
     console.log("1️⃣  SEI");
     console.log("2️⃣  Back\n");
@@ -411,7 +458,7 @@ async function cornMenu() {
 }
 
 async function cornToSeiMenu() {
-    console.clear();
+    // Avoid clearing console here
     console.log("\n🌽 CORN → SEI: Select Token");
     console.log("1️⃣  BTCN");
     console.log("2️⃣  Back\n");
@@ -430,5 +477,5 @@ async function cornToSeiMenu() {
 
 module.exports = {
     mainMenu,
-    getUserInput // Exported for use in index.js
+    getUserInput
 };
