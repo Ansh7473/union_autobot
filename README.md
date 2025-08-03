@@ -43,7 +43,9 @@ https://github.com/user-attachments/assets/92089df5-162b-46d7-a7d2-0158a74dc629
 ---
 
 ---
-Known ERRORS - input data is not a valid secp256k1 private key  sol- check private key in xion.txt make sure rmeove 0x 
+
+## ✨Known ERRORS
+- input data is not a valid secp256k1 private key  sol- check private key in xion.txt make sure rmeove 0x 
 ---
 
 ## ⚡️ Installation
