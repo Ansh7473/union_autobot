@@ -12,7 +12,7 @@ const fs = require('fs').promises;
 function displayBanner() {
     console.clear();
     console.log("\n🌉 ========================================== 🌉");
-    console.log("  UNION Cross-Chain Automation");
+    console.log("  UNION Cross-Chain Automation Powered by Ansh7473");
     console.log("🌉 ========================================== 🌉\n");
 }
 
