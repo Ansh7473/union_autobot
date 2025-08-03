@@ -10,11 +10,11 @@ const path = require('path');
 const fs = require('fs').promises;
 const { createWriteStream } = require('fs');
 
-// ============= Error Logging Setup =============
+
 const errorLogPath = path.join(__dirname, 'error.log');
 const errorLogStream = createWriteStream(errorLogPath, { flags: 'a' });
 
-// Function to log errors to file
+
 function logErrorToFile(errorMessage) {
     const timestamp = new Date().toISOString();
     errorLogStream.write(`[${timestamp}] ${errorMessage}\n`);
@@ -23,22 +23,63 @@ function logErrorToFile(errorMessage) {
 // ============= Menu Interface =============
 function displayBanner() {
     console.clear();
-    console.log("\n\033[31m⚠️ IMPORTANT: Ensure private_key.txt, xion.txt, and BABYLON_ADDRESS.txt are populated with correct sender private key and receiver addresses xion .txt  for transfers. Missing or incorrect data will cause the script to fail. if still script not open just check error .txt in your main bot directory u will see what is problem if cant resolve create issue paste the text in error.txt in issue \033[0m");
-    console.log("\n🌉 ========================================== 🌉");
-    console.log("  UNION Cross-Chain Automation");
-    console.log("🌉 ========================================== 🌉\n");
+    
+   
+    const colors = {
+        reset: '\x1b[0m',
+        bright: '\x1b[1m',
+        red: '\x1b[31m',
+        green: '\x1b[32m',
+        yellow: '\x1b[33m',
+        blue: '\x1b[34m',
+        magenta: '\x1b[35m',
+        cyan: '\x1b[36m',
+        white: '\x1b[37m'
+    };
+    
+    console.log(`\n${colors.cyan}${'═'.repeat(80)}${colors.reset}`);
+    console.log(`${colors.bright}${colors.green}🚀 UNION CROSS-CHAIN AUTOMATION BOT v3.0${colors.reset}`);
+    console.log(`${colors.cyan}${'═'.repeat(80)}${colors.reset}`);
+    
+    
+    console.log(`${colors.cyan}📋 Configuration:${colors.reset} ${colors.green}Multi-Chain Bridge${colors.reset} | ${colors.blue}Sepolia, Holesky, SEI, Xion, Babylon, BSC${colors.reset}`);
+    
+   
+    console.log(`${colors.red}🚨 Setup:${colors.reset} ${colors.yellow}private_key.txt, xion.txt, BABYLON_ADDRESS.txt${colors.reset} ${colors.red}required!${colors.reset}`);
+    
+    console.log(`${colors.cyan}${'═'.repeat(80)}${colors.reset}\n`);
 }
 
 function displayMainMenu(isUpdateAvailable, latestVersion) {
-    console.log("🔹 Select an Option:");
-    console.log("1️⃣  Transfer");
-    console.log("2️⃣  Union Account Checker");
-    console.log("3️⃣  Check for Updates");
-    console.log("4️⃣  Exit");
-    if (isUpdateAvailable === true && latestVersion && latestVersion.version) {
-        console.log(`\n⚠️ New Update Available: v${latestVersion.version} (Select 4 to update)`);
-    }
+    // Enhanced colors
+    const colors = {
+        reset: '\x1b[0m',
+        bright: '\x1b[1m',
+        red: '\x1b[31m',
+        green: '\x1b[32m',
+        yellow: '\x1b[33m',
+        blue: '\x1b[34m',
+        magenta: '\x1b[35m',
+        cyan: '\x1b[36m',
+        white: '\x1b[37m'
+    };
+    
+ 
+    console.log(`${colors.bright}${colors.white}🎯 SELECT OPERATION MODE:${colors.reset}`);
     console.log();
+   
+   
+    console.log(`  ${colors.green}${colors.bright}[1]${colors.reset} 🌉 ${colors.bright}${colors.white}Transfer${colors.reset} - Cross-chain token transfers`);
+    console.log(`  ${colors.blue}${colors.bright}[2]${colors.reset} 📊 ${colors.bright}${colors.white}Union Account Checker${colors.reset} - Verify account status`);
+    console.log(`  ${colors.magenta}${colors.bright}[3]${colors.reset} 🔄 ${colors.bright}${colors.white}Check for Updates${colors.reset} - Update bot to latest version`);
+    console.log(`  ${colors.red}${colors.bright}[4]${colors.reset} 🚪 ${colors.bright}${colors.white}Exit${colors.reset} - Close the application`);
+    
+  
+    if (isUpdateAvailable === true && latestVersion && latestVersion.version) {
+        console.log(`\n${colors.bright}${colors.yellow}⚠️ NEW UPDATE AVAILABLE: v${latestVersion.version} (Select 3 to update)${colors.reset}`);
+    }
+    
+    console.log(`\n${colors.cyan}${'═'.repeat(80)}${colors.reset}`);
 }
 
 async function getUserInput(prompt) {
@@ -214,7 +255,21 @@ async function runScriptWithArg(scriptName, arg) {
 async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) {
     displayBanner();
     displayMainMenu(isUpdateAvailable, latestVersion);
-    const choice = await getUserInput("👉 Enter your choice (1-4): ");
+    
+    // Enhanced colors
+    const colors = {
+        reset: '\x1b[0m',
+        bright: '\x1b[1m',
+        red: '\x1b[31m',
+        green: '\x1b[32m',
+        yellow: '\x1b[33m',
+        blue: '\x1b[34m',
+        magenta: '\x1b[35m',
+        cyan: '\x1b[36m',
+        white: '\x1b[37m'
+    };
+    
+    const choice = await getUserInput(`${colors.yellow}👉 Enter your choice (1-4): ${colors.reset}`);
 
     if (choice === "1") {
         await transferMenu();
@@ -228,31 +283,48 @@ async function mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion) 
             await mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion);
         }
     } else if (choice === "4") {
-        console.log("\n👋 Goodbye!");
+        console.log(`\n${colors.green}👋 Thank you for using UNION Cross-Chain Automation!${colors.reset}`);
+        console.log(`${colors.cyan}🚀 Goodbye and happy bridging!${colors.reset}\n`);
         errorLogStream.end();
         process.exit(0);
     } else {
-        console.log("\n❌ Invalid choice. Please try again.");
+        console.log(`\n${colors.red}❌ Invalid choice. Please try again.${colors.reset}`);
         setTimeout(() => mainMenu(checkVersionCallback, isUpdateAvailable, latestVersion), 1500);
     }
 }
 
 async function transferMenu() {
-    console.log("\n🌉 Transfer Menu: Select Chain");
-    console.log("1️⃣  Sepolia → Holesky");
-    console.log("2️⃣  Holesky → Sepolia");
-    console.log("3️⃣  SEI");
-    console.log("4️⃣  Xion → Babylon");
-    console.log("5️⃣  Xion → Osmosis");
-    console.log("6️⃣  Babylon (Multi-destination)");
-    console.log("7️⃣  Babylon → Sei");
-    console.log("8️⃣  SEI → BSC");
-    console.log("9️⃣  BSC → SEI");
-    console.log("🔟  BSC → Babylon");
-    console.log("1️⃣1️⃣  Osmosis → Babylon");
-    console.log("1️⃣2️⃣  CORN");
-    console.log("1️⃣3️⃣  Back\n");
-    const choice = await getUserInput("👉 Enter your choice (1-13): ");
+    // Enhanced colors
+    const colors = {
+        reset: '\x1b[0m',
+        bright: '\x1b[1m',
+        red: '\x1b[31m',
+        green: '\x1b[32m',
+        yellow: '\x1b[33m',
+        blue: '\x1b[34m',
+        magenta: '\x1b[35m',
+        cyan: '\x1b[36m',
+        white: '\x1b[37m'
+    };
+    
+    console.log(`\n${colors.cyan}${'═'.repeat(80)}${colors.reset}`);
+    console.log(`${colors.bright}${colors.white}🌉 TRANSFER MENU - SELECT BLOCKCHAIN NETWORK${colors.reset}`);
+    console.log(`${colors.cyan}${'═'.repeat(80)}${colors.reset}`);
+    console.log(`${colors.green}[1]${colors.reset} 🔗 Sepolia → Holesky - Ethereum testnet bridge`);
+    console.log(`${colors.green}[2]${colors.reset} 🔗 Holesky → Sepolia - Reverse Ethereum bridge`);
+    console.log(`${colors.blue}[3]${colors.reset} 🌾 SEI Network - SEI ecosystem transfers`);
+    console.log(`${colors.magenta}[4]${colors.reset} ⚡ Xion → Babylon - Cosmos to Bitcoin bridge`);
+    console.log(`${colors.magenta}[5]${colors.reset} ⚡ Xion → Osmosis - Cosmos ecosystem bridge`);
+    console.log(`${colors.yellow}[6]${colors.reset} 🏛️ Babylon (Multi-destination) - Bitcoin staking hub`);
+    console.log(`${colors.yellow}[7]${colors.reset} 🏛️ Babylon → Sei - Bitcoin to SEI bridge`);
+    console.log(`${colors.cyan}[8]${colors.reset} 🌾 SEI → BSC - Cross-chain to Binance`);
+    console.log(`${colors.cyan}[9]${colors.reset} 🟡 BSC → SEI - Binance to SEI bridge`);
+    console.log(`${colors.cyan}[10]${colors.reset} � BSC → Babylon - Binance to Bitcoin bridge`);
+    console.log(`${colors.magenta}[11]${colors.reset} 🌌 Osmosis → Babylon - Cosmos DeFi to Bitcoin`);
+    console.log(`${colors.yellow}[12]${colors.reset} 🌽 CORN Network - Agricultural blockchain`);
+    console.log(`${colors.red}[13]${colors.reset} 🔙 Back to Main Menu`);
+    console.log(`${colors.cyan}${'═'.repeat(80)}${colors.reset}\n`);
+    const choice = await getUserInput(`${colors.yellow}👉 Enter your choice (1-13): ${colors.reset}`);
 
     switch (choice) {
         case "1":
@@ -294,19 +366,35 @@ async function transferMenu() {
         case "13":
             break;
         default:
-            console.log("\n❌ Invalid choice. Please try again.");
+            console.log(`\n${colors.red}❌ Invalid choice. Please try again.${colors.reset}`);
             setTimeout(transferMenu, 1500);
     }
 }
 
 async function sepoliaToHoleskyMenu() {
-    console.log("\n🌉 Sepolia → Holesky: Select Token");
-    console.log("1️⃣  ETH");
-    console.log("2️⃣  LINK");
-    console.log("3️⃣  EURC");
-    console.log("4️⃣  USDC");
-    console.log("5️⃣  Back\n");
-    const token = await getUserInput("👉 Enter your choice (1-5): ");
+    // Enhanced colors
+    const colors = {
+        reset: '\x1b[0m',
+        bright: '\x1b[1m',
+        red: '\x1b[31m',
+        green: '\x1b[32m',
+        yellow: '\x1b[33m',
+        blue: '\x1b[34m',
+        magenta: '\x1b[35m',
+        cyan: '\x1b[36m',
+        white: '\x1b[37m'
+    };
+    
+    console.log(`\n${colors.cyan}${'═'.repeat(80)}${colors.reset}`);
+    console.log(`${colors.bright}${colors.white}🔗 SEPOLIA → HOLESKY - SELECT TOKEN TYPE${colors.reset}`);
+    console.log(`${colors.cyan}${'═'.repeat(80)}${colors.reset}`);
+    console.log(`${colors.green}[1]${colors.reset} 💎 ETH - Native Ethereum transfer`);
+    console.log(`${colors.blue}[2]${colors.reset} 🔗 LINK - Chainlink token bridge`);
+    console.log(`${colors.yellow}[3]${colors.reset} 💶 EURC - Euro Coin stablecoin`);
+    console.log(`${colors.magenta}[4]${colors.reset} 💵 USDC - USD Coin stablecoin`);
+    console.log(`${colors.red}[5]${colors.reset} 🔙 Back to Transfer Menu`);
+    console.log(`${colors.cyan}${'═'.repeat(80)}${colors.reset}\n`);
+    const token = await getUserInput(`${colors.yellow}👉 Enter your choice (1-5): ${colors.reset}`);
     switch (token) {
         case "1":
             await runScript('SepoliaToHoleskyEthTransfer.js');
@@ -323,7 +411,7 @@ async function sepoliaToHoleskyMenu() {
         case "5":
             break;
         default:
-            console.log("\n❌ Invalid choice. Please try again.");
+            console.log(`\n${colors.red}❌ Invalid choice. Please try again.${colors.reset}`);
             setTimeout(sepoliaToHoleskyMenu, 1500);
     }
 }
