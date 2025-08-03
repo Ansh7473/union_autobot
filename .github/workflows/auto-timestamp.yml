@@ -2,7 +2,7 @@ name: Auto Timestamp Update
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Runs every 30 minutes
+    - cron: '*/60 * * * *'  # Runs every 30 minutes
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
