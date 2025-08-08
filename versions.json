@@ -1,5 +1,13 @@
 [
   {
+    "VERSION": "1.0.143",
+    "UPDATE_DATE": "2025-08-08T17:12:32+05:30",
+    "CHANGES": [
+      "Updated files: None",
+      "Commit: Update README.md"
+    ]
+  },
+  {
     "VERSION": "1.0.142",
     "UPDATE_DATE": "2025-08-04T18:48:13+05:30",
     "CHANGES": [
