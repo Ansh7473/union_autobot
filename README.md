@@ -122,6 +122,11 @@ https://github.com/user-attachments/assets/92089df5-162b-46d7-a7d2-0158a74dc629
 
 <div align="center">
 
+### **IMP**
+```bash
+please star the repo this motivats me
+```
+
 ## ⚡️ **INSTALLATION**
 
 ![Install](https://img.shields.io/badge/📦-QUICK%20SETUP-4CAF50?style=for-the-badge)
